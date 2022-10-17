@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser } = require('../controllers/user');
+const { register } = require('../controllers/user');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
@@ -18,8 +18,7 @@ router.post('/', async (req, res) => {
         username,
         password,
         email,
-        gender,
-        salt
+        gender
     }, res);
 });
 
