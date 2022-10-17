@@ -1,26 +1,60 @@
 const Login = require('../schemas/Login');
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-const createUser = async (res, user) => {
+const jwt = require('jsonwebtoken');
+const jwtKey = "supersecret";
+const jwtExpirySeconds = 3600;
+
+const register = async (res, user) => {
 
     const tmpUser = new Login(user);
-    try{
+    tmpUser.password = await bcrypt.hash(user.password, saltRounds);
 
-        await tmpUser.save((error, currentUser) => {
-    
-            //TODO: Send actual error message
-            if(error){ 
-                res.status(500).json(error);
+    try {
+        await tmpUser.save((err, currentUser) => {
+            if (err) {
+                throw "Record Already Exists";
             }
-    
-            else {
-                res.status(200).json(currentUser);
-            }
+
+            return currentUser._id;
         });
+    } catch (err) {
+        res.status(400).json({ status: "failure", message: err.message }).end();
     }
-    catch (e){
-        res.status(500).send(e.message)
-    }
-}
 
-module.exports = { createUser };
+    // Creates Token
+    // TODO replace username with database location
+    const token = jwt.sign({ username }, jwtKey, {
+        algorithm: "HS256",
+        expiresIn: jwtExpirySeconds,
+    });
+
+    res.status(200).json({ status: "sucess", token: token }).end();
+
+
+};
+
+const autheticate = async (req, res) => {
+    // TODO change
+    const { username, password } = req;
+
+    // Get Account From DB
+    const user = await Login.findOne({ username });
+
+    if (!user || !await bcrypt.compare(password, account.password)) {
+        res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
+    } else {
+        // TODO replace username with database location
+        const token = jwt.sign({ username }, jwtKey, {
+            algorithm: "HS256",
+            expiresIn: jwtExpirySeconds,
+        });
+
+        res.status(200).json({ status: "success", token: token }).end();
+    }
+};
+
+
+module.exports = { register, autheticate };

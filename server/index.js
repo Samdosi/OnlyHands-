@@ -8,8 +8,11 @@ const userRoute = require('./routes/user');
 
 const app = express();
 app.use(cors());
-app.use( bodyParser.json() );       
-app.use(bodyParser.urlencoded({     
+
+app.use(express.json());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
   extended: true
 }));
 
@@ -20,11 +23,11 @@ app.use('/user', userRoute);
 
 
 mongoose.connect(
-    'mongodb://127.0.0.1:27017/test', 
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
+  'mongodb://127.0.0.1:27017/test',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
 );
 
 const db = mongoose.connection;
