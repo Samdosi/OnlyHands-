@@ -7,18 +7,18 @@ const jwt = require('jsonwebtoken');
 const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 
-const register = async (res, user) => {
+const register = async (user, res) => {
 
     const tmpUser = new Login(user);
     tmpUser.password = await bcrypt.hash(user.password, saltRounds);
 
     try {
-        await tmpUser.save((err, currentUser) => {
+        tmpUser = await tmpUser.save((err, currentUser) => {
             if (err) {
-                throw "Record Already Exists";
+                throw "Error!";
             }
 
-            return currentUser._id;
+            return currentUser;
         });
     } catch (err) {
         res.status(400).json({ status: "failure", message: err.message }).end();
@@ -26,7 +26,7 @@ const register = async (res, user) => {
 
     // Creates Token
     // TODO replace username with database location
-    const token = jwt.sign({ username }, jwtKey, {
+    const token = jwt.sign({ id: tmpUser._id, username: username }, jwtKey, {
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds,
     });
@@ -47,13 +47,17 @@ const autheticate = async (req, res) => {
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
     } else {
         // TODO replace username with database location
-        const token = jwt.sign({ username }, jwtKey, {
-            algorithm: "HS256",
-            expiresIn: jwtExpirySeconds,
-        });
-
+        const token = jwt.sign(
+            { id: user._id, username: username },
+            jwtKey,
+            { algorithm: "HS256", expiresIn: jwtExpirySeconds }
+        );
         res.status(200).json({ status: "success", token: token }).end();
     }
+};
+
+const verifyToken = async (req, res) => {
+
 };
 
 
