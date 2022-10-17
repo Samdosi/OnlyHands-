@@ -8,15 +8,16 @@ const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 
 const register = async (req, res) => {
-    const user = new Login(req);
+    let user = new Login(req);
     user.password = await bcrypt.hash(user.password, saltRounds);
 
     try {
-        user = await tmpUser.save((err, newUser) => {
+        user = await user.save((err, newUser) => {
             if (err) {
                 throw "Error!";
             }
 
+            console.log(1 + newUser);
             return newUser;
         });
     } catch (err) {
@@ -25,7 +26,8 @@ const register = async (req, res) => {
 
     // Creates Token
     // TODO replace username with database location
-    const token = jwt.sign({ id: tmpUser._id, username: username }, jwtKey, {
+    console.log(user);
+    const token = jwt.sign({ username: user.username }, jwtKey, {
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds,
     });

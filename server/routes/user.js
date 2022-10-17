@@ -18,8 +18,7 @@ router.post('/', async (req, res) => {
         username,
         password,
         email,
-        gender,
-        salt
+        gender
     }, res);
 });
 
