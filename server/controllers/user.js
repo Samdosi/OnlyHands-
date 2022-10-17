@@ -7,18 +7,17 @@ const jwt = require('jsonwebtoken');
 const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 
-const register = async (user, res) => {
-
-    const tmpUser = new Login(user);
-    tmpUser.password = await bcrypt.hash(user.password, saltRounds);
+const register = async (req, res) => {
+    const user = new Login(req);
+    user.password = await bcrypt.hash(user.password, saltRounds);
 
     try {
-        tmpUser = await tmpUser.save((err, currentUser) => {
+        user = await tmpUser.save((err, newUser) => {
             if (err) {
                 throw "Error!";
             }
 
-            return currentUser;
+            return newUser;
         });
     } catch (err) {
         res.status(400).json({ status: "failure", message: err.message }).end();
@@ -43,10 +42,9 @@ const autheticate = async (req, res) => {
     // Get Account From DB
     const user = await Login.findOne({ username });
 
-    if (!user || !await bcrypt.compare(password, account.password)) {
+    if (!user || !await bcrypt.compare(password, user.password)) {
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
     } else {
-        // TODO replace username with database location
         const token = jwt.sign(
             { id: user._id, username: username },
             jwtKey,
@@ -56,9 +54,12 @@ const autheticate = async (req, res) => {
     }
 };
 
-const verifyToken = async (req, res) => {
+const verifyToken = async (req, res, next) => {
+
+
+
 
 };
 
 
-module.exports = { register, autheticate };
+module.exports = { register, autheticate, verifyToken };
