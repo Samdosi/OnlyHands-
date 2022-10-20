@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.icon1{
+    transform: matrix(0.26, -1.08, 0.8, 0.45, 0, 0);
+}
+.icon2{
+    transform: matrix(-0.26, -1.08, -0.8, 0.45, 0, 0);
+}
+
+.hero{
+    background-image: url('./assets/login-bg.jpg');
+    /* background-position: center; 
+    background-repeat: no-repeat;  */
+    background-size: cover;
+}
