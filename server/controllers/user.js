@@ -15,21 +15,23 @@ const createUser = async (req, res) => {
             if (err) {
                 res.status(400).json({ status: "failure", message: err.message }).end();  
             }
+            else{
+
+                // Creates Token
+                // TODO replace username with database location
+                const token = jwt.sign({ username: user.username }, jwtKey, {
+                    algorithm: "HS256",
+                    expiresIn: jwtExpirySeconds,
+                });
+                
+                res.status(200).json({ status: "success", token: token }).end();
+            }
 
         });
     } 
     catch (err) {
         res.status(500).json({ status: "failure", message: err.message }).end();
     }
-
-    // Creates Token
-    // TODO replace username with database location
-    const token = jwt.sign({ username: user.username }, jwtKey, {
-        algorithm: "HS256",
-        expiresIn: jwtExpirySeconds,
-    });
-
-    res.status(200).json({ status: "success", token: token }).end();
 
 };
 
