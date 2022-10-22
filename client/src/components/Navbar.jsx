@@ -45,7 +45,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=' bg-transparent text-white flex justify-between items-center relative'>
+      <nav className=' bg-transparent text-white flex justify-between items-center relative shadow-lg'>
         <Link to='/'>
           <div className='flex items-center text-center lg:py-5'>
             <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-16 lg:w-16'>
@@ -80,7 +80,7 @@ const Navbar = () => {
             />
           </div>
           {toggleMenu && 
-            <u className='bg-white flex flex-col justify-around text-black p-10 w-64 h-64 absolute top-1 right-0 no-underline list-none rounded-md shadow-lg font-medium '>
+            <u className='bg-white flex flex-col justify-around text-black p-10 w-64 h-64 absolute z-[5] top-1 right-0 no-underline list-none rounded-md shadow-lg font-medium '>
               {links}
             </u>
           }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Hero, Login } from "./pages";
+import { Hero, Login, Chat } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
@@ -15,8 +15,8 @@ const App = () => {
   }
   return (
     <div 
-      className="w-screen h-screen hero px-3 sm:px-8 lg:px-12 overflow-hidden" 
-      style={{backgroundImage: `url(${bgImages[bgImage]})`}}
+      className="w-screen min-h-screen hero px-3 sm:px-8 lg:px-12" 
+      style={bgImage === '/chat' ? {background: '#1e1e1e'} : {backgroundImage: `url(${bgImages[bgImage]})`}}
     >
       <BrowserRouter>
 
@@ -25,6 +25,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
           <Route path='/login' element={<Login setBgImage={setBgImage}/>} />
+          <Route path="/chat" element={<Chat setBgImage={setBgImage}/>} />
         </Routes>
       </BrowserRouter>
     </div>

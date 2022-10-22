@@ -9,7 +9,7 @@ const Hero = ({ setBgImage }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="text-white w-full h-full md:h-[80%] flex flex-col justify-around items-center text-center ">
+        <div className="text-white w-full h-[80vh]  flex flex-col justify-around items-center text-center overflow-y-hidden">
 
             <h1 className="text-4xl lg:text-5xl font-bold">Swipe Right, Start Fights</h1>
 
