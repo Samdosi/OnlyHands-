@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Hero, Login } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import BackgroundImg from './assets/login-bg.jpg'
+import heroBG from './assets/hero.png';
+import loginBG from './assets/login.png';
 
 const App = () => {
-  return (
+  
+  const [bgImage, setBgImage] = useState('/');
 
-    <div className=" hero h-full w-full ">
-      {/* <div className=" absolute top-0 min-h-screen min-w-screen -z-10 ">
-        <img src={BackgroundImg} alt="bg-image" className="object-cover" />
-      </div> */}
-    {/* <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Hero/>}/>
-        <Route path='/login' element={<Login />} />
-      </Routes>
-    </BrowserRouter> */}
+  const bgImages = {
+    '/': heroBG,
+    '/login': loginBG
+  }
+  return (
+    <div 
+      className="w-screen h-screen hero px-3 sm:px-8 lg:px-12 overflow-hidden" 
+      style={{backgroundImage: `url(${bgImages[bgImage]})`}}
+    >
+      <BrowserRouter>
+
+        <Navbar />
+
+        <Routes>
+          <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
+          <Route path='/login' element={<Login setBgImage={setBgImage}/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
+
   )
 }
 
