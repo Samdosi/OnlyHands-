@@ -1,43 +1,41 @@
 const Login = require('../schemas/Login');
-
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 
-const register = async (req, res) => {
+const createUser = async (req, res) => {
     let user = new Login(req);
     user.password = await bcrypt.hash(user.password, saltRounds);
 
     try {
-        user = await user.save((err, newUser) => {
+        await user.save((err) => {
             if (err) {
-                throw "Error!";
+                res.status(400).json({ status: "failure", message: err.message }).end();  
+            }
+            else{
+
+                // Creates Token
+                // TODO replace username with database location
+                const token = jwt.sign({ username: user.username }, jwtKey, {
+                    algorithm: "HS256",
+                    expiresIn: jwtExpirySeconds,
+                });
+                
+                res.status(200).json({ status: "success", token: token }).end();
             }
 
-            console.log(1 + newUser);
-            return newUser;
         });
-    } catch (err) {
-        res.status(400).json({ status: "failure", message: err.message }).end();
+    } 
+    catch (err) {
+        res.status(500).json({ status: "failure", message: err.message }).end();
     }
-
-    // Creates Token
-    // TODO replace username with database location
-    console.log(user);
-    const token = jwt.sign({ username: user.username }, jwtKey, {
-        algorithm: "HS256",
-        expiresIn: jwtExpirySeconds,
-    });
-
-    res.status(200).json({ status: "sucess", token: token }).end();
-
 
 };
 
-const autheticate = async (req, res) => {
+const login = async (req, res) => {
     // TODO change
     const { username, password } = req;
 
@@ -48,7 +46,7 @@ const autheticate = async (req, res) => {
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
     } else {
         const token = jwt.sign(
-            { id: user._id, username: username },
+            { username: username },
             jwtKey,
             { algorithm: "HS256", expiresIn: jwtExpirySeconds }
         );
@@ -59,9 +57,7 @@ const autheticate = async (req, res) => {
 const verifyToken = async (req, res, next) => {
 
 
-
-
 };
 
 
-module.exports = { register, autheticate, verifyToken };
+module.exports = { createUser, login, verifyToken };
