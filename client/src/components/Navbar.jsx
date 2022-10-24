@@ -3,18 +3,18 @@ import { GiBoxingGlove } from 'react-icons/gi';
 
 const Navbar = () => {
   return (
-    <nav className=' bg-transparent text-black'>
+    <nav className='flex bg-transparent text-white'>
 
       <div>
         <div className='flex'>
           <GiBoxingGlove className='icon1'/>
           <GiBoxingGlove className='icon2'/>
+          <h1>OnlyHands</h1>
         </div>
         
-        <h1>OnlyHands</h1>
       </div>
 
-      <ul>
+      <ul className='flex'>
         <li>Profile</li>
         <li>Rules</li>
         <li>About</li>
