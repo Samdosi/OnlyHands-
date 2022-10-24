@@ -11,24 +11,24 @@ const createUser = async (req, res) => {
     user.password = await bcrypt.hash(user.password, saltRounds);
 
     try {
-        await user.save((err) => {
+        await user.save((err, new_user) => {
             if (err) {
-                res.status(400).json({ status: "failure", message: err.message }).end();  
+                res.status(400).json({ status: "failure", message: err.message }).end();
             }
-            else{
+            else {
 
                 // Creates Token
                 // TODO replace username with database location
-                const token = jwt.sign({ username: user.username }, jwtKey, {
+                const token = jwt.sign({ user_id: new_user._id }, jwtKey, {
                     algorithm: "HS256",
                     expiresIn: jwtExpirySeconds,
                 });
-                
+
                 res.status(200).json({ status: "success", token: token }).end();
             }
 
         });
-    } 
+    }
     catch (err) {
         res.status(500).json({ status: "failure", message: err.message }).end();
     }

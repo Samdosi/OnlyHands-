@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema  = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
     firstName: {
@@ -55,6 +55,6 @@ const profileSchema = new Schema({
         type: String,
         maxLength: 140
     }
-})
-const Profile =  mongoose.model('profile', profileSchema)
-module.exports = Profile
+});
+const Profile = mongoose.model('profile', profileSchema);
+module.exports = { Profile };

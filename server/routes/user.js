@@ -1,7 +1,7 @@
 const express = require('express');
 const { createUser, login } = require('../controllers/user');
 const { body, validationResult } = require('express-validator');
-const { auth_jwt } = require('../util/auth_jwt');
+const { auth_jwt } = require('../middleware/auth_jwt');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
