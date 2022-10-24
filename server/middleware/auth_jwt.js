@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 
-auth_jwt = (req, res, next) => {
+const auth_jwt = (req, res, next) => {
     const token = req.headers["x-access-token"];
     if (!token) {
         return res.status(403).json({ "message": "No token specified!" });
@@ -20,5 +20,6 @@ auth_jwt = (req, res, next) => {
     });
 
 
-}
+};
 
+module.exports = { auth_jwt };
