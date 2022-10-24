@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
+const profile_route = require("./routes/user");
 const app = express();
 const serverChat = http.createServer(app);
 const io = new Server(serverChat, {
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({
 const PORT = process.env.PORT || 5000;
 
 app.use('/user', userRoute);
+app.use("/profile", profile_route);
 
 
 io.on("connection", (socket) => {
