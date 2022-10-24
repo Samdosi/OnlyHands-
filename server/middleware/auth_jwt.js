@@ -15,11 +15,11 @@ const auth_jwt = (req, res, next) => {
             return res.status(401).json({ "message": "Unauthorized!" });
         }
 
-        req.username = decoded.username;
+        req._id = decoded.user_id;
         next();
     });
 
 
 };
 
-module.exports = {auth_jwt};
+module.exports = { auth_jwt };

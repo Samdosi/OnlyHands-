@@ -1,7 +1,7 @@
 const express = require('express');
 const { createUser, login, verifyEmail} = require('../controllers/user');
 const { body, validationResult } = require('express-validator');
-const {auth_jwt} = require('../util/auth_jwt');
+const { auth_jwt } = require('../middleware/auth_jwt');
 const router = express.Router();
 const Login = require('../schemas/Login')
 const crypto = require('crypto');
@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/secret-stuff', auth_jwt, (req, res) => {
-   return res.status(200).send("You found my secret stuff!");
+    return res.status(200).send("You found my secret stuff!");
 });
 
 
