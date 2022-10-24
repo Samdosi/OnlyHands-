@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import RegisterScreen from "./RegisterScreen";
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
@@ -16,6 +17,9 @@ const App = () => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
+
+    <RegisterScreen/>
+    /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -37,6 +41,7 @@ const App = () => {
         </ImageBackground>
       </SafeAreaView>
     </SafeAreaView>
+    */
   );
 };
 
