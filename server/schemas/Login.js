@@ -15,6 +15,13 @@ const LoginSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    emailToken: {
+        type: String
+    }, 
+    isVerified: {
+        type: Boolean,
+        default : false
     }
 });
 

@@ -1,13 +1,12 @@
 const http = require('http');
+require('dotenv').config();
+
 const express = require('express');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-require('dotenv').config();
-
 const userRoute = require('./routes/user');
-
 const app = express();
 const serverChat = http.createServer(app);
 const io = new Server(serverChat, {
@@ -16,6 +15,7 @@ const io = new Server(serverChat, {
     methods: ["GET", "POST", "DELETE", "PUT"],
   }
 })
+
 
 app.use(cors());
 app.use(express.json());
