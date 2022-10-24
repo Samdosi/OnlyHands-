@@ -37,11 +37,11 @@ const NewMessages = () => {
     ];
 
   return (
-    <div className=' w-full h-fit relative pt-5'>
+    <div className=' w-full h-[25%] min-h-[170px] relative pt-5'>
 
             <h1 className='text-lg md:text-xl'>New Messages</h1>
 
-            <div className='flex w-full h-32 text-center scrolling-wrapper overflow-x-auto my-3 overflow-hidden hide-scrollbar'>
+            <div className='flex w-full h-fit text-center overflow-x-auto pt-3 overflow-hidden hide-scrollbar'>
 
                 {
                     cards.map(c => {

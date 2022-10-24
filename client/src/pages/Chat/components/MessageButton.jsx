@@ -4,12 +4,12 @@ import { BsFillCircleFill } from 'react-icons/bs';
 const MessageButton = ({ picture, name, online, newMessage}) => { 
 
     return(
-    <div className='w-full h-20 hover:bg-white/10 flex items-center relative cursor-pointer'>
+    <div className='w-full h-20 py-2 hover:bg-white/10 flex items-center relative cursor-pointer'>
 
         <div className='relative'>
         <img
             src={picture}
-            alt="profile picture"
+            alt="profile "
             className='w-16 h-16 rounded-[50%]'
         />
 
@@ -26,7 +26,7 @@ const MessageButton = ({ picture, name, online, newMessage}) => {
                 <h3 className='text-lg'>{name}</h3>
                 {
                 newMessage &&
-                <p className='text-gray-300 w-32 sm:w-72 overflow-hidden text-ellipsis whitespace-nowrap'>{newMessage.text}</p>
+                <p className='text-gray-300 w-32 sm:w-72 md:w-32 overflow-hidden text-ellipsis whitespace-nowrap'>{newMessage.text}</p>
                 }
             </div>
 

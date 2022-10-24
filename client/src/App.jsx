@@ -15,7 +15,7 @@ const App = () => {
   }
   return (
     <div 
-      className="w-screen min-h-screen hero px-3 sm:px-8 lg:px-12" 
+      className="w-screen max-w-full h-screen hero px-3 sm:px-8 lg:px-12 overflow-x-clip" 
       style={bgImage === '/chat' ? {background: '#1e1e1e'} : {backgroundImage: `url(${bgImages[bgImage]})`}}
     >
       <BrowserRouter>

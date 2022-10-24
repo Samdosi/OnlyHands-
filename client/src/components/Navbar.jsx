@@ -45,10 +45,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=' bg-transparent text-white flex justify-between items-center relative shadow-lg'>
+      <nav className='min-h-[10%] h-[10%] max-h-[10%] bg-transparent text-white flex justify-between items-center relative shadow-lg'>
         <Link to='/'>
           <div className='flex items-center text-center lg:py-5'>
-            <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-16 lg:w-16'>
+            <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-14 lg:w-14'>
               <GiBoxingGlove className='icon1' style={{width: '100%', height: '100%'}}/>
               <GiBoxingGlove className='icon2' style={{width: '100%', height: '100%'}}/>
             </div>
