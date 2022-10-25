@@ -1,10 +1,10 @@
-const Profile = require("../schemas/Profile");
+const {Profile} = require("../schemas/Profile");
 const User = require("../schemas/Login");
 
 
 
 const create_profile = async (req, res) => {
-    const profile = Profile(req);
+    const profile = new Profile(req.body);
 
     await profile.save((err, new_profile) => {
         if (err) {
