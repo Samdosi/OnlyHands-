@@ -19,7 +19,6 @@ const auth_jwt = (req, res, next) => {
         next();
     });
 
-
 };
 
 module.exports = { auth_jwt };

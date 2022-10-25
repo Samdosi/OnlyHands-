@@ -1,5 +1,5 @@
 const {Profile} = require("../schemas/Profile");
-const User = require("../schemas/Login");
+const User = require("../schemas/User");
 
 
 
