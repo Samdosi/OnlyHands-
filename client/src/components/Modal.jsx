@@ -1,12 +1,34 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { AiOutlineLoading } from 'react-icons/ai';
 
 const Modal = ({ visible, onClose }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    // const [isPending, setIsPending] = useState('false');
 
     const handleOnClose = (e) => {
         if (e.target.id === 'container') onClose();
     }
 
     if (!visible) return null;
+
+    function doLogin(username, password) {
+        fetch('http://localhost:5000/login', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body:{
+              username: username,
+              password: password
+          }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                sessionStorage.setItem("token", data.token);
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div id="container"
@@ -16,32 +38,39 @@ const Modal = ({ visible, onClose }) => {
                 <h1 className="font-semibold text-center text-xl p-2">
                     Welcome Back!
                 </h1>
-
-                <div className="flex flex-col">
-                    <label htmlFor="email">Email
-                    <br />
-                    <input
-                        id="email"
-                        type="text"
-                        className="border border-gray-700 p-2 rounded mb-5"
-                        placeholder="email@example.com"
-                    />
-                    </label>
-                    <label htmlFor="password">Password
-                    <br />
-                    <input
-                        id="password"
-                        type="text"
-                        className="border border-gray-700 p-2 rounded mb-5"
-                        placeholder="*********"
-                    />
-                    </label>
-                </div>
-                <div className="text-center">
-                    <button className="px-5 py-2 bg-gray-700 text-white rounded">
-                        Sign in
-                    </button>
-                </div>
+                <form onSubmit={doLogin}>
+                    <div className="flex flex-col">
+                        <label htmlFor="username">Username
+                        <br />
+                        <input
+                            value={username}
+                            id="username"
+                            type="text"
+                            required
+                            className="border border-gray-700 p-2 rounded mb-5"
+                            placeholder="user13"
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        </label>
+                        <label htmlFor="password">Password
+                        <br />
+                        <input
+                            value={password}
+                            id="password"
+                            type="text"
+                            required
+                            className="border border-gray-700 p-2 rounded mb-5"
+                            placeholder="*********"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        </label>
+                    </div>
+                    <div className="text-center">
+                        <button className="px-5 py-2 bg-gray-700 text-white rounded">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );
