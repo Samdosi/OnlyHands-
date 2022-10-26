@@ -27,7 +27,8 @@ const profileSchema = new Schema({
         required: true
     },
     nickname: {
-        type: String
+        type: String,
+        default: ""
     },
     reach: {
         type: String

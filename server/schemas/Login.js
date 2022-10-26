@@ -11,6 +11,9 @@ const LoginSchema = new Schema({
         type: String,
         required: true
     },
+    profile: {
+        type: { type: Schema.ObjectId, ref: "Profile" }
+    },
     email: {
         type: String,
         required: true,
@@ -18,10 +21,10 @@ const LoginSchema = new Schema({
     },
     emailToken: {
         type: String
-    }, 
+    },
     isVerified: {
         type: Boolean,
-        default : false
+        default: false
     }
 });
 

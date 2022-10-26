@@ -28,53 +28,54 @@ const createUser = async (req, res) => {
     };
 
     try {//save user in db first
-        await user.save((err)=>{
-        if(err){
-            console.log(err);
-            return res.status(400).json({ status: "failure", message: err.message }).end();
-        }else{
+        await user.save((err) => {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({ status: "failure", message: err.message }).end();
+            }
+            else {
                 console.log("User created!");
                 //once user has been created we send verification email
-                try{
-                    sgMail.send(msg,(error)=>{
-                    if(error){
-                        console.log(error);
-                        return res.status(400).json({ status: "failure", message: err.message }).end();
-                    }else{
-                        console.log("Email sent!");
-                        // Creates Token
-                        const token = jwt.sign({ username: user.username }, jwtKey, {
-                            algorithm: "HS256",
-                            expiresIn: jwtExpirySeconds,
-                        });
-                        return res.status(200).json({status: "success", token: token}).end();
-                    }
+                try {
+                    sgMail.send(msg, (error) => {
+                        if (error) {
+                            console.log(error);
+                            return res.status(400).json({ status: "failure", message: err.message }).end();
+                        } else {
+                            console.log("Email sent!");
+                            // Creates Token
+                            const token = jwt.sign({ username: user.username }, jwtKey, {
+                                algorithm: "HS256",
+                                expiresIn: jwtExpirySeconds,
+                            });
+                            return res.status(200).json({ status: "success", token: token }).end();
+                        }
                     })
-                }catch{
+                } catch {
                     res.status(500).json({ status: "failure", message: err.message }).end();
                 }
             }
         })
-    } 
+    }
     catch (err) {
         res.status(500).json({ status: "failure", message: err.message }).end();
     }
 };
 
-const verifyEmail = async (req, res)=>{
-    try{
-        const user = await Login.findOne({ emailToken :req});
-        if(!user){
+const verifyEmail = async (req, res) => {
+    try {
+        const user = await Login.findOne({ emailToken: req });
+        if (!user) {
             console.log('Error. Token is invalid.');
-            return res.status(400).json({ status: "failure"}).end();
+            return res.status(400).json({ status: "failure" }).end();
         }
         //update user token and verification status
         user.emailToken = null;
         user.isVerified = true;
         await user.save();
         console.log("User verified");
-        return res.status(200).json({status : "success"}).end();
-    }catch(error){
+        return res.status(200).json({ status: "success" }).end();
+    } catch (error) {
         console.log(error);
         return res.status(400).json({ status: "failure", message: error.message }).end();
     }
