@@ -1,10 +1,24 @@
 import React from 'react';
 import { BsFillCircleFill } from 'react-icons/bs';
+import { useProfileContext } from '../context/Profile';
 
-const MessageButton = ({ picture, name, online, newMessage}) => { 
+const MessageButton = ({ picture, name, online, newMessage, setShowChat }) => { 
+
+    const { setProfile } = useProfileContext();
 
     return(
-    <div className='w-full h-20 py-2 hover:bg-white/10 flex items-center relative cursor-pointer'>
+    <div 
+        onClick={() => {
+            setShowChat(true);
+            setProfile({
+                picture,
+                name,
+                online,
+                newMessage
+            });
+        }}
+        className='w-full h-20 py-2 hover:bg-white/10 flex items-center relative cursor-pointer'
+    >
 
         <div className='relative'>
         <img
@@ -16,7 +30,7 @@ const MessageButton = ({ picture, name, online, newMessage}) => {
         {
             online && 
             <div className='absolute top-1/2 translate-y-[-50%] -right-2 animate-pulse'>
-            <BsFillCircleFill color='lightGreen'/>
+                <BsFillCircleFill color='lightGreen'/>
             </div>
         }
         </div>
@@ -34,15 +48,15 @@ const MessageButton = ({ picture, name, online, newMessage}) => {
                 newMessage && 
                 <div className='absolute p-1 h-full right-0 top-0 flex flex-col justify-around items-center text-center'>
 
-                <div className=' h-9 w-9 relative'>
-                    <BsFillCircleFill color='#ff405b' style={{width: '100%', height: '100%'}}/>
-                    <p className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-[16px]'>
-                        {
-                        newMessage?.amount.length > 3 ? '999+' : newMessage.amount
-                        }
-                    </p>
-                </div>
-                <p className='text-sm text-start'>{newMessage.date}</p>
+                    <div className=' h-9 w-9 relative'>
+                        <BsFillCircleFill color='#ff405b' style={{width: '100%', height: '100%'}}/>
+                        <p className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-[16px]'>
+                            {
+                            newMessage?.amount.length > 3 ? '999+' : newMessage.amount
+                            }
+                        </p>
+                    </div>
+                    <p className='text-sm text-start'>{newMessage.date}</p>
 
                 </div>
             }

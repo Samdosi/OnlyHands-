@@ -1,8 +1,7 @@
 import React from 'react';
 import MessageButton from './MessageButton';
 
-
-const Messages = () => {
+const Messages = ({ setShowChat }) => {
 
   const cards = [
     {
@@ -67,21 +66,10 @@ const Messages = () => {
     },
   ];
 
-  const cardss = [    {
-    picture: 'https://scontent-atl3-2.xx.fbcdn.net/v/t1.6435-9/80192852_2792338754158050_862576909328842752_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=xHnC3p2bApkAX_oVn2H&_nc_ht=scontent-atl3-2.xx&oh=00_AT9g8gsztIqIlQsmK1w1zZAf_0zQlKDOUAszw2_RaSCOGQ&oe=63783BCD',
-    name: 'Brandon',
-    online: true,
-    newMessage: {
-      text: 'Fight me yoo!!!',
-      amount: '4',
-      date: '2:24PM'
-    }
-},]
-
   return (
     <div className=' w-full h-[74%] messages'>
 
-      <h1 className='text-lg md:text-xl pb-3'>Messages</h1>
+      <h1 className='text-lg md:text-xl pb-3 text-[#ff405b]'>Messages</h1>
 
       <div className='w-full h-[92%] overflow-y-auto overflow-hidden hide-scrollbar'>
 
@@ -93,6 +81,7 @@ const Messages = () => {
                 picture={c.picture}
                 newMessage={c.newMessage}
                 online={c.online}
+                setShowChat={setShowChat}
               />
             )
           })

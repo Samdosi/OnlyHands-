@@ -39,7 +39,7 @@ const NewMessages = () => {
   return (
     <div className=' w-full h-[25%] min-h-[170px] relative pt-5'>
 
-            <h1 className='text-lg md:text-xl'>New Messages</h1>
+            <h1 className='text-lg md:text-xl text-[#ff405b]'>New Messages</h1>
 
             <div className='flex w-full h-fit text-center overflow-x-auto pt-3 overflow-hidden hide-scrollbar'>
 
