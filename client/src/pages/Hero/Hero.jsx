@@ -1,5 +1,7 @@
 import React from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Modal from "../../components/Modal"
 
 const Hero = ({ setBgImage }) => {
 
@@ -7,6 +9,9 @@ const Hero = ({ setBgImage }) => {
     setBgImage(pathname);
     
     const navigate = useNavigate();
+
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => setShowModal(false);
 
     return (
         <div className="text-white w-full h-[80vh]  flex flex-col justify-around items-center text-center overflow-y-hidden">
@@ -18,12 +23,15 @@ const Hero = ({ setBgImage }) => {
                     Create Account
                 </button>
                 <button 
-                    onClick={() => {navigate('/login')}}
+                    // onClick={() => {navigate('/login')}}
+                    onClick={() => setShowModal(true)}
                     className=' p-3 2xl:p-4 rounded-lg shadow-md border transition'
                 >
                     Log in
                 </button>
             </div>
+
+            <Modal onClose={handleModal} visible={showModal} />
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Hero, Login, Chat } from "./pages";
+import { Hero, Chat } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
@@ -11,7 +11,6 @@ const App = () => {
 
   const bgImages = {
     '/': heroBG,
-    '/login': loginBG
   }
   return (
     <div 
@@ -24,7 +23,6 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
-          <Route path='/login' element={<Login setBgImage={setBgImage}/>} />
           <Route path="/chat" element={<Chat setBgImage={setBgImage}/>} />
         </Routes>
       </BrowserRouter>
