@@ -3,15 +3,12 @@ import { NewMessages, Messages, ChatContainer } from './components';
 import { useLocation } from 'react-router-dom';
 import { ProfileProvider } from './context/Profile';
 
-const Chat = ({ setBgImage }) => {
+const Chat = ({ setBgImage, socket }) => {
 
   const {pathname} = useLocation();
   setBgImage(pathname);
 
   const [showChat, setShowChat] = useState(false); 
-
-
-
 
   return (
     <div className='text-white w-full h-[90%] min-h-[290px] flex '>
@@ -30,7 +27,7 @@ const Chat = ({ setBgImage }) => {
         </div>
 
         <div className={showChat ? 'w-full h-full md:w-[55%] lg:w-[65%]' : ' hidden h-full md:block w-full md:w-[55%] lg:w-[65%] ' }>
-          <ChatContainer setShowChat={setShowChat}/>
+          <ChatContainer setShowChat={setShowChat} socket={socket}/>
         </div>
       </ProfileProvider>
 
