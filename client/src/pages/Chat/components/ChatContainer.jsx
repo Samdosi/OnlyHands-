@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useProfileContext } from '../context/Profile';
@@ -11,6 +11,9 @@ const ChatContainer = ({ setShowChat, socket }) => {
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+
+  const [prevScroll, setPrevScroll] = useState(0);
+  const scrollRef = useRef(null);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -40,7 +43,18 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if(profile && profile?.name !== ""){
       socket.emit("join_room", profile.name);
     }
+    setMessageList([]);
+    setCurrentMessage("");
   }, [profile]);
+
+  useEffect(() => {
+
+    if(scrollRef.current?.scrollHeight > prevScroll){
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        setPrevScroll(scrollRef.current.scrollHeight);
+    }
+  
+  }, [messageList])
 
 
   return (
@@ -49,14 +63,14 @@ const ChatContainer = ({ setShowChat, socket }) => {
         ?
         <div className='h-full w-full relative '>
 
-          <div className=' z-[2] h-[10%] min-h-[5rem] w-full bg-zinc-900/95 flex items-center justify-between px-2 absolute top-0'>
-            <div className='flex items-center w-fit h-full'>
+          <div className=' z-[2] h-[15%] w-full bg-zinc-900/95 flex items-center justify-between px-2 '>
+            <div className='flex items-center w-fit h-fit'>
               <div
                 onClick={() => {
                   setProfile(null);
                   setShowChat(false)
                 }}
-                className='md:hidden w-7 h-7 p-1 active:bg-[#484848] rounded-[50%] transition mr-4'>
+                className='md:hidden w-7 h-7 p-1 active:bg-[#484848] rounded-[50%] transition mr-4 cursor-pointer'>
                 <BiArrowBack style={{width: '100%', height: '100%'}}/>
               </div>
               <div className=' h-full flex items-center active:bg-[#484848] '>
@@ -68,23 +82,35 @@ const ChatContainer = ({ setShowChat, socket }) => {
                 <p>{profile.name}</p>
               </div>
             </div>
-            <div className='w-7 h-7 p-1 active:bg-[#484848] rounded-[50%] transition'>
+            <div className='w-7 h-7 p-1 active:bg-[#484848] rounded-[50%] transition cursor-pointer'>
               <BiDotsVerticalRounded style={{width: '100%', height: '100%'}} />
             </div>
           </div>
 
-          <div className='z-[2] w-full h-[90%] overflow-y-auto'>
+          <div ref={scrollRef} className='z-[2] w-full h-[75%] px-5 overflow-y-auto hide-scrollbar scroll-smooth'>
                 {
-                  messageList?.map(message => message.message)
+                  messageList?.map(message => {
+
+                    return(
+                      <div className='flex flex-col '>
+                        <p
+                          className=' overflow-wrap  self-end my-4 text-xl text-black bg-white max-w-[18rem] w-auto h-auto p-2 rounded'
+                        >
+                          {message.message}
+                        </p>
+                      </div>
+                      )
+                  })
                 }
           </div>
 
           <div className=' z-[2] w-full h-[10%] py-1 flex bg-zinc-900'>
             <input
-            onKeyUp={(e) => {
-              if(e.key === 'Enter') sendMessage();
-              else setCurrentMessage(e.target.value)
-            }}
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value) }
+              onKeyUp={(e) => {
+                if(e.key === 'Enter') sendMessage()
+              }}
               type="text" 
               className=' p-3 w-[90%] h-full bg-inherit border-none '
               placeholder='Type a message'

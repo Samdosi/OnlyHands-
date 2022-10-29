@@ -42,6 +42,10 @@
     background-size: cover;
 }
 
+.overflow-wrap{
+    overflow-wrap: break-word;
+}
+
 @media screen and (max-height: 730px) {
     .messages{
         height: 70%;
