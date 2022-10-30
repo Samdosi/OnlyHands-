@@ -24,7 +24,7 @@ const Hero = ({ setBgImage }) => {
                         setShowModal(true);
                         setIsLoginTab(false);
                     }}
-                    className="bg-white hover:bg-gray-200 transition text-black p-3 2xl:p-4 rounded-lg shadow-md">
+                    className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
                     Create Account
                 </button>
                 <button
@@ -32,7 +32,7 @@ const Hero = ({ setBgImage }) => {
                         setShowModal(true);
                         setIsLoginTab(true);
                     }}
-                    className=' p-3 2xl:p-4 rounded-lg shadow-md border transition'
+                    className=' p-3 2xl:p-4 rounded-lg shadow-md border grow-transition'
                 >
                     Log in
                 </button>

@@ -58,7 +58,7 @@ const Login = () => {
                     </label>
                 </div>
                 <div className="text-center">
-                    <button className="px-5 py-2 bg-gray-700 text-white rounded">
+                    <button className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
                         Sign in
                     </button>
                 </div>

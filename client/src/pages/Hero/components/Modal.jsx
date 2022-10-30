@@ -16,13 +16,13 @@ const Modal = ({ onClose, isLoginTab, toggleTab }) => {
             <div className="bg-white rounded w-72 text-gray-700">
                 <div className="flex justify-around">
                     <div className={ `w-full rounded-tl ${isLoginTab ? 'bg-slate-300' : ''}`}>
-                        <button className={ `p-1 ${!isLoginTab ? 'font-bold' : ''}`}
+                        <button className={ `w-full p-1 ${!isLoginTab ? 'font-bold' : ''}`}
                             onClick={() => toggleTab(false)}>
                             Register
                         </button>
                     </div>
                     <div className={`w-full rounded-tr ${!isLoginTab ? 'bg-slate-300' : ''}`}>
-                        <button className={ `p-1 ${isLoginTab ? 'font-bold' : ''}`}
+                        <button className={ `w-full p-1 ${isLoginTab ? 'font-bold' : ''}`}
                             onClick={() => toggleTab(true)}>
                             Login
                         </button>
