@@ -9,21 +9,19 @@ const Modal = ({ onClose, isLoginTab, toggleTab }) => {
         if (e.target.id === 'container') onClose();
     }
 
-    const [isLogin, setIsLogin] = useState(true);
-
     return (
         <div id="container"
             onClick={handleOnClose}
             className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <div className="bg-white p-2 rounded w-72 text-gray-700">
+            <div className="bg-white rounded w-72 text-gray-700">
                 <div className="flex justify-around">
-                    <div>
-                        <button className={ ` p-1 ${!isLoginTab ? 'font-bold' : ''}`}
+                    <div className={ `w-full rounded-tl ${isLoginTab ? 'bg-slate-300' : ''}`}>
+                        <button className={ `p-1 ${!isLoginTab ? 'font-bold' : ''}`}
                             onClick={() => toggleTab(false)}>
                             Register
                         </button>
                     </div>
-                    <div >
+                    <div className={`w-full rounded-tr ${!isLoginTab ? 'bg-slate-300' : ''}`}>
                         <button className={ `p-1 ${isLoginTab ? 'font-bold' : ''}`}
                             onClick={() => toggleTab(true)}>
                             Login
