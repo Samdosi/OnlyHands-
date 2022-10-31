@@ -65,4 +65,4 @@ db.once("open", () => {
 db.on("error", console.error.bind(console, "connection error: "));
 
 
-app.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
+serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
