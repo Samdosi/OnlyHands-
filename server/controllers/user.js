@@ -44,12 +44,7 @@ const createUser = async (req, res) => {
                             return res.status(400).json({ status: "failure", message: error.message }).end();
                         } else {
                             console.log("Email sent!");
-                            // Creates Token
-                            const token = jwt.sign({ user_id: user._id }, jwtKey, {
-                                algorithm: "HS256",
-                                expiresIn: jwtExpirySeconds,
-                            });
-                            return res.status(200).json({ status: "success", token: token }).end();
+                            return res.status(200).json({ status: "success" }).end();
                         }
                     });
                 } catch (err) {
@@ -71,6 +66,8 @@ const login = async (req, res) => {
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
+    } else if (!user.isVerified) {
+        res.status(400).json({ status: "failure", message: "User has not verified email!" }).end();
     } else {
         const token = jwt.sign({ user_id: user._id }, jwtKey, {
             algorithm: "HS256",

@@ -25,6 +25,7 @@ const create_profile = async (req, res) => {
 
             found_user.profile = user_profile;
             found_user.save((err) => {
+
                 return res.status(200).json({ "message": "User Profile Created!" });
             });
         });
