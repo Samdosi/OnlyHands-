@@ -15,7 +15,7 @@ const { msg } = require("../middleware/sendEmail");
 
 //create new user
 const createUser = async (req, res) => {
-    let user = new User(req);
+    const user = new User(req);
     user.password = await bcrypt.hash(user.password, saltRounds);
 
     //create message
@@ -44,12 +44,7 @@ const createUser = async (req, res) => {
                             return res.status(400).json({ status: "failure", message: error.message }).end();
                         } else {
                             console.log("Email sent!");
-                            // Creates Token
-                            const token = jwt.sign({ username: user.username }, jwtKey, {
-                                algorithm: "HS256",
-                                expiresIn: jwtExpirySeconds,
-                            });
-                            return res.status(200).json({ status: "success", token: token }).end();
+                            return res.status(200).json({ status: "success" }).end();
                         }
                     });
                 } catch (err) {
@@ -71,8 +66,10 @@ const login = async (req, res) => {
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
+    } else if (!user.isVerified) {
+        res.status(400).json({ status: "failure", message: "User has not verified email!" }).end();
     } else {
-        const token = jwt.sign({ username: username }, jwtKey, {
+        const token = jwt.sign({ user_id: user._id }, jwtKey, {
             algorithm: "HS256",
             expiresIn: jwtExpirySeconds,
         });
@@ -181,6 +178,5 @@ const reset = (req, res) => {
     }
 };
 
-const verifyToken = async (req, res, next) => { };
 
 module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, };

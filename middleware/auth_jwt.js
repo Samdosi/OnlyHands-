@@ -14,8 +14,9 @@ const auth_jwt = (req, res, next) => {
         if (err) {
             return res.status(401).json({ "message": "Unauthorized!" });
         }
+        console.log(decoded);
 
-        req.body._id = decoded.user_id;
+        req.body = { user_id: decoded.user_id, user_req: req.body };
         next();
     });
 

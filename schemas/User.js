@@ -12,7 +12,9 @@ const UserSchema = new Schema({
         required: true
     },
     profile: {
-        type: { type: Schema.ObjectId, ref: "Profile" }
+        type: Schema.Types.ObjectId,
+        ref: "Profile",
+        default: null
     },
     email: {
         type: String,

@@ -28,8 +28,9 @@ app.use(bodyParser.urlencoded({
 
 const PORT = process.env.PORT || 5000;
 
-app.use('/user', userRoute);
-app.use('/profile', profile_route);
+
+app.use('/api/user', userRoute);
+app.use('/api/profile', profile_route);
 
 
 io.on("connection", (socket) => {
@@ -64,4 +65,4 @@ db.once("open", () => {
 db.on("error", console.error.bind(console, "connection error: "));
 
 
-app.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
+serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
