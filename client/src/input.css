@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.icon1{
+    transform: matrix(0.26, -1.08, 0.8, 0.45, 0, 0);
+}
+.icon2{
+    transform: matrix(-0.26, -1.08, -0.8, 0.45, 0, 0);
+}
+
+.hero{
+    background-color: black;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+
+.overflow-wrap{
+    overflow-wrap: break-word;
+}
+
+@media screen and (max-height: 730px) {
+    .messages{
+        height: 70%;
+    }
+}
+
+@media screen and (max-height: 655px) {
+    .messages{
+        height: 66%;
+    }
+}
+
+@media screen and (max-height: 593px) {
+    .messages{
+        height: 63%;
+    }
+}
+
+@media screen and (max-height: 554px) {
+    .messages{
+        height: 60%;
+    }
+}
+
+@media screen and (max-height: 520px) {
+    .messages{
+        height: 57%;
+    }
+}
+
+@media screen and (max-height: 509px) {
+    .messages{
+        height: 54%;
+    }
+}
+
+@media screen and (max-height: 463px) {
+    .messages{
+        height: 50%;
+    }
+}
+
+@media screen and (max-height: 432px) {
+    .messages{
+        height: 46%;
+    }
+}
+
+@media screen and (max-height: 404px) {
+    .messages{
+        height: 42%;
+    }
+}
+
+@media screen and (max-height: 380px) {
+    .messages{
+        height: 38%;
+    }
+}
+
+@media screen and (max-height: 358px) {
+    .messages{
+        height: 34%;
+    }
+}
+
+@media screen and (max-height: 339px) {
+    .messages{
+        height: 30%; 
+    }
+}
+
+@media screen and (max-height: 320px) {
+    .messages{
+        height: 28%;
+    }
+}
