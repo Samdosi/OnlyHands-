@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
-import { Hero, Chat } from "./pages";
+import { Hero, Chat , Profile } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
+import profileBG from './assets/kick.png';
 
-const socket = io.connect("http://localhost:5000/");
+const socket = io.connect("https://only-hands.herokuapp.com:5000");
 
 const App = () => {
   
@@ -13,6 +14,7 @@ const App = () => {
 
   const bgImages = {
     '/': heroBG,
+    '/profile': profileBG
   }
   return (
     <div 
@@ -26,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
           <Route path="/chat" element={<Chat setBgImage={setBgImage} socket={socket}/>} />
+          <Route path="/profile" element={<Profile setBgImage={setBgImage}/>}/>
         </Routes>
       </BrowserRouter>
     </div>

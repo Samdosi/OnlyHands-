@@ -9,7 +9,7 @@ const Login = () => {
 
 
     function doLogin(username, password) {
-        fetch('http://localhost:5000/login', {
+        fetch('https://only-hands.herokuapp.com/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: {

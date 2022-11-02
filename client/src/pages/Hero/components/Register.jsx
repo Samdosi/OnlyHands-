@@ -5,12 +5,30 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    function doRegister(username, email, password) {
+        fetch('https://only-hands.herokuapp.com/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: {
+                username: username,
+                email: email, 
+                password: password
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                sessionStorage.setItem("token", data.token);
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div>
             <h1 className="font-semibold text-center text-xl p-2">
                 Welcome to OnlyHands!
             </h1>
-            <form >
+            <form onSubmit={ doRegister }>
                 <div className="flex flex-col">
                 <label htmlFor="username">Username
                         <br />
@@ -33,7 +51,7 @@ const Register = () => {
                             required
                             className="border border-gray-700 p-2 rounded mb-5"
                             placeholder="example@example.com"
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </label>
                     <label htmlFor="password">Password
