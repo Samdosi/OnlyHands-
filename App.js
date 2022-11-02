@@ -18,8 +18,7 @@ const App = () => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-
-    <ProfileScreen/>
+    <RegisterScreen />
     /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>

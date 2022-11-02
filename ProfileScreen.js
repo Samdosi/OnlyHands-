@@ -13,7 +13,6 @@ import {
   TextInput,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
-
 function ProfileScreen(props) {
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");

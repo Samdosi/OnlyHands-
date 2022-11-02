@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Input from "./Input";
 import Button from "./Button";
-import { useNavigation } from "@react-navigation/native";
+//import { useNavigation } from "react-navigation/native";
 import Loader from "./Loader";
 import axios from "axios";
 
