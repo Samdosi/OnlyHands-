@@ -34,12 +34,20 @@ const create_profile = async (req, res) => {
 
 
 const get_profile = async (req, res) => {
-
-
-
-
-
-
+    if(req){
+        try{
+            const profile = await Profile.findById(req);
+            if(profile){ 
+                return res.status(200).json(profile);
+            }else{
+                return res.status(400).json("No profile was found for this user");
+            }
+        }catch(err){
+            return res.status(500).json(err);
+        }
+    }else{
+        return res.status(400).json("Profile ID is required");
+    }
 };
 
 const edit_profile = async (req, res) => {
