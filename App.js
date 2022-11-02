@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import ProfileScreen from "./ProfileScreen";
 import RegisterScreen from "./RegisterScreen";
 
 const image = {
@@ -18,7 +19,7 @@ const App = () => {
 
   return (
 
-    <RegisterScreen/>
+    <ProfileScreen/>
     /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>

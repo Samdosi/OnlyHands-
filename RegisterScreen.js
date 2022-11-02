@@ -3,10 +3,15 @@ import { Button, Image, ImageBackground, SafeAreaView, StyleSheet, Text, TextInp
 
 function RegisterScreen(props) {
 
-    const [username, onChangeUsername] = React.useState(null);
-    const [email, onChangeEmail] = React.useState(null);
-    const [password, onChangePassword] = React.useState(null);
+    const [username, onChangeUsername] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [password, onChangePassword] = React.useState('');
 
+    const payload = {
+        username,
+        email,
+        password
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -33,6 +38,7 @@ function RegisterScreen(props) {
                         placeholderTextColor= '#5e5e61'
                         value={username}>
                     </TextInput>
+                
 
                     <TextInput 
                         style={styles.fillIn} 
@@ -52,7 +58,7 @@ function RegisterScreen(props) {
                         
                     </TextInput>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => console.log(username,email,password)}>
                         <View style={styles.registerButtonView}>
                             <Text style= {styles.registerButtonText}>
                                 Register
