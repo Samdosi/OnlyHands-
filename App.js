@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import GalleryPicker from "./GalleryPicker";
 import ProfileScreen from "./ProfileScreen";
 import RegisterScreen from "./RegisterScreen";
 
@@ -18,7 +19,7 @@ const App = () => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-    <RegisterScreen />
+    <GalleryPicker />
     /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>

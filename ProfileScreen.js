@@ -11,8 +11,15 @@ import {
   View,
   ScrollView,
   TextInput,
+  ImagePickerIOS,
 } from "react-native";
-import { CheckBox } from "react-native-elements";
+import { CheckBox, useTheme } from "react-native-elements";
+import ImagePicker from "react-native-image-picker";
+
+
+
+
+
 function ProfileScreen(props) {
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
@@ -47,13 +54,23 @@ function ProfileScreen(props) {
     onChangeOther(true);
   };
 
+   /* handleChoosePhoto = () => {
+      ImagePicker.launchImageLibrary
+    }
+ */
+
+
+  
     return (
+      
+
         <SafeAreaView style={styles.saveArea}>
              <ImageBackground style={styles.bgImage} resizeMode='cover' source={require('./assets/pexels1.jpg')}>
                 <ScrollView style={styles.scroll}>
 
                         <TouchableOpacity >
                             <View style={styles.profilePicture}>
+                              
                                 
                                 <Text style={styles.profilePictureText}>Upload profile Picture</Text>
                             
