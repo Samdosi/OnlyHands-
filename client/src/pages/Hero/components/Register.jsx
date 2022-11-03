@@ -18,10 +18,9 @@ const Register = () => {
                 email: email, 
             })
         })
-            .then((res) => res.json)
+            .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                // sessionStorage.setItem('emailToken', data.token);
                 window.location.reload();
             })
             .catch(error => console.log(error))
