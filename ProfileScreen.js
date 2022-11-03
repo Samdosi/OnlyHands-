@@ -45,10 +45,10 @@ function ProfileScreen(props) {
 
     return (
         <SafeAreaView style={styles.saveArea}>
-             <ImageBackground style={styles.bgImage} resizeMode='cover' source={require('./assets/back.jpg')}>
+             <ImageBackground style={styles.bgImage} resizeMode='cover' source={require('./assets/pexels1.jpg')}>
                 <ScrollView style={styles.scroll}>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity >
                             <View style={styles.profilePicture}>
                                 
                                 <Text style={styles.profilePictureText}>Upload profile Picture</Text>
@@ -69,7 +69,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeFirstName}
                             placeholder="First Name"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={firstName}>
                         </TextInput>
 
@@ -77,7 +77,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeLastName}
                             placeholder="Last Name"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={lastName}>
                         </TextInput>
                         
@@ -91,8 +91,10 @@ function ProfileScreen(props) {
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
                                 onPress={genderMale}
-                                containerStyle={{width:100,left:1,backgroundColor:'#e1e3e6'}}
+                                containerStyle={{borderRadius:9,borderWidth:0,height:40,backgroundColor:"rgba(52, 52, 52, 0.8)"}}
                                 size = {20}
+                                textStyle={{color:'white'}}
+                                checkedColor='red'
                             
 
                                 />
@@ -107,8 +109,10 @@ function ProfileScreen(props) {
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
                                 onPress={genderFemale}
-                                containerStyle={{width:110,backgroundColor:'#e1e3e6'}}
+                                containerStyle={{borderRadius:9,borderWidth:0,height:40,width:110,backgroundColor:"rgba(52, 52, 52, 0.8)"}}
                                 size = {20}
+                                textStyle={{color:'white'}}
+                                checkedColor='red'
 
                                 />
 
@@ -123,8 +127,10 @@ function ProfileScreen(props) {
                             checkedIcon='dot-circle-o'
                             uncheckedIcon='circle-o'
                             onPress={genderOther}
-                            containerStyle={{backgroundColor:'#e1e3e6'}}
+                            containerStyle={{borderRadius:9,borderWidth:0,height:40,backgroundColor:"rgba(52, 52, 52, 0.8)"}}
+                            textStyle={{color:'white'}}
                             size = {20}
+                            checkedColor='red'
 
 
                             />   
@@ -139,7 +145,7 @@ function ProfileScreen(props) {
                                 style={styles.AHWInput} 
                                 onChangeText={onChangeAge}
                                 placeholder="Age"
-                                placeholderTextColor= '#5e5e61'
+                                placeholderTextColor= 'white'
                                 value={age}>
                             </TextInput>
 
@@ -147,7 +153,7 @@ function ProfileScreen(props) {
                                 style={styles.AHWInput} 
                                 onChangeText={onChangeHeight}
                                 placeholder="Height"
-                                placeholderTextColor= '#5e5e61'
+                                placeholderTextColor= 'white'
                                 value={height}>
                             </TextInput>
 
@@ -155,7 +161,7 @@ function ProfileScreen(props) {
                                 style={styles.AHWInput} 
                                 onChangeText={onChangeWeight}
                                 placeholder="Weight"
-                                placeholderTextColor= '#5e5e61'
+                                placeholderTextColor= 'white'
                                 value={weight}>
                             </TextInput>
                         </View>
@@ -165,7 +171,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeNickname}
                             placeholder="Nickname"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={nickname}>
                         </TextInput>
 
@@ -173,7 +179,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeReach}
                             placeholder="Reach"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={reach}>
                         </TextInput>
 
@@ -183,7 +189,7 @@ function ProfileScreen(props) {
                             style={styles.RecordInput} 
                             onChangeText={onChangeWins}
                             placeholder="Wins"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={wins}>
                         </TextInput>
 
@@ -191,7 +197,7 @@ function ProfileScreen(props) {
                             style={styles.RecordInput} 
                             onChangeText={onChangeLosses}
                             placeholder="Losses"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={losses}>
                         </TextInput>
 
@@ -202,7 +208,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeKOs}
                             placeholder="KO's"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={KOs}>
                         </TextInput>
 
@@ -210,7 +216,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeTotalFihts}
                             placeholder="Total Fights"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={totalFights}>
                         </TextInput>
 
@@ -220,7 +226,7 @@ function ProfileScreen(props) {
                             style={styles.fillIn} 
                             onChangeText={onChangeStyle}
                             placeholder="Fighting style"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={style}>
                         </TextInput>
                         
@@ -228,7 +234,7 @@ function ProfileScreen(props) {
                             style={styles.bio} 
                             onChangeText={onChangeBio}
                             placeholder="Bio"
-                            placeholderTextColor= '#5e5e61'
+                            placeholderTextColor= 'white'
                             value={bio}
                             multiline={true}
                             ellip>
@@ -271,17 +277,18 @@ const styles = StyleSheet.create({
         borderWidth:1.8,
         flex:1,
         textAlign:'center',
-        height: 60,
-        backgroundColor: '#e1e3e6',
+        height: 40,
+        backgroundColor: "rgba(52, 52, 52, 0.8)",
         top: 30,
         marginBottom:45,
         flex:1,
         borderRadius: 15,
         textAlign: 'center',
-        borderColor: 'black',
+        borderColor: '#ff0011',
         borderWidth: 1.8,
         fontWeight:'600',
-        fontSize:'14' 
+        fontSize:'14',
+        color: 'white' 
         
     },
 
@@ -292,19 +299,23 @@ const styles = StyleSheet.create({
     },
 
     bio:{
+        
         width:300,
         height: 100,
-        backgroundColor: '#e1e3e6',
+        backgroundColor: "rgba(52, 52, 52, 0.8)",
         top: 30,
         bottom: 30,
         marginBottom:20,
         flex:1,
         borderRadius: 15,
         //textAlign: 'center',
-        borderColor: 'black',
+        borderColor: '#ff0011',
         borderWidth: 1.8,
         textAlignVertical: 'top',
-        padding:5
+        padding:10,
+        color: 'white',
+        fontSize:'14',
+        fontWeight: '600'
         
     },
 
@@ -320,32 +331,33 @@ const styles = StyleSheet.create({
 
     fillIn:{
         width:300,
-        height: 60,
-        backgroundColor: '#e1e3e6',
+        height: 40,
+        backgroundColor: "rgba(52, 52, 52, 0.8)",
         top: 30,
         marginBottom:45,
         flex:1,
         borderRadius: 15,
         textAlign: 'center',
-        borderColor: 'black',
+        borderColor: '#ff0011',
         borderWidth: 1.8,
         placeholderTextColor: 'black',
         fontWeight:'600',
-        fontSize:'14'   
+        fontSize:'14',
+        color: 'white'   
     },
 
     genderOpt:{
         width:300,
-        height: 60,
-        backgroundColor:'#e1e3e6',
+        height: 45,
+        backgroundColor:"rgba(52, 52, 52, 0.8)",
         top: 30,
         marginBottom:45,
         flexDirection:'row',
         borderRadius: 15,
         alignContent: 'center',
         justifyContent:'space-between',
-        borderColor: 'black',
-        
+        borderColor: '#ff0011',
+        paddingLeft:5,
         borderWidth: 1.8 ,
     },
     
@@ -368,12 +380,12 @@ const styles = StyleSheet.create({
         left: 15,
         top: 15,
         borderRadius:60,
-        backgroundColor:'#989a9e',
+        backgroundColor:"rgba(52, 52, 52, 0.8)",
         alignItems:'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        borderColor: 'black',
-        borderWidth:'1.8'        
+        borderColor: '#ff0011',
+        borderWidth:'1.8'       
     },
 
     profileInfo:{
@@ -397,7 +409,7 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         fontWeight:'600',
         fontSize: '30',
-        color:'#009bb0',
+        color:'white',
         textShadowColor: '#00454f',
         textShadowOffset:{width:0.5,height:0.5},
         textShadowRadius: 2
@@ -405,7 +417,8 @@ const styles = StyleSheet.create({
 
     profilePictureText:{
         textAlign: 'center',
-        top:2
+        top:2,
+        color:'white'
     },
 
     Record:{
@@ -421,17 +434,18 @@ const styles = StyleSheet.create({
         borderWidth:1.8,
         flex:1,
         textAlign:'center',
-        height: 60,
-        backgroundColor: '#e1e3e6',
+        height: 40,
+        backgroundColor: "rgba(52, 52, 52, 0.8)",
         top: 30,
         marginBottom:45,
         flex:1,
         borderRadius: 15,
         textAlign: 'center',
-        borderColor: 'black',
+        borderColor: '#ff0011',
         borderWidth: 1.8,
         fontWeight:'600',
-        fontSize:'14' 
+        fontSize:'14',
+        color: 'white' 
     },
 
     saveArea:{
@@ -453,10 +467,11 @@ const styles = StyleSheet.create({
         alignItems:'center',
         bottom:15,
         borderRadius: 15,
+        backgroundColor:'#ff0011'
     },
 
     saveButtonText:{
-
+        
     }
 
     
