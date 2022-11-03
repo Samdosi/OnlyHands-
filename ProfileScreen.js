@@ -1,47 +1,51 @@
-import React, { useState } from 'react';
-import { Input, Image, ImageBackground, SafeAreaView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ScrollView, TextInput } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-
-
-
-
+import React, { useState } from "react";
+import {
+  Input,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  TextInput,
+} from "react-native";
+import { CheckBox } from "react-native-elements";
 function ProfileScreen(props) {
-    const [firstName, onChangeFirstName] = useState('');
-    const [lastName, onChangeLastName] = useState('');
-    const [male, onChangeMale] = useState(false);
-    const [female, onChangeFemale] = useState(false);
-    const [other, onChangeOther] = useState(false);
-    const [age, onChangeAge] = useState('');
-    const [height, onChangeHeight] = useState('');
-    const [weight, onChangeWeight] = useState('');
-    const [nickname, onChangeNickname] = useState('');
-    const [reach, onChangeReach] = useState('');
-    const [wins, onChangeWins] = useState('');
-    const [losses, onChangeLosses] = useState('');
-    const [KOs, onChangeKOs] = useState('');
-    const [totalFights, onChangeTotalFihts] = useState('');
-    const [style, onChangeStyle] = useState('');
-    const [bio, onChangeBio] = useState('');
+  const [firstName, onChangeFirstName] = useState("");
+  const [lastName, onChangeLastName] = useState("");
+  const [male, onChangeMale] = useState(false);
+  const [female, onChangeFemale] = useState(false);
+  const [other, onChangeOther] = useState(false);
+  const [age, onChangeAge] = useState("");
+  const [height, onChangeHeight] = useState("");
+  const [weight, onChangeWeight] = useState("");
+  const [nickname, onChangeNickname] = useState("");
+  const [reach, onChangeReach] = useState("");
+  const [wins, onChangeWins] = useState("");
+  const [losses, onChangeLosses] = useState("");
+  const [KOs, onChangeKOs] = useState("");
+  const [totalFights, onChangeTotalFihts] = useState("");
+  const [style, onChangeStyle] = useState("");
+  const [bio, onChangeBio] = useState("");
 
-    
-    const genderMale = () =>{
-        onChangeMale(true);
-        onChangeFemale(false);
-        onChangeOther(false);
-    }
-    const genderFemale = () =>{
-        onChangeMale(false);
-        onChangeFemale(true);
-        onChangeOther(false);
-    }
-    const genderOther = () =>{
-        onChangeMale(false);
-        onChangeFemale(false);
-        onChangeOther(true);
-    }
-
-    
-
+  const genderMale = () => {
+    onChangeMale(true);
+    onChangeFemale(false);
+    onChangeOther(false);
+  };
+  const genderFemale = () => {
+    onChangeMale(false);
+    onChangeFemale(true);
+    onChangeOther(false);
+  };
+  const genderOther = () => {
+    onChangeMale(false);
+    onChangeFemale(false);
+    onChangeOther(true);
+  };
 
     return (
         <SafeAreaView style={styles.saveArea}>
@@ -56,12 +60,14 @@ function ProfileScreen(props) {
                             </View>
                         </TouchableOpacity>
 
-                    <View style={styles.profileInfo}>
-
-                        <Text style={styles.profileInfoText}>{firstName} {lastName}</Text>
-                        <Text style={styles.profileInfoText}>{wins} - {losses}</Text>
-
-                    </View>
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileInfoText}>
+              {firstName} {lastName}
+            </Text>
+            <Text style={styles.profileInfoText}>
+              {wins} - {losses}
+            </Text>
+          </View>
 
                     <View style={styles.fillInContainer}>
 
@@ -243,34 +249,25 @@ function ProfileScreen(props) {
                         
                 </View>
 
-                
-                <TouchableOpacity>
-                        <View style={styles.saveButtonView}>
-                            <Text style= {styles.saveButtonText}>
-                                Save
-                            </Text>
-                        </View>
-                </TouchableOpacity>
-
-                </ScrollView>
-                
-             </ImageBackground>
-        </SafeAreaView>
-      
-    );
+          <TouchableOpacity>
+            <View style={styles.saveButtonView}>
+              <Text style={styles.saveButtonText}>Save</Text>
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-
-    
-
-    AHW:{
-        flex:1,
-        flexDirection: 'row',
-        alignContent:'center',
-        justifyContent:'space-between',
-        width:300
-    },
+  AHW: {
+    flex: 1,
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "space-between",
+    width: 300,
+  },
 
     AHWInput:{
         placeholderTextColor:'black',
@@ -292,11 +289,11 @@ const styles = StyleSheet.create({
         
     },
 
-    bgImage:{
-        position: 'relative',
-        width:'100%',
-        height:'100%',
-    },
+  bgImage: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+  },
 
     bio:{
         
@@ -319,15 +316,15 @@ const styles = StyleSheet.create({
         
     },
 
-    counter:{
-       marginBottom:0,
-       fontWeight: 'bold'
-    },
+  counter: {
+    marginBottom: 0,
+    fontWeight: "bold",
+  },
 
-    fillInContainer:{
-        alignItems:'center',
-        marginBottom:50
-    },
+  fillInContainer: {
+    alignItems: "center",
+    marginBottom: 50,
+  },
 
     fillIn:{
         width:300,
@@ -363,16 +360,13 @@ const styles = StyleSheet.create({
     
 
 
-    genderCheckBox:{
-        width:101,
-        flex:1,
-        //borderWidth:1.5, 
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-        
-        
-    },
+  genderCheckBox: {
+    width: 101,
+    flex: 1,
+    //borderWidth:1.5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
     profilePicture:{//on press we will open gallery and user can upload his picture
         width:120,
@@ -388,19 +382,19 @@ const styles = StyleSheet.create({
         borderWidth:'1.8'       
     },
 
-    profileInfo:{
-        flex:1,
-        width:230,
-        height:55,
-        right:15,
-        top:15,
-        alignSelf:'flex-end',
-        flexDirection:'column',
-        marginTop:-80,
-        marginBottom:50,
-        textAlign:'center',
-        alignItems:'center',
-    },
+  profileInfo: {
+    flex: 1,
+    width: 230,
+    height: 55,
+    right: 15,
+    top: 15,
+    alignSelf: "flex-end",
+    flexDirection: "column",
+    marginTop: -80,
+    marginBottom: 50,
+    textAlign: "center",
+    alignItems: "center",
+  },
 
     profileInfoText:{
         textAlign:'center',
@@ -421,13 +415,13 @@ const styles = StyleSheet.create({
         color:'white'
     },
 
-    Record:{
-        flex:1,
-        flexDirection: 'row',
-        alignContent:'center',
-        justifyContent:'space-between',
-        width:300
-    },
+  Record: {
+    flex: 1,
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "space-between",
+    width: 300,
+  },
 
     RecordInput:{
         placeholderTextColor:'black',
@@ -448,13 +442,13 @@ const styles = StyleSheet.create({
         color: 'white' 
     },
 
-    saveArea:{
-        backgroundColor: 'black'
-    },
+  saveArea: {
+    backgroundColor: "black",
+  },
 
-    scroll:{
-        width: '100%'
-    },
+  scroll: {
+    width: "100%",
+  },
 
     saveButtonView:{
         width:120,
