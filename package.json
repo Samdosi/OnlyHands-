@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage" : "http://only-hands.herokuapp.com/",
   "scripts": {
     "start": "node index.js",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
@@ -25,5 +26,4 @@
     "nodemon": "^2.0.20",
     "socket.io": "^4.5.3"
   },
-  "homepage" : "http://only-hands.herokuapp.com/",
 }
