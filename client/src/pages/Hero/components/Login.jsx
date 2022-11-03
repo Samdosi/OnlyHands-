@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useOutsideClick } from '../../../hooks';
 import { AiOutlineLoading } from 'react-icons/ai';
 
 const Login = () => {
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
    
     const doLogin = async event =>  {
-        console.log(username, password);
 
         event.preventDefault();
 
-        await fetch('https://only-hands.herokuapp.com/api/login', {
+        fetch('https://only-hands.herokuapp.com/api/login/', {
             method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json', },
-            body: {
-                username: JSON.stringify(username),
-                password: JSON.stringify(password)
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                sessionStorage.setItem("token", data.token);
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: username,
+                password: password
             })
-            .catch(error => console.log(error))
+        })
+        .then((res) => res.json)
+        .then((data) => {
+            console.log(data);
+            sessionStorage.setItem("token", data.token);
+            navigate('/profile');
+        })
+        .catch(error => console.log(error))
     }
 
     return (
@@ -34,35 +34,34 @@ const Login = () => {
             <h1 className="font-semibold text-center text-xl p-2">
                 Welcome Back!
             </h1>
-            <form onSubmit={doLogin}>
+            <form>
                 <div className="flex flex-col">
                     <label htmlFor="username">Username
                         <br />
                         <input
-                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             id="username"
                             type="text"
                             required
                             className="border border-gray-700 p-2 rounded mb-5"
                             placeholder="Username"
-                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </label>
                     <label htmlFor="password">Password
                         <br />
                         <input
-                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             id="password"
-                            type="text"
+                            type="password"
+                            name="password"
                             required
                             className="border border-gray-700 p-2 rounded mb-5"
                             placeholder="*********"
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
+                    <button onClick={ doLogin } type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
                         Sign in
                     </button>
                 </div>
