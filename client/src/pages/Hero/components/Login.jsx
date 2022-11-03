@@ -6,15 +6,19 @@ const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+   
+    const doLogin = async event =>  {
+        console.log(username, password);
 
+        event.preventDefault();
 
-    function doLogin(username, password) {
-        fetch('https://only-hands.herokuapp.com/login', {
+        await fetch('https://only-hands.herokuapp.com/api/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json', },
             body: {
-                username: username,
-                password: password
+                username: JSON.stringify(username),
+                password: JSON.stringify(password)
             }
         })
             .then((res) => res.json())
@@ -58,7 +62,7 @@ const Login = () => {
                     </label>
                 </div>
                 <div className="text-center">
-                    <button className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
+                    <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
                         Sign in
                     </button>
                 </div>
