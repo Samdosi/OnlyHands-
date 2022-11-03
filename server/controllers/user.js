@@ -118,7 +118,7 @@ const forgotPassword = async (req, res) => {
                     //send reset email link
                     msg(user.email, ohemail, "Password Reset",
                         `<h3>Click on the link below to reset your account password.</h3>
-            <a href = 'http://localhost:5000/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
+            <a href = 'https://only-hands.herokuapp.com/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
 
                     console.log("Password reset email sent");
                 }
