@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage" : "http://only-hands.herokuapp.com/build",
+  "homepage" : "https://only-hands.herokuapp.com/build",
   "scripts": {
     "start": "node index.js",
     "install": "npm install --prefix client",
