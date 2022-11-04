@@ -12,7 +12,7 @@ const Login = () => {
 
         event.preventDefault();
 
-        fetch('https://only-hands.herokuapp.com/api/login/', {
+        fetch('https://only-hands.herokuapp.com/api/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -20,11 +20,15 @@ const Login = () => {
                 password: password
             })
         })
-        .then((res) => res.json)
+        .then((res) => { 
+            return res.json() 
+        })
         .then((data) => {
-            console.log(data);
-            sessionStorage.setItem("token", data.token);
-            navigate('/profile');
+            if (data["status"] === "success") {
+                sessionStorage.setItem("token", data.token);
+                navigate('/profile');
+            }
+            console.log(data["message"])
         })
         .catch(error => console.log(error))
     }

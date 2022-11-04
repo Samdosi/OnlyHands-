@@ -4,6 +4,7 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
 
     const doRegister = async event => {
 
@@ -20,8 +21,8 @@ const Register = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                window.location.reload();
+                if ( data && data["status"] === "success") window.location.reload();
+                throw(data["message"] || "no data");
             })
             .catch(error => console.log(error))
         }
