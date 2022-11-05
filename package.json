@@ -6,8 +6,6 @@
   "homepage" : "https://only-hands.herokuapp.com/build",
   "scripts": {
     "start": "node index.js",
-    "install": "npm install --prefix client",
-    "build": "npm run build --prefix client",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client" 
   },
   "engines": {
