@@ -12,6 +12,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
+const url = "https://only-hands.herokuapp.com";
 
 //create new user
 const createUser = async (req, res) => {
@@ -25,7 +26,7 @@ const createUser = async (req, res) => {
         subject: "OnlyHands Account Verification",
         html: `<h2>Congratulations on creating your Only Hands account. 
                 By clicking of the folllowing link you are verifying your account.</h2>
-            <a href = 'http://localhost:5000/user/verify-email?token=${user.emailToken}'>Confirm your email address</a>`,
+            <a href = '${url}/api/user/verify-email?token=${user.emailToken}'>Confirm your email address</a>`,
     };
 
     try {
@@ -118,7 +119,7 @@ const forgotPassword = async (req, res) => {
                     //send reset email link
                     msg(user.email, ohemail, "Password Reset",
                         `<h3>Click on the link below to reset your account password.</h3>
-            <a href = 'http://localhost:5000/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
+            <a href = '${url}/api/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
 
                     console.log("Password reset email sent");
                 }
