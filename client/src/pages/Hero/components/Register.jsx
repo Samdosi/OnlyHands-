@@ -4,11 +4,19 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [error, setError] = useState(false);
+
+    function isValidEmail(email) {
+        return /\S+@\S+\.\S+/.test(email);
+    }
 
     const doRegister = async event => {
 
         event.preventDefault();
+
+        if (username.length == 0 || password.length < 8 || !isValidEmail(email)) {
+            setError(true);
+        }
 
         fetch('https://only-hands.herokuapp.com/api/user/', {
             method: 'POST',
@@ -32,45 +40,45 @@ const Register = () => {
             <h1 className="font-semibold text-center text-xl p-2">
                 Welcome to OnlyHands!
             </h1>
-            <form>
+            <form onSubmit={doRegister}>
                 <div className="flex flex-col">
-                <label htmlFor="username">Username
+                    <label htmlFor="username">Username
                         <br />
                         <input
                             onChange={(e) => setUsername(e.target.value)}
-                            id="username"
                             type="text"
-                            required
-                            className="border border-gray-700 p-2 rounded mb-5"
+                            className="border border-gray-700 p-2 rounded mb-3"
                             placeholder="Username"
                         />
+                        {error&&username.length<=0? 
+                        <p className="text-s text-red-600 mb-2">Please enter a valid username.</p>:""}
                     </label>
                     <label htmlFor="username">Email
                         <br />
                         <input
                             onChange={(e) => setEmail(e.target.value)}
-                            id="email"
                             type="email"
-                            required
-                            className="border border-gray-700 p-2 rounded mb-5"
+                            className="border border-gray-700 p-2 rounded mb-3"
                             placeholder="example@example.com"
                         />
+                        {error&&!isValidEmail(email)? 
+                        <p className="text-s text-red-600 mb-2">Please enter a valid email.</p>:""}
                     </label>
                     <label htmlFor="password">Password
                         <br />
                         <input
                             onChange={(e) => setPassword(e.target.value)}
-                            id="password"
                             type="password"
                             name="password"
-                            required
-                            className="border border-gray-700 p-2 rounded mb-5"
-                            placeholder="*********"
+                            className="border border-gray-700 p-2 rounded mb-3"
+                            placeholder="********"
                         />
+                        {error&&password.length<8?
+                        <p className="text-s text-red-600 mb-2">Please enter a valid password.</p>:""}
                     </label>
                 </div>
                 <div className="text-center">
-                    <button onClick={ doRegister} type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
+                    <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
                         Register
                     </button>
                 </div>
