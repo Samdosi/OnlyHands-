@@ -55,11 +55,8 @@ const profileSchema = new Schema({
     bio: {
         type: String,
         maxLength: 140
-    },
-    profilePic: {
-        data: Buffer,
-        type: String
     }
+
 });
 const Profile = mongoose.model('profile', profileSchema);
 module.exports = { Profile };
