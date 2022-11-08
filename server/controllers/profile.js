@@ -34,22 +34,20 @@ const create_profile = async (req, res) => {
 
 
 const get_profile = async (req, res) => {
-    // TODO unwrap body in route
-    req = req.body;
-
-    Profile.findById(req.user_req.id, (err, found_profile) => {
-        console.log(err);
-        if (err) {
-            console.log(err);
-            return res.status(400).end();
+    if (req) {
+        try {
+            const profile = await Profile.findById(req);
+            if (profile) {
+                return res.status(200).json(profile);
+            } else {
+                return res.status(400).json("No profile was found for this user");
+            }
+        } catch (err) {
+            return res.status(500).json(err);
         }
-        if (!found_profile) {
-            console.log(found_profile);
-            return res.status(400).end();
-        }
-
-        return res.status(200).json({ "profile": found_profile }).end();
-    });
+    } else {
+        return res.status(400).json("Profile ID is required");
+    }
 };
 
 const edit_profile = async (req, res) => {
