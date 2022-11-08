@@ -148,35 +148,11 @@ const resetPassword = async (req, res) => {
         } else {
             //send password changed email confirmation
             msg(user.email, ohemail, "Your password has been changed.",
-                `Hi ${user.username} \n This is a confirmation that the password for your account ${user.email} has just been changed.\n`, res);
+                `Hi ${user.username}! \n This is a confirmation that the password for your account ${user.email} has just been changed.\n`, res);
 
             console.log("Password has been changed");
         }
     });
 };
 
-const reset = (req, res) => {
-    try {
-        const user = User.findOne({
-            resetPasswordToken: req.params.token,
-            resetPasswordExpires: { $gt: Date.now() },
-        });
-        if (!user)
-            return res
-                .status(400)
-                .json({
-                    statuse: "failure",
-                    message: "Password reset token is invalid or has expired.",
-                })
-                .end();
-
-        res.render("reset", { user });
-    } catch (err) {
-        return res
-            .status(500)
-            .json({ status: "failure", message: err.message })
-            .end();
-    }
-};
-
-module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, };
+module.exports = { createUser, login, verifyEmail, forgotPassword, resetPassword, };

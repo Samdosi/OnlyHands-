@@ -1,5 +1,5 @@
 const express = require("express");
-const { createUser, login, verifyEmail, forgotPassword, reset, resetPassword } = require("../controllers/user");
+const { createUser, login, verifyEmail, forgotPassword, resetPassword } = require("../controllers/user");
 const { body, validationResult } = require("express-validator");
 const { auth_jwt } = require("../middleware/auth_jwt");
 const router = express.Router();
@@ -61,7 +61,7 @@ router.put("/forgot-password", body('email').isEmail().withMessage('Enter a vali
 });
 
 //password reset routes link
-router.get("/password-reset", reset);
+router.get("/password-reset");
 router.put("/password-reset",
     body("password").not().isEmpty().isLength({ min: 8 }).withMessage('Must be at least 8 chars long'),
     body("confirmPassword", "Passwords do not match").custom((value, { req }) => (value === req.body.password)),
