@@ -14,22 +14,31 @@ const App = () => {
   const bgImages = {
     '/': heroBG,
   }
+  const api_regex = /^\/api\/.*/;
+
   return (
-    <div 
-      className="w-screen max-w-full h-screen hero px-3 sm:px-8 lg:px-12 overflow-y-auto overflow-x-clip" 
-      style={bgImage === '/chat' ? {background: '#1e1e1e'} : {backgroundImage: `url(${bgImages[bgImage]})`}}
-    >
-      <BrowserRouter>
+    <>
+      {
+        (api_regex.test(window.location.pathname))
+        ?
+          <div/>
+        :
+        <div 
+          className="w-screen max-w-full h-screen hero px-3 sm:px-8 lg:px-12 overflow-y-auto overflow-x-clip" 
+          style={bgImage === '/chat' ? {background: '#1e1e1e'} : {backgroundImage: `url(${bgImages[bgImage]})`}}
+        >
+          <BrowserRouter>
 
-        <Navbar />
+            <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
-          <Route path="/chat" element={<Chat setBgImage={setBgImage} socket={socket}/>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-
+            <Routes>
+              <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
+              <Route path="/chat" element={<Chat setBgImage={setBgImage} socket={socket}/>} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      }
+    </>
   )
 }
 
