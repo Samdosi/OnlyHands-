@@ -84,14 +84,14 @@ const verifyEmail = async (req, res) => {
         const user = await User.findOne({ emailToken: req });
         if (!user) {
             console.log("Error. Token is invalid.");
-            return res.status(400).json({ status: "failure" }).end();
+            return res.status(400).json({ status: "Invalid link" }).end();
         }
         //update user token and verification status
         user.emailToken = null;
         user.isVerified = true;
         await user.save();
         console.log("User verified");
-        return res.status(200).json({ status: "success" }).end();
+        return res.status(200).json({ status: "User verified" }).end();
     } catch (error) {
         console.log(error);
         return res.status(400).json({ status: "failure", message: error.message }).end();
@@ -178,6 +178,5 @@ const reset = (req, res) => {
             .end();
     }
 };
-
 
 module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, };
