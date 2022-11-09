@@ -12,11 +12,11 @@ const app = express();
 const serverChat = http.createServer(app);
 const io = new Server(serverChat, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST", "DELETE", "PUT"],
   }
 })
-
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
@@ -27,7 +27,6 @@ app.use(bodyParser.urlencoded({
 
 
 const PORT = process.env.PORT || 5000;
-
 
 app.use('/api/user', userRoute);
 app.use('/api/profile', profile_route);
@@ -42,7 +41,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", (data) => {
-    socket.to(data.room).emit("receive_message", data);
+    socket.to(data.room).emit("receiveMessage", data);
   });
 
   socket.on("disconnect", () => {
@@ -56,13 +55,22 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true
   }
-);
-
+  );
+  
 const db = mongoose.connection;
 db.once("open", () => {
   console.log("Connected successfully");
 });
 db.on("error", console.error.bind(console, "connection error: "));
-
+  
+  
+// For product deployment
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
