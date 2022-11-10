@@ -14,7 +14,7 @@ import {
   ImagePickerIOS,
 } from "react-native";
 import { CheckBox, useTheme } from "react-native-elements";
-import ImagePicker from "react-native-image-picker";
+//import ImagePicker from "react-native-image-picker";
 
 
 
