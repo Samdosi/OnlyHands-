@@ -7,13 +7,12 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import GalleryPicker from "./GalleryPicker";
 import ProfileScreen from "./ProfileScreen";
 import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
 import HomePage from './HomePage'
 import Home from "./HomePage";
-import LoginScreen from './Login'
+//import LoginScreen from './Login'
 
 
 const image = {
@@ -24,7 +23,7 @@ const App = () => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-    <GalleryPicker />
+    <Home />
     /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>

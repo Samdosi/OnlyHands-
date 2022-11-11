@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet, SafeAreaView, Text, View} from 'react-nati
 
 import { React, useState } from "react";
 
-import useNavigation from "react-navigation/native";
+//import useNavigation from "react-navigation/native";
 
 import axios from "axios";
 
