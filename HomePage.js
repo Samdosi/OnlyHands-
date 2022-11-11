@@ -10,7 +10,8 @@ import
     View, 
     Button, 
     Pressable, 
-    useWindowDimensions 
+    useWindowDimensions,
+    
 } from "react-native";
 import Card from './src/components/card'
 import users from './assets/data/usersTest'
@@ -21,7 +22,8 @@ import Animated,
     useAnimatedGestureHandler,
     useDerivedValue,
     interpolate,
-    runOnJS
+    runOnJS,
+    Button
 } from 'react-native-reanimated'
 
 import {PanGestureHandler} from 'react-native-gesture-handler'
