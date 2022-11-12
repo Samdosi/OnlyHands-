@@ -13,8 +13,7 @@ const App = () => {
   const [bgImage, setBgImage] = useState('/');
 
   const bgImages = {
-    '/': heroBG,
-    '/profile': profileBG
+    '/': heroBG
   }
   return (
     <div 
