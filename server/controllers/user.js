@@ -45,7 +45,7 @@ const createUser = async (req, res) => {
                             return res.status(400).json({ status: "failure", message: error.message }).end();
                         } else {
                             console.log("Email sent!");
-                            return res.status(200).json({ status: "success" }).end();
+                            return res.status(200).json({ status: "success", username: user.username}).end();
                         }
                     });
                 } catch (err) {
@@ -66,6 +66,7 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
+        //throw new Error("User does not exist!");
         res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
     } else if (!user.isVerified) {
         res.status(400).json({ status: "failure", message: "User has not verified email!" }).end();
@@ -74,7 +75,8 @@ const login = async (req, res) => {
             algorithm: "HS256",
             expiresIn: jwtExpirySeconds,
         });
-        res.status(200).json({ status: "success", token: token }).end();
+        //return user;
+        res.status(200).json({ status: "success", token: token, username : user.username }).end();
     }
 };
 
