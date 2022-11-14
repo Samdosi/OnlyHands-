@@ -6,14 +6,15 @@ import {
   StyleSheet,
   Text,
   View,
+  ActivityIndicator,
 } from "react-native";
 import Input from "./Input";
 import Button from "./Button";
-//import { useNavigation } from "react-navigation/native";
+
 import Loader from "./Loader";
 import axios from "axios";
 
-function RegisterScreen(props) {
+function RegisterScreen({ navigation }) {
   const [inputs, setInputs] = React.useState({
     username: "",
     email: "",
@@ -56,8 +57,9 @@ function RegisterScreen(props) {
   };
   const register = async () => {
     setLoading(true);
+
     //setTimeout(() => {
-    setLoading(false);
+
     // finish the API and connect to the database
     const payload = {
       username: inputs.username,
@@ -65,12 +67,14 @@ function RegisterScreen(props) {
       email: inputs.email,
     };
     try {
-      //navigation.navigate("LoginScreen"); // needs to debug
       const baseUrl = "https://only-hands.herokuapp.com";
       const res = await axios.post(baseUrl + "/api/user", payload);
+      setLoading(false);
+      navigation.navigate("LoginScreen");
     } catch (error) {
       console.log(error.response.data);
       //handleErorr(error.response.data.message, error.response.data.input);
+      setLoading(false);
     }
 
     //}, 3000);
@@ -125,7 +129,7 @@ function RegisterScreen(props) {
           />
           <Button title={"Register"} onPress={validate} />
           <Text
-            //onPress={() => navigation.navigate("LoginScreen")} // needs to debug
+            onPress={() => navigation.navigate("LoginScreen")} // needs to debug
             style={{
               color: "white",
               fontSize: 16,

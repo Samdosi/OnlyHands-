@@ -10,20 +10,47 @@ import {
 import ProfileScreen from "./ProfileScreen";
 import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
-import HomePage from './HomePage'
+import HomePage from "./HomePage";
 import Home from "./HomePage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import LoginScreen from './Login'
-
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
 };
+
+const Stack = createNativeStackNavigator();
 const App = () => {
   const [text, onChangeText] = React.useState("Useless Text");
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-    <Home />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterScreen"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: true }}
+        ></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+    //<RegisterScreen />
     /*
     <SafeAreaView>
       <SafeAreaView style={styles.container}>
