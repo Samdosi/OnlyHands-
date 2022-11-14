@@ -5,7 +5,7 @@ import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
 
-const socket = io.connect("https://only-hands.herokuapp.com:80");
+const socket = io.connect("https://only-hands.herokuapp.com/");
 
 const App = () => {
   
