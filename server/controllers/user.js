@@ -14,6 +14,12 @@ const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
 const url = "https://only-hands.herokuapp.com";
 
+
+const getUser = async (userID) => {
+    const user = User.findOne(userID)
+    return user;
+}
+
 //create new user
 const createUser = async (req, res) => {
     const user = new User(req);
@@ -179,4 +185,4 @@ const reset = (req, res) => {
     }
 };
 
-module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, };
+module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, getUser };

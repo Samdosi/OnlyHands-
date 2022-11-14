@@ -23,3 +23,6 @@ const matchSchema = new Schema({
 const arrayLimit = (val) => {
     return val.length <= 2;
 };
+
+const Match = mongoose.model('match', matchSchema);
+module.exports = { Match };

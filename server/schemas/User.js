@@ -16,6 +16,9 @@ const UserSchema = new Schema({
         ref: "Profile",
         default: null
     },
+    matches: {
+        type: { profile: { type: Schema.Types.ObjectId, ref: "Profile" }, match: { type: Schema.Types.ObjectId, ref: "Match" } },
+    },
     email: {
         type: String,
         required: true,
