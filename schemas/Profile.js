@@ -56,10 +56,10 @@ const profileSchema = new Schema({
         type: String,
         maxLength: 140
     },
-    profilePic: {
-        data: Buffer,
-        type: String
-    }
+    image: {
+        type: Schema.Types.ObjectId,
+        ref: "ImageUpload",
+    },
 });
 const Profile = mongoose.model('profile', profileSchema);
 module.exports = { Profile };
