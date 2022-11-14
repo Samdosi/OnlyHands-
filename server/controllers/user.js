@@ -16,7 +16,7 @@ const url = "https://only-hands.herokuapp.com";
 
 
 const getUser = async (userID) => {
-    const user = User.findOne(userID)
+    const user = await User.findById(userID)
     return user;
 }
 
