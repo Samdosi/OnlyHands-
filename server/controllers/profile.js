@@ -2,8 +2,6 @@ const { Profile } = require("../schemas/Profile");
 const { User } = require("../schemas/User");
 const { ImageUpload } = require("../schemas/ImageUpload");
 
-
-
 const create_profile = async (req, res) => {
     try {
         req = req.body;
