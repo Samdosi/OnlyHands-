@@ -14,12 +14,14 @@ import {
   ImagePickerIOS,
 } from "react-native";
 import { CheckBox, useTheme } from "react-native-elements";
-//import ImagePicker from "react-native-image-picker";
 
-function ProfileScreen(props) {
+import Loader from "./Loader";
+import axios from "axios";
+function ProfileScreen({ navigation, route }) {
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
+  const [gender, onchangeGender] = useState("");
   const [female, onChangeFemale] = useState(false);
   const [other, onChangeOther] = useState(false);
   const [age, onChangeAge] = useState("");
@@ -33,64 +35,64 @@ function ProfileScreen(props) {
   const [totalFights, onChangeTotalFihts] = useState("");
   const [style, onChangeStyle] = useState("");
   const [bio, onChangeBio] = useState("");
+  const [loading, setLoad] = React.useState(false);
 
   const genderMale = () => {
     onChangeMale(true);
     onChangeFemale(false);
     onChangeOther(false);
+    onchangeGender("male");
   };
   const genderFemale = () => {
     onChangeMale(false);
     onChangeFemale(true);
     onChangeOther(false);
+    onchangeGender("female");
   };
   const genderOther = () => {
     onChangeMale(false);
     onChangeFemale(false);
     onChangeOther(true);
+    onchangeGender("other");
   };
 
-  /* handleChoosePhoto = () => {
-      ImagePicker.launchImageLibrary
-    }
- */
   const Login = async () => {
-    //let uError = (pError = null);
-
-    if (username == "" || password == "") {
-      // if (username == null) {
-      //   uError = "Please Enter your Username";
-      // }
-
-      // if (password == null) {
-      //   pError = "Please Enter your Password";
-      // }
-      alert("please input both fields");
-    } else {
-      const payload = {
-        username: username,
-        password: password,
-      };
-      setLoad(true);
-      try {
-        const baseURL = "https://only-hands.herokuapp.com";
-
-        const response = await axios.post(
-          baseURL + "/api/user/login/",
-          payload
-        );
-        navigation.navigate("ProfileScreen");
-        console.log(response.data);
-        setLoad(false);
-      } catch (error) {
-        setLoad(false);
-        console.log(error.response.data);
-        alert(error.response.data.message);
-      }
+    const payload = {
+      firstName: firstName,
+      lastName: lastName,
+      gender: gender,
+      age: age,
+      height: height,
+      weight: weight,
+      reach: reach,
+      wins: wins,
+      losses: losses,
+      KOs: KOs,
+      totalFights: totalFights,
+      nickname: nickname,
+    };
+    const token = route.params.paramKey;
+    setLoad(true);
+    const headers = {
+      "x-access-token": token,
+    };
+    try {
+      const baseURL = "https://only-hands.herokuapp.com";
+      const response = await axios.post(baseURL + "/api/profile/", payload, {
+        headers: headers,
+      });
+      console.log(response);
+      navigation.navigate("Home");
+      setLoad(false);
+    } catch (error) {
+      setLoad(false);
+      console.log(error.message);
+      alert(error.message);
     }
   };
   return (
     <SafeAreaView style={styles.saveArea}>
+      <Loader visible={loading} />
       <ImageBackground
         style={styles.bgImage}
         resizeMode="cover"
@@ -290,7 +292,7 @@ function ProfileScreen(props) {
             ></TextInput>
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={Login}>
             <View style={styles.saveButtonView}>
               <Text style={styles.saveButtonText}>Save</Text>
             </View>
@@ -322,7 +324,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 15,
     textAlign: "center",
-    borderColor: "#ff0011",
+    borderColor: "white",
     borderWidth: 1.8,
     fontWeight: "600",
     fontSize: "14",

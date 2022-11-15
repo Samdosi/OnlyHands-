@@ -24,18 +24,9 @@ function LoginScreen({ navigation }) {
   const [password = null, setPassword] = useState();
   const [errors, setError] = useState({ username: "", password: "" });
   const [loading, setLoad] = useState();
-
+  const [token, setTokens] = useState("");
   const Login = async () => {
-    //let uError = (pError = null);
-
     if (username == "" || password == "") {
-      // if (username == null) {
-      //   uError = "Please Enter your Username";
-      // }
-
-      // if (password == null) {
-      //   pError = "Please Enter your Password";
-      // }
       alert("please input both fields");
     } else {
       const payload = {
@@ -50,8 +41,9 @@ function LoginScreen({ navigation }) {
           baseURL + "/api/user/login/",
           payload
         );
-        navigation.navigate("ProfileScreen");
-        console.log(response.data);
+        setTokens(response.data.token);
+        navigation.navigate("ProfileScreen", { paramKey: token });
+
         setLoad(false);
       } catch (error) {
         setLoad(false);

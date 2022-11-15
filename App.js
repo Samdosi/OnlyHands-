@@ -14,6 +14,7 @@ import HomePage from "./HomePage";
 import Home from "./HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { color } from "react-native-reanimated";
 //import LoginScreen from './Login'
 
 const image = {
@@ -31,7 +32,10 @@ const App = () => {
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            headerStyle: { backgroundColor: "red" },
+          }}
         />
         <Stack.Screen
           name="RegisterScreen"
@@ -41,7 +45,11 @@ const App = () => {
         <Stack.Screen
           name="ProfileScreen"
           component={ProfileScreen}
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: "black", color: "white" },
+            headerTintColor: "white",
+          }}
         />
         <Stack.Screen
           name="Home"
@@ -50,30 +58,6 @@ const App = () => {
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
-    //<RegisterScreen />
-    /*
-    <SafeAreaView>
-      <SafeAreaView style={styles.container}>
-        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          <View style={styles.View}>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
-              placeholder="Username"
-              value={text}
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeNumber}
-              value={number}
-              placeholder="Password"
-              keyboardType="numeric"
-            />
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
-    </SafeAreaView>
-    */
   );
 };
 
