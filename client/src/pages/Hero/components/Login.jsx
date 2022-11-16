@@ -48,17 +48,19 @@ const Login = () => {
                     <label htmlFor="username">Username
                         <br />
                         <input
+                            id="username"
                             className="border border-gray-700 p-2 rounded mb-3"
                             onChange={(e) => setUsername(e.target.value)}
                             type="text"
                             placeholder="Username"
                         />
                         {error&&username.length<=0? 
-                        <p className="text-s text-red-600 mb-2">Please enter a valid username.</p>:""}
+                        <p className="text-s text-red-600 mb-2" datatype='username-error'>Please enter a valid username.</p>:""}
                     </label>
                     <label htmlFor="password">Password
                         <br />
                         <input
+                            id="password"
                             className="border border-gray-700 p-2 rounded mb-3"
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
@@ -69,7 +71,7 @@ const Login = () => {
                     </label>
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
+                    <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition" data-testid='login-btn'>
                         Sign in
                     </button>
                 </div>
