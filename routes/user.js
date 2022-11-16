@@ -73,7 +73,7 @@ router.put("/password-reset",
     });
 
 router.get("/secret-stuff", auth_jwt, (req, res) => {
-    return res.status(200).send("You found my secret stuff!");
+    return res.status(200).json({ msg: "You found my secret stuff!" });
 });
 
 module.exports = router;

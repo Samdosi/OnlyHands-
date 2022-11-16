@@ -4,9 +4,8 @@ import { Hero, Chat , Profile } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
-import profileBG from './assets/kick.png';
 
-const socket = io.connect("https://only-hands.herokuapp.com:5000");
+const socket = io.connect("https://only-hands.herokuapp.com/");
 
 const App = () => {
   

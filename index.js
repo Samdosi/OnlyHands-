@@ -17,6 +17,8 @@ const io = new Server(serverChat, {
   }
 })
 const path = require("path");
+const { verify } = require('crypto');
+const { auth_jwt } = require('./middleware/auth_jwt');
 
 app.use(cors());
 app.use(express.json());
@@ -25,24 +27,18 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// From Leinecker
-// Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
-{
-  // Set static folder
-  app.use(express.static('../client/build'));
-  app.get('*', (req, res) => 
- {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
-  });
-}
 
 const PORT = process.env.PORT || 5000;
-
 
 app.use('/api/user', userRoute);
 app.use('/api/profile', profile_route);
 
+app.get("/api/verify", auth_jwt, (req, res) => {
+  res.status(200).end();
+});
+app.get("/api/*", (req, res) => {
+  res.status(404).end();
+})
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -53,7 +49,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", (data) => {
-    socket.to(data.room).emit("receive_message", data);
+    socket.to(data.room).emit("receiveMessage", data);
   });
 
   socket.on("disconnect", () => {
@@ -75,5 +71,14 @@ db.once("open", () => {
 });
 db.on("error", console.error.bind(console, "connection error: "));
 
+
+// For product deployment
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
