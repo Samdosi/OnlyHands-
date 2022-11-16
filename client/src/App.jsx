@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
-import { Hero, Chat , Profile } from "./pages";
+import { Hero, Chat } from "./pages";
 import { Navbar } from "./components";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import heroBG from './assets/hero.png';
@@ -26,7 +26,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
           <Route path="/chat" element={<Chat setBgImage={setBgImage} socket={socket}/>} />
-          <Route path="/profile" element={<Profile setBgImage={setBgImage}/>}/>
+          {/* <Route path="/profile" element={<Profile setBgImage={setBgImage}/>}/> */}
         </Routes>
       </BrowserRouter>
     </div>
