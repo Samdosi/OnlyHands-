@@ -1,17 +1,7 @@
 const { Match } = require("../schemas/Match")
-
-const createMatch = (userProfieId, matchProfileId, res) => {
-
+const { User } = require("../schema")
 
 
-
-};
-
-const getMatches = (userProfieId) => {
-
-
-
-};
 
 const checkExistingMatch = (userProfieId, matchProfileId) => {
 
@@ -19,14 +9,39 @@ const checkExistingMatch = (userProfieId, matchProfileId) => {
 
 };
 
+const createMatch = (userId, matchProfileId, res) => {
+    // will find the user associtated with userId, go into there matches and create a new match record in db
 
+
+};
+
+// POST
 const completeMatch = () => {
+    //
+
+};
+
+// GET
+const getMatches = (userId, res) => {
+    //
 
 
 };
 
-const serveMatch = (userProfileId, res) => {
 
+// POST
+const dislike = (userId, matchProfileId, res) => {
+
+
+}
+
+
+
+
+// GET
+const serveMatch = (userId, numMatches, res) => {
+    // 
 
 
 };
+

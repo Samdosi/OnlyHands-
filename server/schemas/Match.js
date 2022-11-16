@@ -14,10 +14,6 @@ const matchSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Chat"
     },
-    isPending: {
-        type: Boolean,
-        default: true
-    }
 });
 
 const arrayLimit = (val) => {
