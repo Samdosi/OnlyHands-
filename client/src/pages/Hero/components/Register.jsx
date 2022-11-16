@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const navigate = useNavigate();
 
     function isValidEmail(email) {
         return /\S+@\S+\.\S+/.test(email);
@@ -29,8 +31,11 @@ const Register = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                if ( data && data["status"] === "success") window.location.reload();
-                throw(data["message"] || "no data");
+                if (data["success"]) {
+                    console.log(data.message)
+                    navigate('/');
+                }
+                else console.log(data.message)
             })
             .catch(error => console.log(error))
         }

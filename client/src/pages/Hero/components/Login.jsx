@@ -30,11 +30,12 @@ const Login = () => {
         })
         .then((data) => {
             if (data["success"]) {
+                console.log("Successfully logged in!")
                 sessionStorage.setItem("token", data.token);
                 navigate('/profile');
             }
             else
-                console.log(data.token);
+                console.log(data.message);
         })
         .catch(error => console.log(error))
     }
