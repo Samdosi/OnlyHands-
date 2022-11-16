@@ -10,7 +10,7 @@ const validateInput = async(req, res, next) =>{
       height: Joi.string().required(),
       age: Joi.number().required(),
       weight: Joi.number().required(),
-      ninckname: Joi.string(),
+      nickname: Joi.string(),
       reach: Joi.string(),
       style: Joi.string(),
       bio: Joi.string().max(140),

@@ -12,7 +12,11 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
-const url = "https://only-hands.herokuapp.com";
+
+
+
+//! PUT ON SERVER
+const url = process.env.APP_URL ||"http://localhost:5000";
 
 
 const getUser = async (userID) => {

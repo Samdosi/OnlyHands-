@@ -17,11 +17,12 @@ const UserSchema = new Schema({
         default: null
     },
     matches: {
-        type: [{
+        type: Map,
+        of: {
             type: Schema.Types.ObjectId,
             ref: "Match"
-        }],
-        default: []
+        },
+        default: {}
     },
     rejections: {
         type: [{

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const arrayLimit = (val) => {
+    return val.length <= 2;
+};
+
 const matchSchema = new Schema({
     user_ids: {
         type: [{
@@ -16,9 +20,7 @@ const matchSchema = new Schema({
     },
 });
 
-const arrayLimit = (val) => {
-    return val.length <= 2;
-};
+
 
 const Match = mongoose.model('match', matchSchema);
 module.exports = { Match };
