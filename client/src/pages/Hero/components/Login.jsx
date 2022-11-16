@@ -29,11 +29,12 @@ const Login = () => {
             return res.json() 
         })
         .then((data) => {
-            if (data["status"] === "success") {
+            if (data["success"]) {
                 sessionStorage.setItem("token", data.token);
                 navigate('/profile');
             }
-            console.log(data["message"])
+            else
+                console.log(data.token);
         })
         .catch(error => console.log(error))
     }
@@ -67,6 +68,7 @@ const Login = () => {
                         {error&&password.length<8?
                         <p className="text-s text-red-600 mb-2">Please enter a valid password.</p>:""}
                     </label>
+                    <button className="mr-16 mb-1">Forgot password?</button>
                 </div>
                 <div className="text-center">
                     <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition">
