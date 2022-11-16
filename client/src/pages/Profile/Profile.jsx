@@ -22,30 +22,46 @@ const Profile = ({ setBgImage }) => {
     const [bio, setBio] = useState('');
     const [profilePhoto, setProfilePhoto] = useState(null);
 
-    
-    // const createProfile = async event => {
+    const createProfile = async event => {
         
-    //     event.preventDefault();
+        event.preventDefault();
+        const token = sessionStorage.getItem(token);
 
-    //     fetch('https://only-hands.herokuapp.com/api/', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({
-    //             firstname: firstname,
-    //             lastname: lastname,
-    //             nickname: nickname,
-    //             gender: gender,
-    //             height: height,
-    //             weight: weight,
-    //             reach: reach,
-    //             wins: wins,
-    //             losses: losses,
-    //             kos: kos,
-    //             style: style,
-    //             bio: bio
-    //         })
-    //     })
-    // }
+        fetch('https://only-hands.herokuapp.com/api/profile', {
+            method: 'GET',
+            headers: { 
+                'Content-Type' : 'application/json',
+                "x-access-token": token 
+            },
+            body: JSON.stringify({
+                firstname: firstname,
+                lastname: lastname,
+                nickname: nickname,
+                gender: gender,
+                height: height,
+                weight: weight,
+                reach: reach,
+                wins: wins,
+                losses: losses,
+                kos: kos,
+                style: style,
+                bio: bio,
+                profilePhoto: profilePhoto
+            })
+        })
+            .then((res) => { 
+                return res.json() 
+            })
+            .then((data) => {
+                if (data["success"]) {
+                    sessionStorage.setItem("token", data.token);
+                    navigate('/profile');
+                }
+                else
+                    console.log(data.message);
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className="text-white mt-5"> 
