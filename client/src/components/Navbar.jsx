@@ -26,7 +26,7 @@ const Navbar = () => {
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
-        <Link className={linksClass} to='#'>Profile</Link>
+        <Link className={linksClass} to='/profile'>Profile</Link>
       </li>
       <li 
         className='w-fit h-fit'
@@ -61,8 +61,8 @@ const Navbar = () => {
         <u className='hidden md:flex justify-between lg:justify-around text-white w-1/3 no-underline list-none font-medium '>
           {links}
         </u>
-        <div ref={hamburgerRef} className='absolute top-1/4 right-0 md:hidden'>
-          <div className='z-10 absolute top-0 right-0'>
+        <div ref={hamburgerRef} className=' z-10 absolute top-1/2 translate-y-[-50%] right-0 md:hidden'>
+          <div className='z-10 relative top-0 right-0'>
             <Hamburger
               color={toggleHamburger ? 'black' : 'white'}
               toggled={toggleHamburger}

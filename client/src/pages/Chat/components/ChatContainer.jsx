@@ -27,21 +27,21 @@ const ChatContainer = ({ setShowChat, socket }) => {
           new Date(Date.now()).getMinutes(),
       };
 
-      await socket.emit("send_message", messageData);
+      await socket.emit("sendMessage", messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
     }
   };
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
+    socket.on("receiveMessage", (data) => {
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
 
   useEffect(() => {
     if(profile && profile?.name !== ""){
-      socket.emit("join_room", profile.name);
+      socket.emit("joinRoom", profile.name);
     }
     setMessageList([]);
     setCurrentMessage("");
