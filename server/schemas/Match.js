@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const arrayLimit = (val) => {
-    return val.length <= 2;
-};
+
 
 const matchSchema = new Schema({
-    user_ids: {
+    matchedProfiles: {
         type: [{
             type: Schema.Types.ObjectId,
-            ref: "User"
-        }],
-        validate: [arrayLimit, "Match must contain at most 2 users"],
-        default: []
+            ref: "Profile"
+        }]
     },
-    chat_id: {
+    chatId: {
         type: Schema.Types.ObjectId,
-        ref: "Chat"
+        ref: "Chat",
+        default: null
     },
+    isPending: {
+        type: Boolean,
+        default: false
+    }
 });
 
 
