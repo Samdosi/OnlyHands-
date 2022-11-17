@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const { auth_jwt } = require("../middleware/auth_jwt");
 const { create_profile, get_profile, edit_profile, upload_image } = require("../controllers/profile");
 const { validateInput } = require("../middleware/validateInput");

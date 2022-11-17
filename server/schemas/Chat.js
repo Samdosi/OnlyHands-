@@ -9,7 +9,7 @@ const chatSchema = new Schema({
             },
             from: {
                 type: Schema.Types.ObjectId,
-                ref: "User"
+                ref: "Profile"
             },
             timeSent: {
                 type: Date

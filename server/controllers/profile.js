@@ -17,12 +17,12 @@ const create_profile = async (req, res) => {
 
             const user_profile = new Profile(req.user_req);
 
-            user_profile.save((err) => {
+            user_profile.save((err, savedProfile) => {
                 if (err) {
                     return res.status(400).json({ "success": false, "message": "Database Error 1!" });
                 }
 
-                found_user.profile = user_profile;
+                found_user.profile = savedProfile;
 
                 found_user.save((err) => {
                     if (err) {

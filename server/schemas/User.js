@@ -16,6 +16,21 @@ const UserSchema = new Schema({
         ref: "Profile",
         default: null
     },
+    matches: {
+        type: Map,
+        of: {
+            type: Schema.Types.ObjectId,
+            ref: "Match"
+        },
+        default: {}
+    },
+    rejections: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: "Profile"
+        }],
+        default: []
+    },
     email: {
         type: String,
         required: true,
