@@ -28,11 +28,12 @@ router.post("/", auth_jwt, async (req, res) => {
     }
 
     if (match) {
-        const value = await checkExistingMatch(user_id, profileID);
-        if (value) {
+        const existingMatch = await checkExistingMatch(user_id, profileID);
+
+        if (!existingMatch) {
             await createMatch(user_id, profileID, res);
         }
-        return res.status(200).json({ "success": true, "message": "Match is " + value })
+        else return res.status(200).json({ "success": true, "message": "Match is " + value })
     }
 
     else {

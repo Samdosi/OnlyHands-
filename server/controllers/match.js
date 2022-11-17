@@ -71,7 +71,7 @@ const createMatch = async (userId, matchProfileId, res) => {
             const foundProfile = foundUser.profile;
 
             const newMatch = new Match({
-                matchedProfiles: (foundProfile, matchProfile)
+                matchedProfiles: [foundProfile, matchProfile]
             });
 
             newMatch.save(err => {
@@ -80,7 +80,7 @@ const createMatch = async (userId, matchProfileId, res) => {
                 }
 
                 //? Maybe have to change with `foundProfile._id`
-                foundUser.matches.put(foundProfile, newMatch);
+                foundUser.matches.set(foundProfile, newMatch);
 
                 foundUser.save(err => {
                     if (err) {
