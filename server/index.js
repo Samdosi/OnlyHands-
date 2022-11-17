@@ -55,21 +55,29 @@ io.on("connection", (socket) => {
   });
 });
 
-mongoose.connect(
-  process.env.DATABASE_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+if(process.env.TESTING === 'yes'){
+  mongoose.connect(
+    process.env.TESTING_DB_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  );
+}else{
+  mongoose.connect(
+    process.env.DATABASE_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  );
+}
 
 const db = mongoose.connection;
 db.once("open", () => {
   console.log("Connected successfully");
 });
 db.on("error", console.error.bind(console, "connection error: "));
-
-
 
 // For product deployment
 if (process.env.NODE_ENV === 'production') {
