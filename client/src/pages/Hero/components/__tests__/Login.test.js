@@ -42,17 +42,17 @@ describe('Login', () => {
         expect(passwordInput.value).toMatch('');
     })
 
-    // Buggy test
     test("username error doesn't appear before typing", () => {
-        const usernameError = screen.queryByLabelText('Username')
+        // const usernameError = screen.queryByTestId('Username')
+        const usernameError = screen.queryByText(/Please enter a valid username./i);
         expect(usernameError).not.toBeTruthy();
     })
     
-    // tests below are to be finished
-    test("username error message appears after a bad username", () => {
+    test("username error message appears after a bad username (empty)", () => {
         // Please enter a valid username.
     })
-
+    
+    // tests below are to be finished
     test('correctly login user', async () => {
         // const onSubmit = jest.fn();
         // const username = screen.getByLabelText('Username');
