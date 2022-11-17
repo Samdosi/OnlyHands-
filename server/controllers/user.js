@@ -3,9 +3,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const saltRounds = 10;
-const jwtKey = "supersecret";
+const jwtKey = "supersecret"; 
 const jwtExpirySeconds = 3600;
 const e = require("express");
+require('dotenv').config();
 
 //require sendgrid/mail
 const sgMail = require("@sendgrid/mail");
@@ -68,10 +69,9 @@ const login = async (req, res) => {
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
         //throw new Error("User does not exist!");
-        res.status(400).json({ status: "failure", message: "User does not exist!" }).end();
-        res.status(400).json({ "success": false, message: "User does not exist!" }).end();
+        res.status(400).json({ "success": false, "message": "User does not exist!" }).end();
     } else if (!user.isVerified) {
-        res.status(400).json({ "success": false, message: "User has not verified email!" }).end();
+        res.status(400).json({ "success": false, "message": "User has not verified email!" }).end();
     } else {
         const token = jwt.sign({ user_id: user._id }, jwtKey, {
             algorithm: "HS256",
@@ -94,10 +94,10 @@ const verifyEmail = async (req, res) => {
         user.isVerified = true;
         await user.save();
         //console.log("User verified");
-        return res.status(200).json({ "success": true, status: "User verified" }).end();
+        return res.status(200).json({ "success": true, "message": "User verified" }).end();
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ "success": false, "message": "Server Error!" }).end();
+        return res.status(500).json({ "success": false, "message": "Server Error!" }).end();
     }
 };
 
@@ -107,7 +107,7 @@ const forgotPassword = async (req, res) => {
     try {
         const user = await User.findOne({ email: req });
         if (!user) {
-            res.status(400).json({ "success": false, message: "Email doesn't exist in our records" }).end();
+            res.status(400).json({ "success": false, "message": "Email doesn't exist in our records" }).end();
         } else {
             //generate reset password token
             const resetToken = crypto.randomBytes(64).toString("hex");

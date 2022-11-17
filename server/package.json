@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "mocha --recursive --exit ./tests"
+    "test": "mocha --timeout 11000 --exit ./tests"
   },
   "author": "",
   "license": "ISC",

@@ -9,8 +9,13 @@ const { validateInput } = require("../middleware/validateInput");
 //const upload = multer({ storage: storage });
 
 router.get("/", auth_jwt, async (req, res) => {
-    const profileId = req.headers.profileid;
-    await get_profile(profileId, res);
+    if (!req.body.user_req.profile_id) {
+        const user = await get_user(req.body.user_id);
+        await get_profile(user.profile_id, res);
+    }
+    else {
+        await get_profile(req.body.user_req.profile_id, res);
+    }
 });
 
 router.post("/", validateInput, auth_jwt, async (req, res) => {

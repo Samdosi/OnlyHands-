@@ -17,7 +17,7 @@ router.post("/",
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ "success": false , "message": errors.array() });
         }
 
         const username = req.body.username;
@@ -54,7 +54,7 @@ router.get("/verify-email", async (req, res) => {
 router.get("/forgot-password");
 router.put("/forgot-password", body('email').isEmail().withMessage('Enter a valid email address'), async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) return res.status(400).json({ "success": false, "message": "Invalid email address" });
 
     const email = req.body.email;
     await forgotPassword(email, res);
@@ -68,9 +68,9 @@ router.put("/password-reset",
     async (req, res) => {
 
         const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+        if (!errors.isEmpty()) return res.status(400).json({ "success": false, "message": "Invalid new password"});
         await resetPassword(req, res);
-    });
+});
 
 router.get("/secret-stuff", auth_jwt, (req, res) => {
     return res.status(200).send("You found my secret stuff!");

@@ -25,7 +25,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
 const PORT = process.env.PORT || 5000;
 
 app.use('/api/user', userRoute);
@@ -49,21 +48,30 @@ io.on("connection", (socket) => {
   });
 });
 
-mongoose.connect(
-  process.env.DATABASE_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
+if(process.env.TESTING === 'yes'){
+  mongoose.connect(
+    process.env.TESTING_DB_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
   );
-  
+}else{
+  mongoose.connect(
+    process.env.DATABASE_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  );
+}
+
 const db = mongoose.connection;
 db.once("open", () => {
   console.log("Connected successfully");
 });
 db.on("error", console.error.bind(console, "connection error: "));
-  
-  
+
 // For product deployment
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
@@ -73,4 +81,5 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
+const server = serverChat.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
+module.exports={app, server}

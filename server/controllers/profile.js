@@ -2,8 +2,6 @@ const { Profile } = require("../schemas/Profile");
 const { User } = require("../schemas/User");
 const { ImageUpload } = require("../schemas/ImageUpload");
 
-
-
 const create_profile = async (req, res) => {
     try {
         req = req.body;
@@ -21,14 +19,14 @@ const create_profile = async (req, res) => {
 
             user_profile.save((err) => {
                 if (err) {
-                    return res.status(400).json({ "success": false, "message": "Database Error!" });
+                    return res.status(400).json({ "success": false, "message": "Database Error 1!" });
                 }
 
                 found_user.profile = user_profile;
 
                 found_user.save((err) => {
                     if (err) {
-                        return res.status(400).json({ "success": false, "message": "Database Error!" });
+                        return res.status(400).json({ "success": false, "message": "Database Error 2!" });
                     }
 
                     return res.status(200).json({ "success": true, "message": "User Profile Created!" });
@@ -39,7 +37,6 @@ const create_profile = async (req, res) => {
         return res.status(500).json({ "success": false, "message": "Server error!" });
     }
 };
-
 
 const get_profile = async (req, res) => {
     try {
@@ -138,6 +135,5 @@ const upload_image = async (req, res) => {
         return res.status(500).json({ "success": false, "message": "Server error!" });
     }
 };
-
 
 module.exports = { create_profile, get_profile, edit_profile, upload_image };

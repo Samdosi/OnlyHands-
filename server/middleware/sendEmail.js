@@ -11,9 +11,9 @@ const msg = async (receiver, sender, subject, body, res) => {
     await sgMail.send(msg, (error) => {
         if (error) {
             console.log(error);
-            return res.status(400).json({ "success": false, message: error.message }).end();
+            return res.status(400).json({ "success": false, "message": error.message }).end();
         } else {
-            return res.status(200).json({ "success": true, message: "Email sent!" }).end();
+            return res.status(200).json({ "success": true, "message": "Email sent!" }).end();
         }
     });
 }

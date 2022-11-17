@@ -1,32 +1,39 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer} = require('mongodb-memory-server');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+require('dotenv').config();
 
-//conncet to db
-const connect = async()=>{
-    const mongod = await MongoMemoryServer.create();
-    const uri= mongod.getUri();
-    const mongooseOpts = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        poolSize: 10
-    };
-    await mongoose.connect(uri, mongooseOpts);
-}
+let mongod = null;
 
-//disconnect and close connection
-const closeDatabase = async()=>{
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-    await mongod.stop();
-}
-
-//clear the db, remove all data
-const clearDatabase = async()=>{
-    const collections = mongoose.connection.collections;
-    for(const key in collections){
-        const collection = collections[key];
-        await collection.deleteMany();
+const connectDB = async () => {
+  try {
+    let dbUrl = process.env.TESTING_DB_URI; 
+    if (process.env.NODE_ENV === 'test') {
+      mongod = await MongoMemoryServer.create();
+      dbUrl = mongod.getUri();
     }
-}
 
-module.exports = {connect, closeDatabase, clearDatabase};
+    const conn = mongoose.createConnection(dbUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log(`MongoDB connected: ${conn.connection}`);
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+};
+
+const disconnectDB = async () => {
+  try {
+    await mongoose.connection.close();
+    if (mongod) {
+      await mongod.stop();
+    }
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+};
+
+module.exports = { connectDB, disconnectDB };
