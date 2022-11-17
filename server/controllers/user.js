@@ -14,11 +14,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
 
-
-
 //! PUT ON SERVER
 const url = process.env.APP_URL ||"http://localhost:5000";
-
 
 const getUser = async (userID) => {
     const user = await User.findById(userID)
@@ -53,9 +50,7 @@ const createUser = async (req, res) => {
                 }
                 throw err;
             } else {
-                //console.log("User created!");
                 //once user has been created we send verification email
-
                 sgMail.send(msg, (error) => {
                     if (error) {
                         throw error;
@@ -78,7 +73,6 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        //throw new Error("User does not exist!");
         res.status(400).json({ "success": false, "message": "User does not exist!" }).end();
     } else if (!user.isVerified) {
         res.status(400).json({ "success": false, "message": "User has not verified email!" }).end();
@@ -96,14 +90,12 @@ const verifyEmail = async (req, res) => {
     try {
         const user = await User.findOne({ emailToken: req });
         if (!user) {
-            //console.log("Error. Token is invalid.");
             return res.status(400).json({ "success": false, "message": "Invalid link!" }).end();
         }
         //update user token and verification status
         user.emailToken = null;
         user.isVerified = true;
         await user.save();
-        //console.log("User verified");
         return res.status(200).json({ "success": true, "message": "User verified" }).end();
     } catch (error) {
         console.log(error);
@@ -132,7 +124,6 @@ const forgotPassword = async (req, res) => {
                     msg(user.email, ohemail, "Password Reset",
                         `<h3>Click on the link below to reset your account password.</h3>
             <a href = '${url}/api/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
-                    //console.log("Password reset email sent");
                 }
             });
         }
@@ -161,12 +152,8 @@ const resetPassword = async (req, res) => {
             //send password changed email confirmation
             msg(user.email, ohemail, "Your password has been changed.",
                 `Hi ${user.username}! \n This is a confirmation that the password for your account ${user.email} has just been changed.\n`, res);
-
-            //console.log("Password has been changed");
         }
     });
 };
 
-module.exports = { createUser, login, verifyEmail, forgotPassword, resetPassword, };
-
-module.exports = { createUser, login, verifyEmail, forgotPassword, reset, resetPassword, getUser };
+module.exports = { createUser, login, verifyEmail, forgotPassword, resetPassword, getUser };
