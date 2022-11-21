@@ -7,11 +7,11 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import ProfileScreen from "./ProfileScreen";
-import LoginScreen from "./LoginScreen";
-import RegisterScreen from "./RegisterScreen";
-import HomePage from "./HomePage";
-import Home from "./HomePage";
+import ProfileScreen from "./pages/ProfileScreen";
+import LoginScreen from "./pages/LoginScreen";
+import RegisterScreen from "./pages/RegisterScreen";
+import HomePage from "./pages/HomePage";
+import Home from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
@@ -31,7 +31,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="LoginScreen"
-          component={LoginScreen}
+          component={RegisterScreen}
           options={{
             headerShown: false,
             headerStyle: { backgroundColor: "red" },
