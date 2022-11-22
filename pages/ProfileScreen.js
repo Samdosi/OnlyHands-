@@ -10,11 +10,12 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  TextInput,
+  //TextInput,
   ImagePickerIOS,
 } from "react-native";
+import { TextInput } from "react-native-paper";
 import { CheckBox, useTheme } from "react-native-elements";
-
+import ImagePicker from "react-native-image-picker";
 import Loader from "./Loader";
 import axios from "axios";
 function ProfileScreen({ navigation, route }) {
@@ -27,15 +28,16 @@ function ProfileScreen({ navigation, route }) {
   const [age, onChangeAge] = useState("");
   const [height, onChangeHeight] = useState("");
   const [weight, onChangeWeight] = useState("");
-  const [nickname, onChangeNickname] = useState("");
-  const [reach, onChangeReach] = useState("");
-  const [wins, onChangeWins] = useState("");
-  const [losses, onChangeLosses] = useState("");
-  const [KOs, onChangeKOs] = useState("");
-  const [totalFights, onChangeTotalFihts] = useState("");
-  const [style, onChangeStyle] = useState("");
-  const [bio, onChangeBio] = useState("");
+  const [nickname, onChangeNickname] = useState();
+  const [reach, onChangeReach] = useState();
+  const [wins, onChangeWins] = useState();
+  const [losses, onChangeLosses] = useState();
+  const [KOs, onChangeKOs] = useState();
+  const [totalFights, onChangeTotalFihts] = useState();
+  const [style, onChangeStyle] = useState();
+  const [bio, onChangeBio] = useState();
   const [loading, setLoad] = React.useState(false);
+  const [haserorr, setErorrs] = React.useState(false);
 
   const genderMale = () => {
     onChangeMale(true);
@@ -57,38 +59,57 @@ function ProfileScreen({ navigation, route }) {
   };
 
   const Login = async () => {
-    const payload = {
-      firstName: firstName,
-      lastName: lastName,
-      gender: gender,
-      age: age,
-      height: height,
-      weight: weight,
-      reach: reach,
-      wins: wins,
-      losses: losses,
-      KOs: KOs,
-      totalFights: totalFights,
-      nickname: nickname,
-    };
-    const token = route.params.paramKey;
-    setLoad(true);
-    const headers = {
-      "x-access-token": token,
-    };
-    try {
-      const baseURL = "https://only-hands.herokuapp.com";
-      const response = await axios.post(baseURL + "/api/profile/", payload, {
-        headers: headers,
-      });
-      console.log(response);
-      navigation.navigate("Home");
-      setLoad(false);
-    } catch (error) {
-      setLoad(false);
-      console.log(error.message);
-      alert(error.message);
+    if (
+      firstName == "" ||
+      lastName == "" ||
+      gender == "" ||
+      age == "" ||
+      height == "" ||
+      weight == ""
+    ) {
+      setErorrs(true);
+      alert("please input all the required fields");
+    } else {
+      const payload = {
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        age: age,
+        height: height,
+        weight: weight,
+        reach: reach,
+        wins: wins,
+        losses: losses,
+        KOs: KOs,
+        totalFights: totalFights,
+        nickname: nickname,
+      };
+      const token = route.params.paramKey;
+      setLoad(true);
+      console.log(token);
+      const headers = {
+        "x-access-token": token,
+        "Content-Type": "application/json",
+      };
+      try {
+        const baseURL = "https://only-hands.herokuapp.com";
+        const response = await axios.post(baseURL + "/api/profile/", payload, {
+          headers: headers,
+        });
+        console.log(response);
+        navigation.navigate("Home");
+        setLoad(false);
+      } catch (error) {
+        setLoad(false);
+        console.log(error.response.data);
+        alert(error.response.data.message);
+      }
     }
+  };
+  const handlephoto = () => {
+    const option = {};
+
+    ImagePicker.launchImageLibrary();
   };
   return (
     <SafeAreaView style={styles.saveArea}>
@@ -99,7 +120,7 @@ function ProfileScreen({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handlephoto}>
             <View style={styles.profilePicture}>
               <Text style={styles.profilePictureText}>
                 Upload profile Picture
@@ -118,18 +139,26 @@ function ProfileScreen({ navigation, route }) {
 
           <View style={styles.fillInContainer}>
             <TextInput
+              mode="flat"
+              label={"First Name"}
+              error={haserorr}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
               onChangeText={onChangeFirstName}
-              placeholder="First Name"
-              placeholderTextColor="white"
               value={firstName}
             ></TextInput>
 
             <TextInput
+              mode="flat"
+              label={"Last Name"}
+              error={haserorr}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
               onChangeText={onChangeLastName}
-              placeholder="Last Name"
-              placeholderTextColor="white"
               value={lastName}
             ></TextInput>
 
@@ -199,93 +228,136 @@ function ProfileScreen({ navigation, route }) {
 
             <View style={styles.AHW}>
               <TextInput
+                mode="flat"
+                label={"Age"}
+                keyboardType="decimal-pad"
+                error={haserorr}
+                textColor="white"
+                underlineColor="black"
+                activeUnderlineColor="white"
                 style={styles.AHWInput}
                 onChangeText={onChangeAge}
-                placeholder="Age"
-                placeholderTextColor="white"
                 value={age}
               ></TextInput>
 
               <TextInput
+                mode="flat"
+                label={"Height"}
+                error={haserorr}
+                textColor="white"
+                underlineColor="black"
+                activeUnderlineColor="white"
                 style={styles.AHWInput}
                 onChangeText={onChangeHeight}
-                placeholder="Height"
-                placeholderTextColor="white"
                 value={height}
               ></TextInput>
 
               <TextInput
+                mode="flat"
+                label={"Weight"}
+                error={haserorr}
+                textColor="white"
+                underlineColor="black"
+                activeUnderlineColor="white"
                 style={styles.AHWInput}
                 onChangeText={onChangeWeight}
-                placeholder="Weight"
-                placeholderTextColor="white"
+                keyboardType="decimal-pad"
                 value={weight}
               ></TextInput>
             </View>
 
             <TextInput
+              mode="flat"
+              label={"Nickname"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
               onChangeText={onChangeNickname}
-              placeholder="Nickname"
-              placeholderTextColor="white"
               value={nickname}
             ></TextInput>
 
             <TextInput
+              mode="flat"
+              label={"Reach"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
+              keyboardType="decimal-pad"
               onChangeText={onChangeReach}
-              placeholder="Reach"
-              placeholderTextColor="white"
               value={reach}
             ></TextInput>
 
             <View style={styles.Record}>
               <TextInput
+                mode="flat"
+                label={"Wins"}
+                textColor="white"
+                underlineColor="black"
+                activeUnderlineColor="white"
                 style={styles.RecordInput}
+                keyboardType="decimal-pad"
                 onChangeText={onChangeWins}
-                placeholder="Wins"
-                placeholderTextColor="white"
                 value={wins}
               ></TextInput>
 
               <TextInput
+                mode="flat"
+                label={"Losses"}
+                textColor="white"
+                underlineColor="black"
+                activeUnderlineColor="white"
+                keyboardType="decimal-pad"
                 style={styles.RecordInput}
                 onChangeText={onChangeLosses}
-                placeholder="Losses"
-                placeholderTextColor="white"
                 value={losses}
               ></TextInput>
             </View>
 
             <TextInput
+              mode="flat"
+              label={"KO's"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
+              keyboardType="decimal-pad"
               onChangeText={onChangeKOs}
-              placeholder="KO's"
-              placeholderTextColor="white"
               value={KOs}
             ></TextInput>
 
             <TextInput
+              mode="flat"
+              label={"Total Fights"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
               onChangeText={onChangeTotalFihts}
-              placeholder="Total Fights"
-              placeholderTextColor="white"
+              keyboardType="decimal-pad"
               value={totalFights}
             ></TextInput>
 
             <TextInput
+              mode="flat"
+              label={"Fighting style"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.fillIn}
               onChangeText={onChangeStyle}
-              placeholder="Fighting style"
-              placeholderTextColor="white"
               value={style}
             ></TextInput>
 
             <TextInput
+              mode="flat"
+              label={"Bio"}
+              textColor="white"
+              underlineColor="black"
+              activeUnderlineColor="white"
               style={styles.bio}
               onChangeText={onChangeBio}
-              placeholder="Bio"
-              placeholderTextColor="white"
               value={bio}
               multiline={true}
               ellip
@@ -347,7 +419,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 15,
     //textAlign: 'center',
-    borderColor: "#ff0011",
+    borderColor: "white",
     borderWidth: 1.8,
     textAlignVertical: "top",
     padding: 10,
@@ -375,7 +447,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 15,
     textAlign: "center",
-    borderColor: "#ff0011",
+    borderColor: "white",
     borderWidth: 1.8,
     placeholderTextColor: "black",
     fontWeight: "600",
@@ -393,7 +465,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignContent: "center",
     justifyContent: "space-between",
-    borderColor: "#ff0011",
+    borderColor: "white",
     paddingLeft: 5,
     borderWidth: 1.8,
   },
@@ -417,7 +489,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-    borderColor: "#ff0011",
+    borderColor: "white",
     borderWidth: "1.8",
   },
 
@@ -474,7 +546,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 15,
     textAlign: "center",
-    borderColor: "#ff0011",
+    borderColor: "white",
     borderWidth: 1.8,
     fontWeight: "600",
     fontSize: "14",

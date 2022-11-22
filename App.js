@@ -31,7 +31,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="LoginScreen"
-          component={RegisterScreen}
+          component={LoginScreen}
           options={{
             headerShown: false,
             headerStyle: { backgroundColor: "red" },

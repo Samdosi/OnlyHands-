@@ -41,6 +41,7 @@ function LoginScreen({ navigation }) {
           payload
         );
         setTokens(response.data.token);
+
         navigation.navigate("ProfileScreen", { paramKey: token });
 
         setLoad(false);

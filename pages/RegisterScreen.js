@@ -58,9 +58,6 @@ function RegisterScreen({ navigation }) {
   const register = async () => {
     setLoading(true);
 
-    //setTimeout(() => {
-
-    // finish the API and connect to the database
     const payload = {
       username: inputs.username,
       password: inputs.password,
@@ -73,11 +70,9 @@ function RegisterScreen({ navigation }) {
       navigation.navigate("LoginScreen");
     } catch (error) {
       console.log(error.response.data);
-      //handleErorr(error.response.data.message, error.response.data.input);
+
       setLoading(false);
     }
-
-    //}, 3000);
   };
   return (
     <SafeAreaView style={styles.safeArea}>
