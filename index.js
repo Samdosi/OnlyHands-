@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
 const profile_route = require("./routes/profile");
+const matchRoute = require("./routes/match")
 const app = express();
 const serverChat = http.createServer(app);
 const io = new Server(serverChat, {
@@ -17,6 +18,8 @@ const io = new Server(serverChat, {
   }
 })
 const path = require("path");
+const { verify } = require('crypto');
+const { auth_jwt } = require('./middleware/auth_jwt');
 
 app.use(cors());
 app.use(express.json());
@@ -25,12 +28,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
 const PORT = process.env.PORT || 5000;
 
 app.use('/api/user', userRoute);
 app.use('/api/profile', profile_route);
+app.use("/api/match/", matchRoute);
 
+app.get("/api/verify", auth_jwt, (req, res) => {
+  res.status(200).end();
+});
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
