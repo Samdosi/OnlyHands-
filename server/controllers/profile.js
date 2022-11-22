@@ -8,11 +8,11 @@ const create_profile = async (req, res) => {
         User.findById(req.user_id, (err, found_user) => {
 
             if (err) {
-                return res.status(400).json({ "success": false, "message": "User DNE!" });
+                return res.status(404).json({ "success": false, "message": "User DNE!" });
             }
 
-            if (!found_user || found_user.profile != null) {
-                return res.status(400).json({ "success": false, "message": "User Profile Already Exists!" });
+            if (!found_user || found_user.profile) {
+                return res.status(406).json({ "success": false, "message": "User Profile Already Exists!" });
             }
 
             const user_profile = new Profile(req.user_req);
@@ -45,10 +45,10 @@ const get_profile = async (req, res) => {
             if (profile) {
                 return res.status(200).json({ "success": true, "profile": profile });
             } else {
-                return res.status(404).json({ "success": false, "profile": "No profile was found for this user" });
+                return res.status(404).json({ "success": false, "message": "No profile was found for this user" });
             }
         } else {
-            return res.status(403).json({ "success": false, "profile": "Profile ID is required" });
+            return res.status(403).json({ "success": false, "message": "Profile ID is required" });
         }
     } catch (err) {
         return res.status(500).json({ "success": false, "message": "Server error!" })
@@ -66,7 +66,7 @@ const edit_profile = async (req, res) => {
             }
 
             Profile.findById(found_user.profile, (err, found_profile) => {
-                if (err) {
+                if (err || !profile) {
                     return res.status(404).json({ "success": false, "message": "Profile not found!" })
                 }
 

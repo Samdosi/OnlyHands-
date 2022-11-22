@@ -96,21 +96,81 @@ const createMatch = async (userId, matchProfileId, res) => {
     }
 };
 
+// TODO TEST
 // POST
-const completeMatch = () => {
-    //
+const completeMatch = (userId, matchProfileId, res) => {
+    try {
+        User.findById(userId, async (err, foundUser) => {
+            if (err || !foundUser.profile) {
+                return res.status(400).json({ "success": false, "message": "Profile not found!" });
+            }
 
+            matchUser = await User.findOne({ "profile": matchProfileId });
+
+            matchDocument = matchUser.matches.get(foundUser.profile);
+            matchDocument.isComplete = true;
+            console.log(matchDocument);
+
+            foundUser.matches.set(matchProfileId, matchDocument);
+
+            foundUser.save();
+
+            return res.status(200).json({ "success": true, "message": "Match Completed Successfully!" });
+        })
+    } catch (err) {
+        return res.status(500).json({ "success": false, "message": "Server error!" });
+    }
 };
 
+//! THIS NEEDS TESTING BAD BAD << RUN THRU WITH JOSEPH
 // GET
-const getMatches = (userId, res) => {
-    //
+const getMatches = (userId, res, start, count) => {
+    try {
+        User.findById(userId, async (err, foundUser) => {
+            if (err) {
+                return res.status(400).json({ "success": false, "message": "User not found!" });
+            }
 
+            const matchArr = [];
+            for (const [profileId, matchId] in foundUser.matches.entries().slice(start, start + count + 1)) {
+                const profile = await Profile.getById(profileId);
 
+                const match = {
+                    profileId: profileId,
+                    firstName: profile.firstName,
+                    lastName: profile.lastName,
+                    matchId: matchId
+                };
+
+                matchArr.push(match);
+            };
+
+            return res.status(200).json({ "success": true, "matches": matchArr })
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ "success": false, "message": "Server error!" });
+    }
 };
+
+
 
 const getSpecificMatch = (userId, matchId, res) => {
+    try {
+        User.findById(userId, async (err, foundUser) => {
+            if (err) {
+                return res.status(400).json({ "success": false, "message": "User not found!" });
+            }
 
+            const matchDocument = foundUser.matches.get(matchId);
+
+            return res.status(200).json({ "success": true, "match": matchDocument });
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ "success": false, "message": "Server error!" });
+    }
 };
 
 
@@ -142,12 +202,27 @@ const dislike = async (userId, matchProfileId, res) => {
 }
 
 
-
-
 // GET
-const serveMatch = (userId, numMatches, res) => {
-    // 
+const serveMatch = async (userId, numMatches, res) => {
+    try {
+        User.findById(userId, async (err, foundUser) => {
+            if (err) {
+                return res.status(404).json({ "success": false, "message": "User not found!" });
+            }
 
+            const queryRes = await Profile.
+                find().
+                nin("_id", foundUser.rejections).
+                nin("_id", Array.from(foundUser.matches.keys())).
+                aggregate().sample(numMatches);
+
+            return res.status(200).json({ "success": true, matches: queryRes });
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ "success": false, "message": "Server error!" });
+    }
 
 };
 

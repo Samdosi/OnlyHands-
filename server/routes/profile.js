@@ -4,15 +4,17 @@ const router = express.Router();
 const { auth_jwt } = require("../middleware/auth_jwt");
 const { create_profile, get_profile, edit_profile, upload_image } = require("../controllers/profile");
 const { validateInput } = require("../middleware/validateInput");
+const { getUser } = require("../controllers/user");
 
 const multer = require('multer')
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.get("/", auth_jwt, async (req, res) => {
-    if (!req.body.user_req.profile_id) {
-        const user = await get_user(req.body.user_id);
-        await get_profile(user.profile_id, res);
+    //TODO CHECK THIS
+    if (!req.body.user_req.profile) {
+        const user = await getUser(req.body.user_id);
+        await get_profile(user.profile, res);
     }
     else {
         await get_profile(req.body.user_req.profile_id, res);
