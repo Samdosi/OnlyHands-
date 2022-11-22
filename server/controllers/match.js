@@ -25,27 +25,6 @@ const checkExistingMatch = async (userID, matchProfileId) => {
 
         return foundMatchUser.matches.get(userProfileId) ? true : false;
 
-        // User.findById(userID, (err, foundUser) => {
-        //     if (err) {
-        //        console.log(err); 
-        //     }
-
-        //     const userProfileId = foundUser.profile;
-        //     if(!userProfileId){
-        //         console.log("BAD BAD THINGS!")
-        //     }
-
-
-        //     User.findOne({ profile: matchProfileId }, (err, foundMatchUser) => {
-        // 		if (err) {
-        // 			console.log(err);
-        // 		}
-
-        //         console.log(foundMatchUser.matches.get(userProfileId) ? true : false)
-        // 		return foundMatchUser.matches.get(userProfileId) ? true : false;
-        // 	});
-        // })
-
 
     } catch (err) {
         console.log(err);
@@ -60,14 +39,20 @@ const createMatch = async (userId, matchProfileId, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err) {
-                return res.status(404);
+                return res.status(404).end();
             }
 
             const matchProfile = await Profile.findById(matchProfileId)
 
             if (!matchProfile) {
-                return res.status(404);
+                return res.status(404).end();
             }
+
+            
+            if (foundUser.matches.get(matchProfileId)){
+                return res.status(405).end();
+            }
+            
 
             const foundProfile = foundUser.profile;
 
@@ -79,42 +64,51 @@ const createMatch = async (userId, matchProfileId, res) => {
                 if (err) {
                     return res.status(400).json(79);
                 }
-
+                console.log("saved match");
                 //? Maybe have to change with `foundProfile._id`
-                foundUser.matches.set(foundProfile, newMatch);
+                foundUser.matches.set(matchProfileId, newMatch);
 
                 foundUser.save(err => {
                     if (err) {
                         return res.status(400).json(87);
                     }
+                    console.log("saved user");
                     return res.status(200).json({ "success": true, "message": "Match Created Successfully!" });
                 });
             });
         });
     }
     catch (err) {
+        console.log(err);
         return res.status(500).json({ "success": false, "message": "Server Error!" });
     }
 };
 
 // TODO TEST
 // POST
-const completeMatch = (userId, matchProfileId, res) => {
+const completeMatch = async (userId, matchProfileId, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err || !foundUser.profile) {
                 return res.status(400).json({ "success": false, "message": "Profile not found!" });
             }
 
+            if(foundUser.matches.get(matchProfileId)){
+                return res.status(405).end();
+            }
+
             matchUser = await User.findOne({ "profile": matchProfileId });
 
-            matchDocument = matchUser.matches.get(foundUser.profile);
+            matchDocumentId = matchUser.matches.get(foundUser.profile);
+
+            matchDocument = await Match.findById(matchDocumentId);
             matchDocument.isComplete = true;
-            console.log(matchDocument);
+            matchDocument.chatId = new Chat();
+            await matchDocument.save();
 
-            foundUser.matches.set(matchProfileId, matchDocument);
+            foundUser.matches.set(matchProfileId, matchDocumentId);
 
-            foundUser.save();
+            await foundUser.save();
 
             return res.status(200).json({ "success": true, "message": "Match Completed Successfully!" });
         })
@@ -123,29 +117,38 @@ const completeMatch = (userId, matchProfileId, res) => {
     }
 };
 
-//! THIS NEEDS TESTING BAD BAD << RUN THRU WITH JOSEPH
+
+// TODO add pictures
 // GET
-const getMatches = (userId, res, start, count) => {
+const getMatches = (userId, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err) {
                 return res.status(400).json({ "success": false, "message": "User not found!" });
             }
 
-            const matchArr = [];
-            const mapEntries = Array.from(foundUser.matches.entries()).slice(start, start + count + 1);
-            for (const [profileId, matchId] in mapEntries) {
-                const profile = await Profile.getById(profileId);
+            let matchArr = [];
+            const mapEntries = Array.from(foundUser.matches.entries())//.slice(start, start + count + 1);
+
+            for (let index = 0; index < mapEntries.length; index++) {
+                const currentArray = mapEntries[index];
+                
+                const profileId = currentArray[0];
+                const matchId = currentArray[1];
+
+                
+                const profile = await Profile.findById(profileId);
+                const matchDoc = await Match.findById(matchId);
 
                 const match = {
                     profileId: profileId,
                     firstName: profile.firstName,
                     lastName: profile.lastName,
-                    matchId: matchId
+                    matchId: matchDoc._id
                 };
 
                 matchArr.push(match);
-            };
+            }
 
             return res.status(200).json({ "success": true, "matches": matchArr })
         });
@@ -160,14 +163,12 @@ const getMatches = (userId, res, start, count) => {
 
 const getSpecificMatch = (userId, matchId, res) => {
     try {
-        User.findById(userId, async (err, foundUser) => {
-            if (err) {
-                return res.status(400).json({ "success": false, "message": "User not found!" });
+        Match.findById(matchId, async (err, foundMatch) => {
+            if (err || !foundMatch) {
+                return res.status(400).json({ "success": false, "message": "Match not found!" });
             }
 
-            const matchDocument = foundUser.matches.get(matchId);
-
-            return res.status(200).json({ "success": true, "match": matchDocument });
+            return res.status(200).json({ "success": true, "match": foundMatch });
         });
     } catch (err) {
         console.log(err);
@@ -211,12 +212,18 @@ const serveMatch = async (userId, numMatches, res) => {
             if (err) {
                 return res.status(404).json({ "success": false, "message": "User not found!" });
             }
-
+            
 
             const queryRes = await Profile.
-                find().
-                nin("_id", foundUser.rejections).
-                nin("_id", Array.from(foundUser.matches.keys()));
+                find({
+                    $and: [
+                        { "_id": { $nin : Array.from(foundUser.matches.keys()) } },
+                        { "_id": { $nin : foundUser.rejections } },
+                        { "_id": {$not: {$eq: foundUser.profile}} } 
+                    ]
+                })   
+
+            console.log(queryRes);
 
 
             return res.status(200).json({ "success": true, matches: _.sample(queryRes, numMatches) });
