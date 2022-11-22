@@ -10,12 +10,11 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  //TextInput,
   ImagePickerIOS,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { CheckBox, useTheme } from "react-native-elements";
-import ImagePicker from "react-native-image-picker";
+import { ImagePicker } from "react-native-image-picker";
 import Loader from "./Loader";
 import axios from "axios";
 function ProfileScreen({ navigation, route }) {
@@ -106,11 +105,7 @@ function ProfileScreen({ navigation, route }) {
       }
     }
   };
-  const handlephoto = () => {
-    const option = {};
 
-    ImagePicker.launchImageLibrary();
-  };
   return (
     <SafeAreaView style={styles.saveArea}>
       <Loader visible={loading} />
@@ -120,7 +115,24 @@ function ProfileScreen({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity onPress={handlephoto}>
+          <TouchableOpacity
+          // onPress={() =>
+          //   ImagePicker.launchImageLibrary(
+          //     {
+          //       mediaType: "photo",
+          //       includeBase64: false,
+          //       maxHeight: 200,
+          //       maxWidth: 200,
+          //     },
+          //     (response) => {
+          //       console.log(response);
+          //       this.setState({
+          //         resourcePath: response,
+          //       });
+          //     }
+          //   )
+          // }
+          >
             <View style={styles.profilePicture}>
               <Text style={styles.profilePictureText}>
                 Upload profile Picture
