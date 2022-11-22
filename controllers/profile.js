@@ -69,8 +69,9 @@ const edit_profile = async (req, res) => {
                 if (err || !profile) {
                     return res.status(404).json({ "success": false, "message": "Profile not found!" })
                 }
-
+                
                 Object.entries(req.user_req).forEach(([key, value]) => {
+                    console.log(key, value);
                     if (value) {
                         found_profile[key] = value;
                     }
@@ -86,6 +87,7 @@ const edit_profile = async (req, res) => {
             });
         });
     } catch (err) {
+        console.log(err);
         return res.status(500).json({ "success": false, "message": "Server error!" });
     }
 };

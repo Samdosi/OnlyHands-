@@ -11,13 +11,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.get("/", auth_jwt, async (req, res) => {
-    //TODO CHECK THIS
-    if (!req.body.user_req.profile) {
+    if (!req.body.user_req.profile_id) {
         const user = await getUser(req.body.user_id);
         await get_profile(user.profile, res);
     }
     else {
-        await get_profile(req.body.user_req.profile_id, res);
+        await get_profile(req.body.user_req.profile, res);
     }
 });
 
