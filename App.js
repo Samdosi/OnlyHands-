@@ -10,12 +10,12 @@ import {
 import ProfileScreen from "./pages/ProfileScreen";
 import LoginScreen from "./pages/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen";
+import ChatScreen from "./pages/ChatScreen";
 import HomePage from "./pages/HomePage";
 import Home from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
-//import LoginScreen from './Login'
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
