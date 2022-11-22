@@ -3,6 +3,13 @@ const router = express.Router();
 const { auth_jwt } = require("../middleware/auth_jwt");
 const { dislike, checkExistingMatch, createMatch, serveMatch, getMatches, getSpecificMatch } = require("../controllers/match");
 
+router.get("/serve", auth_jwt, async (req, res) => {
+    const userId = req.body.user_id;
+    const numMatches = req.body.user_req.numMatches || 5;
+    console.log(numMatches);
+
+    await serveMatch(userId, numMatches, res);
+});
 
 //Get all matches
 router.get("/", auth_jwt, async (req, res) => {
@@ -45,11 +52,5 @@ router.post("/", auth_jwt, async (req, res) => {
 
 });
 
-router.get("/serve", auth_jwt, async (req, res) => {
-    const { userId } = req.body.user_id;
-    const { numMatches } = req.body.user_req || 2;
-
-    await serveMatch(userId, numMatches, res);
-});
 
 module.exports = router;

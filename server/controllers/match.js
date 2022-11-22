@@ -2,6 +2,7 @@ const { Match } = require("../schemas/Match");
 const { Chat } = require("../schemas/Chat")
 const { User } = require("../schemas/User");
 const { Profile } = require("../schemas/Profile");
+const _ = require("underscore");
 
 const checkExistingMatch = async (userID, matchProfileId) => {
 
@@ -132,7 +133,8 @@ const getMatches = (userId, res, start, count) => {
             }
 
             const matchArr = [];
-            for (const [profileId, matchId] in foundUser.matches.entries().slice(start, start + count + 1)) {
+            const mapEntries = Array.from(foundUser.matches.entries()).slice(start, start + count + 1);
+            for (const [profileId, matchId] in mapEntries) {
                 const profile = await Profile.getById(profileId);
 
                 const match = {
@@ -210,13 +212,14 @@ const serveMatch = async (userId, numMatches, res) => {
                 return res.status(404).json({ "success": false, "message": "User not found!" });
             }
 
+
             const queryRes = await Profile.
                 find().
                 nin("_id", foundUser.rejections).
-                nin("_id", Array.from(foundUser.matches.keys())).
-                aggregate().sample(numMatches);
+                nin("_id", Array.from(foundUser.matches.keys()));
 
-            return res.status(200).json({ "success": true, matches: queryRes });
+
+            return res.status(200).json({ "success": true, matches: _.sample(queryRes, numMatches) });
         });
 
     } catch (err) {
