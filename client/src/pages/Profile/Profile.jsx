@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Card from './components/Card'
+import InfoModal from './components/InfoModal';
 
 const Profile = ({ setBgImage }) => {
 
@@ -21,6 +23,10 @@ const Profile = ({ setBgImage }) => {
     const [style, setStyle] = useState('');
     const [bio, setBio] = useState('');
     const [profilePhoto, setProfilePhoto] = useState(null);
+
+    // Modal Info
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => setShowModal(false);
 
     const createProfile = async event => {
         
@@ -220,6 +226,23 @@ const Profile = ({ setBgImage }) => {
             </div>
         </div>
     )
+    // return (
+    //     <div className='grid grid-cols-3 gap-3'>
+    //         <div classname="left col-span-1 bg-white">
+    //         <button
+    //             onClick={() => {setShowModal(true)}}
+    //             className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
+    //             Show Modal
+    //         </button>
+    //         </div>
+    //         <div className="right col-span-2 flex flex-col justify-center items-center">
+    //             <div className="w-full relative flex flex-col justify-center overflow-hidden">
+    //                 <Card />
+    //             </div>
+    //         </div>
+    //         {showModal && <InfoModal onClose={handleModal} />}
+    //     </div>
+    // )
 }
 
 export default Profile

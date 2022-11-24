@@ -24,7 +24,7 @@ const Hero = ({ setBgImage }) => {
                         setShowModal(true);
                         setIsLoginTab(false);
                     }}
-                    className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
+                    className="bg-white text-black p-3 2xl:p-4 rounded-lg shadow-md transition grow-transition">
                     Create Account
                 </button>
                 <button
