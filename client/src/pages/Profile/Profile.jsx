@@ -1,13 +1,13 @@
-import React, { useState , useEffect } from 'react';
-import ProfileModal from "./Components/ProfileModal"
-import Card from './components/Card'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import ProfileModal from "./components/ProfileModal";
+import Card from './components/Card';
 import InfoModal from './components/InfoModal';
 
 /* Modal is only rendered if user has not created a profile. Otherwise, shows them the normal swipe screen. */
 
-const Profile = () => {
+const Profile = ({ setBgImage }) => {
     const [showModal, setShowModal] = useState(false);
-    const Profile = ({ setBgImage }) => {
 
     const { pathname } = useLocation();
     setBgImage(pathname);
@@ -32,30 +32,32 @@ const Profile = () => {
     // const [showModal, setShowModal] = useState(false);
     // const handleModal = () => setShowModal(false);
 
-    const createProfile = async event => {
-        
-        event.preventDefault();
-        const token = sessionStorage.getItem(token);
+    // createProfile should probably be inside the useEffect
+    // const createProfile = async event => {
 
-    useEffect(() => {
-        fetch('https://only-hands.herokuapp.com/api/profile/', {
-            method: 'GET',
-            headers: { 'x-access-token' : sessionStorage.getItem('token'), 'Content-Type': 'application/json' },
-        })
-            .then((res) => { 
-                return res.json() 
-            })
-            .then((data) => {
-                if (data["success"]) {
-                    console.log(data["profile"])
-                }
-                else {
-                    console.log(data["message"]);
-                    setShowModal(true) // open profile modal
-                }
-            })
-            .catch(error => console.log(error))
-    }, [])
+    //     event.preventDefault();
+    //     const token = sessionStorage.getItem(token);
+
+    //     useEffect(() => {
+    //         fetch('https://only-hands.herokuapp.com/api/profile/', {
+    //             method: 'GET',
+    //             headers: { 'x-access-token': sessionStorage.getItem('token'), 'Content-Type': 'application/json' },
+    //         })
+    //             .then((res) => {
+    //                 return res.json()
+    //             })
+    //             .then((data) => {
+    //                 if (data["success"]) {
+    //                     console.log(data["profile"])
+    //                 }
+    //                 else {
+    //                     console.log(data["message"]);
+    //                     setShowModal(true) // open profile modal
+    //                 }
+    //             })
+    //             .catch(error => console.log(error))
+    //     }, [])
+    // }
 
     return (
         <div>
