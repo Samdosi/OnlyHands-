@@ -9,13 +9,17 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 
-function ChatScreen() {
-    const [messages, setMessages] = useState([{ id: "", status: "" }]);
+import Message from "../src/components/Message";
 
-    const addNew = () => {
+import axios from "axios";
+
+function ChatScreen() {
+    const [messages, setMessages] = useState([{image: "", status: "", name: "", message: "", numMessages: "", timestamp: ""}]);
+
+    const addNew = async(props) => {
         setMessages((prevMessages) => {
             return [
-                { id: "123", status: "123" },
+                {message: props.message, timestamp: 123},
                 ...prevMessages
             ];
         })
@@ -23,24 +27,18 @@ function ChatScreen() {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-
             <ImageBackground
                 style={styles.background}
                 source={require("../assets/pexels-cottonbro-4761792.jpg")} //replace this.
             >
-                <View style={styles.mainView}>
+                <View style={styles.mainView} onLayout={() => addNew({ message: "123", timestamp: "123" })}>
                     <FlatList
                         data={messages}
-                        renderItem={({ item }) => (
-                            <Text style={styles.text}>{item.id}</Text>
+                        renderItem={({ item }) => ( //if messages are available.
+                            <Message message={item.message} timestamp = {item.timestamp}/>
                         )}
                     />
                 </View>
-
-                <Button
-                    onPress={() => addNew()}
-                    title= "test"
-                />
             </ImageBackground>
         </SafeAreaView>
     );
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
 
     mainView: {
         marginTop: 50,
-        alignItems: "center"
+        alignItems: "center",
     },
 
     text: {
