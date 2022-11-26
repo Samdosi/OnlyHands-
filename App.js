@@ -12,6 +12,7 @@ import LoginScreen from "./pages/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen";
 import ChatScreen from "./pages/ChatScreen";
 import HomePage from "./pages/HomePage";
+import MessageScreen from "./pages/MessageScreen";
 import Home from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -28,7 +29,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+       <Stack.Navigator>       
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
@@ -50,6 +51,16 @@ const App = () => {
             headerStyle: { backgroundColor: "black", color: "white" },
             headerTintColor: "white",
           }}
+       />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MessageScreen"
+          component={MessageScreen}
+          option={{headerShown:false}}
         />
         <Stack.Screen
           name="Home"
