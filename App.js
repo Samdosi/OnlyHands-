@@ -29,10 +29,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-       <Stack.Navigator>       
+        <Stack.Navigator>    
+         
         <Stack.Screen
           name="LoginScreen"
-          component={LoginScreen}
+          component={ChatScreen}
           options={{
             headerShown: false,
             headerStyle: { backgroundColor: "red" },
@@ -52,11 +53,7 @@ const App = () => {
             headerTintColor: "white",
           }}
        />
-        <Stack.Screen
-          name="ChatScreen"
-          component={ChatScreen}
-          options={{ headerShown: false }}
-        />
+        
         <Stack.Screen
           name="MessageScreen"
           component={MessageScreen}

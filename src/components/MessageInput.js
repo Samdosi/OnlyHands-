@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text, ImageBackground } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import Input from "../src/components/Input";
 
 const MessageBox = () => {
 
     return (
         <View style={styles.mainView}>
-            <View></View>
+            <Input
+                
+            ></Input>
         </View>
     );
 }
