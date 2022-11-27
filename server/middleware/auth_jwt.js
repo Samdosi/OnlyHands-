@@ -12,9 +12,9 @@ const auth_jwt = (req, res, next) => {
 
     jwt.verify(token, jwtKey, (err, decoded) => {
         if (err) {
+            //what does unauthorized mean? does it mean that we tried to access the profile page without being logged in so the token is not valid?
             return res.status(401).json({ "success": false, "message": "Unauthorized!" });
         }
-        //console.log(decoded);
 
         req.body = { user_id: decoded.user_id, user_req: req.body };
         next();

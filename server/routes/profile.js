@@ -11,6 +11,7 @@ const upload = multer({ storage: storage });
 
 router.get("/", auth_jwt, async (req, res) => {
     if (!req.body.user_req.profile_id) {
+        //what does the get_user do?
         const user = await get_user(req.body.user_id);
         await get_profile(user.profile_id, res);
     }

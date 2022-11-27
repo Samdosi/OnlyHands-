@@ -8,7 +8,7 @@ const create_profile = async (req, res) => {
         User.findById(req.user_id, (err, found_user) => {
 
             if (err) {
-                return res.status(400).json({ "success": false, "message": "User DNE!" });
+                return res.status(400).json({ "success": false, "message": "User DNE!" });//what do you mean by User DNE?
             }
 
             if (!found_user || found_user.profile != null) {
@@ -45,10 +45,11 @@ const get_profile = async (req, res) => {
             if (profile) {
                 return res.status(200).json({ "success": true, "profile": profile });
             } else {
-                return res.status(404).json({ "success": false, "profile": "No profile was found for this user" });
+                return res.status(404).json({ "success": false, "message": "No profile was found for this user" });//meaning profile_ID = null?
             }
         } else {
-            return res.status(403).json({ "success": false, "profile": "Profile ID is required" });
+            //meaning no profile ID was provided? so it was empty?
+            return res.status(403).json({ "success": false, "message": "Profile ID is required" });
         }
     } catch (err) {
         return res.status(500).json({ "success": false, "message": "Server error!" })
