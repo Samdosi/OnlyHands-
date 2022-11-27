@@ -1,19 +1,17 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text, ImageBackground} from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, ImageBackground } from 'react-native';
 
 const MessageBox = (props) => {
-
     return (
         <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate(props.dest)}>
             <View style={styles.mainView}>
-                <View style={styles.icon}>
-                    <ImageBackground
-                        //source={require(props.image)}
-                    >
-                    
-                    </ImageBackground>
-                </View>
+                <ImageBackground
+                    source={require("../../assets/pexels-cottonbro-4761792.jpg")} //props.image
+                    style={styles.image}
+                >
+
+                </ImageBackground>
                 <View style={styles.placeholder}>
                     <View>
                         <Text style={styles.header}>{props.name}</Text>
@@ -44,13 +42,16 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        marginRight: 20
+        marginRight: 20,
+        borderWidth: 1,
+        borderRadius: 20
     },
 
     image: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
+        width: 50,
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 200,
         justifContent: "flex-end"
     },
 
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
-    circle: { //placeholder (temporary)
+    circle: {
         height: 45,
         width: 45,
         borderRadius: 45,

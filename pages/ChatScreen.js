@@ -2,7 +2,9 @@ import {
     ImageBackground,
     StyleSheet,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    View,
+    Text
 } from "react-native";
 import { React, useState} from "react";
 
@@ -25,39 +27,45 @@ function ChatScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView style={styles.mainView}>
-                {profiles.map(c => (
-                    <MessageBox
-                        image={c.image}
-                        status={c.status}
-                        name={c.name}
-                        message={c.message}
-                        numMessages={c.numMessages}
-                        timestamp={c.timestamp}
-                        navigation={navigation}
-                        dest="MessageScreen"
-                    />
-                ))
-                }
-            </ScrollView>
+            <View style={styles.mainView}>
+                <Text style={styles.title}>Messages</Text>
+
+                <ScrollView style={styles.list}>
+                    {profiles.map(c => (
+                        <MessageBox
+                            image={c.image}
+                            status={c.status}
+                            name={c.name}
+                            message={c.message}
+                            numMessages={c.numMessages}
+                            timestamp={c.timestamp}
+                            navigation={navigation}
+                            dest="MessageScreen"
+                        />
+                    ))
+                    }
+                </ScrollView>
+            </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     safeArea: {
-        backgroundColor: "black",
+        backgroundColor: "rgb(37, 37, 37)",
         flex: 1,
     },
 
-    background: {
-        height: "100%",
-        width: "100%"
+    title: {
+        color: "#ff405b",
+        fontStyle: "bold",
+        fontSize: 30,
+        marginLeft: 40
     },
 
     mainView: {
-        backgroundColor: "grey",
-        marginTop: 50
+        backgroundColor: "rgb(37, 37, 37)",
+        marginTop: 20,
     },
 
     text: {
