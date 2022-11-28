@@ -43,11 +43,11 @@ const Navbar = () => {
         <Link to='/'>
           <div className='flex items-center text-center lg:py-5'>
             <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-14 lg:w-14'>
-              <GiBoxingGlove className='icon1' style={{width: '100%', height: '100%'}}/>
+              <GiBoxingGlove className='icon1 mr-1' style={{width: '100%', height: '100%'}}/>
               <GiBoxingGlove className='icon2' style={{width: '100%', height: '100%'}}/>
             </div>
             
-            <h1 className='text-xl xsm:text-2xl lg:text-3xl font-medium'>OnlyHands</h1>
+            <h1 className='text-xl xsm:text-2xl lg:text-3xl font-medium ml-2'>OnlyHands</h1>
 
           </div>
         </Link>

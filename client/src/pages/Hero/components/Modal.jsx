@@ -28,7 +28,7 @@ const Modal = ({ onClose, isLoginTab, toggleTab }) => {
                         </button>
                     </div>
                 </div>
-                {isLoginTab ? <Login /> : <Register />}
+                {isLoginTab ? <Login /> : <Register handleModal={onClose} />}
             </div>
         </div>
     )

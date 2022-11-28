@@ -166,21 +166,29 @@ hr.solid {
 }
 
 .cardContainer {
-    width: 90vw;
-    max-width: 260px;
-    height: 300px;
+    width: 37vw;
+    max-width: 500px;
+    height: 500px;
 }
 
 .card {
     position: relative;
-    background-color: #fff;
-    width: 80vw;
-    max-width: 260px;
-    height: 300px;
+    background-color: black;
+    background-repeat: no-repeat;
+    width: 250vw;
+    max-width: 450px;
+    height: 500px;
     box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.30);
     border-radius: 20px;
-    background-size: cover;
-    background-position: center;
+    background-size: 100%;
+    background-position: top;
+}
+
+.figherCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardContent {
@@ -195,6 +203,35 @@ hr.solid {
     bottom: 0;
     margin: 10px;
     color: #fff;
+    align-items: center;
+}
+
+.gridContainer {
+    display: grid;
+    vertical-align: bottom; /* I CANT ALIGN FOR SHIT */
+    padding-left: 5%;
+    grid-template-columns: auto auto;
+    gap: 25px 75px;
+    transform: translate(0, +118%);
+}
+
+.item1 {
+    grid-column: 1 / span 2;
+    font-weight: bold;
+    justify-self: center;
+    color: white;
+}
+
+.gridItem {
+    font-weight: bold;
+    color: white;
+}
+
+.item10 {
+    grid-column: 1 / span 2;
+    font-weight: bold;
+    align-self: top;
+    color: white;
 }
 
 .infoText {
@@ -210,6 +247,7 @@ hr.solid {
     margin: 20px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 @media (max-width: 625px) {

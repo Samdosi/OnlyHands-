@@ -1,89 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProfileModal from "./components/ProfileModal";
-import Card from './components/Card';
-import InfoModal from './components/InfoModal';
-
-/* Modal is only rendered if user has not created a profile. Otherwise, shows them the normal swipe screen. */
+import Card from './Components/Card';
+import InfoModal from './Components/InfoModal';
 
 const Profile = ({ setBgImage }) => {
-    const [showModal, setShowModal] = useState(false);
-
+    
     const { pathname } = useLocation();
     setBgImage(pathname);
+    
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => setShowModal(false);
+    const [isCreated, setIsCreated] = useState(false);
 
-    const [firstname, setFirstName] = useState('');
-    const [lastname, setLastName] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [age, setAge] = useState(0);
-    const [gender, setGender] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState(0);
-    const [reach, setReach] = useState('');
-    const [wins, setWins] = useState(0);
-    const [losses, setLosses] = useState(0);
-    const [fights, setFights] = useState(0);
-    const [kos, setKOS] = useState(0);
-    const [style, setStyle] = useState('');
-    const [bio, setBio] = useState('');
-    const [profilePhoto, setProfilePhoto] = useState(null);
-
-    // James' Modal Info
-    // const [showModal, setShowModal] = useState(false);
-    // const handleModal = () => setShowModal(false);
-
-    // createProfile should probably be inside the useEffect
-    // const createProfile = async event => {
-
-    //     event.preventDefault();
-    //     const token = sessionStorage.getItem(token);
-
-    //     useEffect(() => {
-    //         fetch('https://only-hands.herokuapp.com/api/profile/', {
-    //             method: 'GET',
-    //             headers: { 'x-access-token': sessionStorage.getItem('token'), 'Content-Type': 'application/json' },
-    //         })
-    //             .then((res) => {
-    //                 return res.json()
-    //             })
-    //             .then((data) => {
-    //                 if (data["success"]) {
-    //                     console.log(data["profile"])
-    //                 }
-    //                 else {
-    //                     console.log(data["message"]);
-    //                     setShowModal(true) // open profile modal
-    //                 }
-    //             })
-    //             .catch(error => console.log(error))
-    //     }, [])
-    // }
+    useEffect(() => {
+        fetch('https://only-hands.herokuapp.com/api/profile/', {
+            method: 'GET',
+            headers: { 'x-access-token': sessionStorage.getItem('token'), 'Content-Type': 'application/json' },
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                if (data["success"]) {
+                    console.log(data["profile"])
+                    sessionStorage.setItem("profile", JSON.stringify(data["profile"]));
+                    setIsCreated(true);
+                }
+                else {
+                    console.log(data["message"]);
+                    setShowModal(true) 
+                }
+            })
+            .catch(error => console.log(error))
+    }, [])
 
     return (
-        <div>
-            <div>
+        <div className='grid grid-cols-3 gap-3'>
+            <div classname="left col-span-1 bg-white">
+            <button
+                onClick={() => {setShowModal(true)}}
+                className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
                 Profile
+            </button>
             </div>
-            {showModal && <ProfileModal />}
+            <div className="right col-span-2 flex flex-col justify-center items-center">
+                <div className="w-full relative flex flex-col justify-center overflow-hidden">
+                    <Card />
+                </div>
+            </div>
+            {showModal && <InfoModal onClose={handleModal} isCreated={isCreated} setIsCreated={setIsCreated} />}
         </div>
     )
-    // return (
-    //     <div className='grid grid-cols-3 gap-3'>
-    //         <div classname="left col-span-1 bg-white">
-    //         <button
-    //             onClick={() => {setShowModal(true)}}
-    //             className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
-    //             Show Modal
-    //         </button>
-    //         </div>
-    //         <div className="right col-span-2 flex flex-col justify-center items-center">
-    //             <div className="w-full relative flex flex-col justify-center overflow-hidden">
-    //                 <Card />
-    //             </div>
-    //         </div>
-    //         {showModal && <InfoModal onClose={handleModal} />}
-    //     </div>
-    // )
 }
 
-export default Profile
+export default Profile;
