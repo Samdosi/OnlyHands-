@@ -45,9 +45,10 @@ const get_profile = async (req, res) => {
             if (profile) {
                 return res.status(200).json({ "success": true, "profile": profile });
             } else {
-                return res.status(404).json({ "success": false, "message": "No profile was found for this user" });
+                return res.status(403).json({ "success": false, "message": "No profile was found for this user" });
             }
         } else {
+        
             return res.status(403).json({ "success": false, "message": "Profile ID is required" });
         }
     } catch (err) {
@@ -66,7 +67,7 @@ const edit_profile = async (req, res) => {
             }
 
             Profile.findById(found_user.profile, (err, found_profile) => {
-                if (err || !profile) {
+                if (err || !found_profile) {
                     return res.status(404).json({ "success": false, "message": "Profile not found!" })
                 }
 
