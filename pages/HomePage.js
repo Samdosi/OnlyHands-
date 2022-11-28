@@ -38,8 +38,11 @@ const SWIPE_VELOCITY = 1000;
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { BackgroundImage } from "react-native-elements/dist/config";
 
-const Home = () => {
+import axios from "axios";
+
+const Home = ({navigation,route}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [nextIndex, setNextIndex] = useState(currentIndex+1)
 
@@ -133,7 +136,8 @@ const Home = () => {
                 hiddenTranslateX * Math.sign(event.velocityX),
                 {},
                 () => runOnJS(setCurrentIndex)(currentIndex+1)
-                );          
+                );
+                //post match          
         }
     });
 
@@ -145,6 +149,8 @@ const Home = () => {
         
     },[currentIndex,translateX])
 
+  //  users[0].name = 'Sam'
+//
 
 
 //IF YES or NO buttons, but F that
@@ -162,10 +168,37 @@ const Home = () => {
                     
                 </View>
 */
+// testing 
+    const testing = async () =>{
+        console.log(route.params.paramKey)
+        const header = {
+            'x-access-token': route.params.paramKey,
+            'Content-Type': 'application/json',
+        }
+        console.log(header["x-access-token"])
+        try{
+            const baseURL = "https://only-hands.herokuapp.com"
+            const res = await axios.get(baseURL + '/api/match/serve',{
+                headers:header
+            });
+            
+            console.log(res.data.matches[1].nickname)
+            users[0].name = res.data.matches[1].nickname
+
+        }
+        catch(e){
+            console.log(e)
+        }
+        
+        
+        
+    }
+
 
     return(
 
-            <SafeAreaView style={{flex:1}}>
+            <SafeAreaView style={{flex:1,backgroundColor:'#e6e6e3'}}>
+               
                 <View style={{alignItems:'center',justifyContent:'center',top:60}}>
                     <Image  style={styles.logoStyle} source={require('../assets/logoTrans.png')}resizeMode='contain' ></Image>
                 </View>
@@ -173,8 +206,9 @@ const Home = () => {
                 
                 <View  style={styles.pageContainer}>                
                     <View style={styles.topNavigation}>
+                        <TouchableOpacity onPress={testing}>
                         <FontAwesome name="user-circle-o" size={40} color={'black'}/>
-                        
+                        </TouchableOpacity>
                         <Entypo name="chat" size={40} color={'black'}/>
                     </View>
 
@@ -205,17 +239,21 @@ const Home = () => {
                     
                     
                 )}
+                <Button title="Click" style={{width:30,height:30,backgroundColor:'red'}} onPress={testing}>
 
-                </View>
+                </Button>
 
-                
-                
+                </View>         
             </SafeAreaView>
         
     )
 }
 
 const styles = StyleSheet.create({
+
+    bg:{
+        position:'absolute'
+    },
 
     logoStyle:{
         position:'absolute',

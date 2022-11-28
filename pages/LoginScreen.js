@@ -18,12 +18,12 @@ import Button from "../src/components/Button";
 import Loader from "./Loader";
 //import ProfileScreen from "./ProfileScreen";
 
-function LoginScreen({ navigation }) {
+const  LoginScreen = ({ navigation }) => {
   const [username = null, setUsername] = useState();
   const [password = null, setPassword] = useState();
   const [errors, setError] = useState({ username: "", password: "" });
   const [loading, setLoad] = useState();
-  const [token, setTokens] = useState("");
+  //const [token, setTokens] = useState("");
   const Login = async () => {
     if (username == "" || password == "") {
       alert("please input both fields");
@@ -36,13 +36,18 @@ function LoginScreen({ navigation }) {
       try {
         const baseURL = "https://only-hands.herokuapp.com";
 
-        const response = await axios.post(
+        //const response = 
+        await axios.post(
           baseURL + "/api/user/login/",
           payload
-        );
-        setTokens(response.data.token);
-
-        navigation.navigate("ProfileScreen", { paramKey: token });
+        ).then((response) => {
+          //setTokens(response.data.token);
+          const token = response.data.token
+          console.log(response);
+          navigation.navigate("Home", { paramKey: token });
+      })
+        //console.log(response);
+        
 
         setLoad(false);
       } catch (error) {
