@@ -38,6 +38,12 @@ const Navbar = () => {
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
+        <Link className={linksClass} to='/chat'>Chat</Link>
+      </li>
+      <li 
+        className='w-fit h-fit'
+        onClick={handleLinkClicked}
+      >
         <Link className={linksClass} to='#'>About</Link>
       </li>
     </>

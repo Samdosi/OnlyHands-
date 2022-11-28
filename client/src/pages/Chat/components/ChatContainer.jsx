@@ -18,8 +18,8 @@ const ChatContainer = ({ setShowChat, socket }) => {
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
-        room: profile?.name,
-        author: profile?.name,
+        room: profile?.matchId,
+        author: profile?.profileId,
         message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
@@ -40,8 +40,8 @@ const ChatContainer = ({ setShowChat, socket }) => {
   }, [socket]);
 
   useEffect(() => {
-    if(profile && profile?.name !== ""){
-      socket.emit("joinRoom", profile.name);
+    if(profile && profile?.profileId !== ""){
+      socket.emit("joinRoom", profile.matchId);
     }
     setMessageList([]);
     setCurrentMessage("");

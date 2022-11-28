@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { Hero, Chat } from "./pages";
 import { Navbar } from "./components";
@@ -14,6 +14,30 @@ const App = () => {
   const bgImages = {
     '/': heroBG
   }
+
+  useEffect(() => {
+    //window.addEventListener('beforeunload', alertUser)
+    window.addEventListener('unload', handleTabClosing)
+    return () => {
+        //window.removeEventListener('beforeunload', alertUser)
+        window.removeEventListener('unload', handleTabClosing)
+    }
+  })
+
+const handleTabClosing = () => {
+    fetch("https://only-hands.herokuapp.com/api/user/login",{
+      method: 'DELETE',
+      headers:{
+        'x-access-token': sessionStorage.getItem('token')
+      },
+      
+    })
+      .then(response => console.log(response.status()))
+      .catch(e => console.log(e))
+
+    sessionStorage.removeItem('token')
+}
+
   return (
     <div 
       className="w-screen max-w-full h-screen hero px-3 sm:px-8 lg:px-12 overflow-y-auto overflow-x-clip" 
