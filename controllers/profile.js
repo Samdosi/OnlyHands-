@@ -66,7 +66,7 @@ const edit_profile = async (req, res) => {
             }
 
             Profile.findById(found_user.profile, (err, found_profile) => {
-                if (err || !profile) {
+                if (err || !found_profile) {
                     return res.status(404).json({ "success": false, "message": "Profile not found!" })
                 }
                 
