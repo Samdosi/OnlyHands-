@@ -1,24 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const { auth_jwt } = require("../middleware/auth_jwt");
-const { dislike, checkExistingMatch, createMatch } = require("../controllers/match");
+const { dislike, checkExistingMatch, createMatch, serveMatch, getMatches, getSpecificMatch, completeMatch } = require("../controllers/match");
 
+router.get("/serve", auth_jwt, async (req, res) => {
+    const userId = req.body.user_id;
+    const numMatches = req.body.user_req.numMatches || 2;
 
-//Get all matches
-router.get("/", auth_jwt, (req, res) => {
-
-
+    await serveMatch(userId, numMatches, res);
 });
 
-//Get a match
-router.get("/:match", auth_jwt, (req, res) => {
+//Get all matches
+router.get("/", auth_jwt, async (req, res) => {
+    const { user_id } = req.body;
+    
 
-
+    await getMatches(user_id, res);
 });
 
 //Do the match
 router.post("/", auth_jwt, async (req, res) => {
-
     const { user_id } = req.body;
     const { match } = req.body.user_req || false; //bool
     const { profileID } = req.body.user_req;
@@ -33,13 +34,24 @@ router.post("/", auth_jwt, async (req, res) => {
         if (!existingMatch) {
             await createMatch(user_id, profileID, res);
         }
-        else return res.status(200).json({ "success": true, "message": "Match is " + value })
+        else await completeMatch(user_id, profileID, res);
     }
 
     else {
-        dislike(user_id, profileID, res);
+        await dislike(user_id, profileID, res);
     }
 
 });
+
+
+//Get a match
+// 
+router.get("/:matchID", auth_jwt, async (req, res) => {
+    const { user_id } = req.body;
+    const matchID = req.params.matchID;
+
+    await getSpecificMatch(user_id, matchID, res);
+});
+
 
 module.exports = router;

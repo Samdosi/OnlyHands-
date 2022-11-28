@@ -15,7 +15,7 @@ const matchSchema = new Schema({
         ref: "Chat",
         default: null
     },
-    isPending: {
+    isComplete: {
         type: Boolean,
         default: false
     }
