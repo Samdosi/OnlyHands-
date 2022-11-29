@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const saltRounds = 10;
-const jwtKey = "supersecret"; 
+const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 const e = require("express");
 require('dotenv').config();
@@ -16,7 +16,7 @@ const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
 
 //! PUT ON SERVER
-const url = process.env.APP_URL ||"http://localhost:5000";
+const url = process.env.APP_URL || "http://localhost:5000";
 
 const getUser = async (userID) => {
     const user = await User.findById(userID)
@@ -83,7 +83,7 @@ const login = async (req, res) => {
             expiresIn: jwtExpirySeconds,
         });
 
-        if(user.profile){
+        if (user.profile) {
             const foundProfile = await Profile.findById(user.profile);
             foundProfile.online = true;
             await foundProfile.save();
@@ -101,8 +101,8 @@ const logout = async (userId, res) => {
         await foundProfile.save();
         console.log(foundProfile);
 
-        return res.status(200).json({"success": true}); 
-        
+        return res.status(200).json({ "success": true });
+
     } catch (err) {
         console.log(err)
         return res.status(500).json({ "success": false });
@@ -147,7 +147,7 @@ const forgotPassword = async (req, res) => {
                     //send reset email link
                     msg(user.email, ohemail, "Password Reset",
                         `<h3>Click on the link below to reset your account password.</h3>
-            <a href = '${url}/api/user/password-reset?token=${resetToken}&email=${user.email}'>Reset password</a>`, res);
+            <a href = '${url}/passwordReset?token=${resetToken}'>Reset password</a>`, res);
                 }
             });
         }
