@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const saltRounds = 10;
-const jwtKey = "supersecret"; 
+const jwtKey = "supersecret";
 const jwtExpirySeconds = 3600;
 const e = require("express");
 require('dotenv').config();
@@ -15,7 +15,7 @@ const ohemail = "only.hands202@gmail.com";
 const { msg } = require("../middleware/sendEmail");
 
 //! PUT ON SERVER
-const url = process.env.APP_URL ||"http://localhost:5000";
+const url = process.env.APP_URL || "http://localhost:5000";
 
 const getUser = async (userID) => {
     const user = await User.findById(userID)

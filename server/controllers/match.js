@@ -48,11 +48,11 @@ const createMatch = async (userId, matchProfileId, res) => {
                 return res.status(404).end();
             }
 
-            
-            if (foundUser.matches.get(matchProfileId)){
+
+            if (foundUser.matches.get(matchProfileId)) {
                 return res.status(405).end();
             }
-            
+
 
             const foundProfile = foundUser.profile;
 
@@ -93,7 +93,7 @@ const completeMatch = async (userId, matchProfileId, res) => {
                 return res.status(400).json({ "success": false, "message": "Profile not found!" });
             }
 
-            if(foundUser.matches.get(matchProfileId)){
+            if (foundUser.matches.get(matchProfileId)) {
                 return res.status(405).end();
             }
 
@@ -120,7 +120,7 @@ const completeMatch = async (userId, matchProfileId, res) => {
 
 // TODO add pictures
 // GET
-const getMatches = (userId, res) => {
+const getMatches = (userId, searchQuery, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err) {
@@ -132,11 +132,11 @@ const getMatches = (userId, res) => {
 
             for (let index = 0; index < mapEntries.length; index++) {
                 const currentArray = mapEntries[index];
-                
+
                 const profileId = currentArray[0];
                 const matchId = currentArray[1];
 
-                
+
                 const profile = await Profile.findById(profileId);
                 const matchDoc = await Match.findById(matchId);
 
@@ -212,16 +212,16 @@ const serveMatch = async (userId, numMatches, res) => {
             if (err) {
                 return res.status(404).json({ "success": false, "message": "User not found!" });
             }
-            
+
 
             const queryRes = await Profile.
                 find({
                     $and: [
-                        { "_id": { $nin : Array.from(foundUser.matches.keys()) } },
-                        { "_id": { $nin : foundUser.rejections } },
-                        { "_id": {$not: {$eq: foundUser.profile}} } 
+                        { "_id": { $nin: Array.from(foundUser.matches.keys()) } },
+                        { "_id": { $nin: foundUser.rejections } },
+                        { "_id": { $not: { $eq: foundUser.profile } } }
                     ]
-                })   
+                })
 
             console.log(queryRes);
 
