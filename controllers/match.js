@@ -120,7 +120,7 @@ const completeMatch = async (userId, matchProfileId, res) => {
 
 // TODO add pictures
 // GET
-const getMatches = (userId, res) => {
+const getMatches = (userId, searchQuery, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err) {
@@ -144,8 +144,19 @@ const getMatches = (userId, res) => {
                     profileId: profileId,
                     firstName: profile.firstName,
                     lastName: profile.lastName,
+                    online: profile.online,
                     matchId: matchDoc._id
                 };
+
+                if(searchQuery){
+                    searchRegex = new RegExp(searchQuery,"i");
+                    const {firstName, lastName} = match;
+                    const fullName = firstName + " " + lastName;
+                    console.log(fullName)
+                    if(fullName.search(searchRegex) == -1){
+                        continue;
+                    }
+                }
 
                 matchArr.push(match);
             }

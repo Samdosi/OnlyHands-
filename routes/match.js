@@ -13,9 +13,9 @@ router.get("/serve", auth_jwt, async (req, res) => {
 //Get all matches
 router.get("/", auth_jwt, async (req, res) => {
     const { user_id } = req.body;
-    
+    const { searchQuery } = req.body.user_req;
 
-    await getMatches(user_id, res);
+    await getMatches(user_id, searchQuery, res);
 });
 
 //Do the match
