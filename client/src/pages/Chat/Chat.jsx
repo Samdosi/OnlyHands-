@@ -13,7 +13,7 @@ const Chat = ({ setBgImage, socket }) => {
   const [newMessages, setNewMessages] = useState([]);
 
   useEffect(() => {
-    fetch("http://only-hands.herokuapp.com/api/match", {
+    fetch("https://only-hands.herokuapp.com/api/match", {
       headers:{
         'x-access-token': sessionStorage.getItem('token')
       }
