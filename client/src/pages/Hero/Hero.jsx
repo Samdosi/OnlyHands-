@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Modal from "./components/Modal"
+import Modal from "./components/Modal";
 
 const Hero = ({ setBgImage }) => {
 
@@ -14,17 +14,15 @@ const Hero = ({ setBgImage }) => {
     const [isLoginTab, setIsLoginTab] = useState(false);
 
     return (
-        <div className="text-white w-full h-[80vh]  flex flex-col justify-around items-center text-center overflow-y-hidden">
-
-            <h1 className="text-4xl lg:text-5xl font-bold">Swipe Right, Start Fights</h1>
-
-            <div className="flex flex-col justify-around h-1/3 md:h-1/3 lg:text-lg md:font-medium">
+        <div className="text-white w-full h-[80vh] flex flex-col justify-center items-center text-center overflow-y-hidden">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-6">Swipe Right, Start Fights</h1>
+            <div className="flex flex-col justify-evenly h-1/3 md:h-1/3 lg:text-lg md:font-medium">
                 <button 
                     onClick={() => {
                         setShowModal(true);
                         setIsLoginTab(false);
                     }}
-                    className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
+                    className="bg-white text-black p-3 2xl:p-4 rounded-lg shadow-md transition grow-transition">
                     Create Account
                 </button>
                 <button
@@ -32,12 +30,11 @@ const Hero = ({ setBgImage }) => {
                         setShowModal(true);
                         setIsLoginTab(true);
                     }}
-                    className=' p-3 2xl:p-4 rounded-lg shadow-md border grow-transition'
+                    className="p-3 2xl:p-4 rounded-lg shadow-md border grow-transition"
                 >
                     Log in
                 </button>
             </div>
-
             {showModal && <Modal onClose={handleModal} isLoginTab={isLoginTab} toggleTab={setIsLoginTab} />}
         </div>
     );

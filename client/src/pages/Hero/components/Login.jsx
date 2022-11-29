@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 import { useOutsideClick } from '../../../hooks';
 import { AiOutlineLoading } from 'react-icons/ai';
 
@@ -8,6 +10,45 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const navigate = useNavigate();
+
+    function notify() {
+        toast("You have successfully logged in!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        toast.configure();
+      }
+
+    const forgotPassword = async event => {
+        let passPrompt = prompt("Enter your registered email below to recieve a password reset email.");
+
+        event.preventDefault();
+
+        fetch('https://only-hands.herokuapp.com/api/user/forgot-password', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: passPrompt
+            })
+        })
+        .then((res) => { 
+            return res.json() 
+        })
+        .then((data) => {
+            if (data["success"]) {
+                console.log("message");
+            }
+            else
+                console.log(data.message);
+        })
+        .catch(error => console.log(error))
+    }
 
     const doLogin = async event =>  {
 
@@ -34,6 +75,7 @@ const Login = () => {
                 sessionStorage.setItem("token", data.token);
                 sessionStorage.setItem('profile', data.profile);
                 navigate('/profile');
+                notify();
             }
             else
                 console.log(data.message);
@@ -72,7 +114,7 @@ const Login = () => {
                         {error&&password.length<8?
                         <p className="text-s text-red-600 mb-2">Please enter a valid password.</p>:""}
                     </label>
-                    <button className="mr-16 mb-1">Forgot password?</button>
+                    <button onClick={forgotPassword} className="mr-16 mb-1">Forgot password?</button>
                 </div>
                 <div className="text-center">
                     <button type="submit" className="px-5 py-2 m-2 bg-gray-700 text-white rounded grow-transition" data-testid='login-btn'>
@@ -80,6 +122,18 @@ const Login = () => {
                     </button>
                 </div>
             </form>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 }
