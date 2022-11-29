@@ -1,4 +1,5 @@
 const { User } = require("../schemas/User");
+const { Profile } = require("../schemas/Profile");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
@@ -81,7 +82,30 @@ const login = async (req, res) => {
             algorithm: "HS256",
             expiresIn: jwtExpirySeconds,
         });
-        res.status(200).json({ "success": true, token: token }).end();
+
+        if(user.profile){
+            const foundProfile = await Profile.findById(user.profile);
+            foundProfile.online = true;
+            await foundProfile.save();
+        }
+
+        res.status(200).json({ "success": true, token: token, profile: user.profile }).end();
+    }
+};
+
+const logout = async (userId, res) => {
+    try {
+        const foundUser = await User.findById(userId);
+        const foundProfile = await Profile.findById(foundUser.profile);
+        foundProfile.online = false;
+        await foundProfile.save();
+        console.log(foundProfile);
+
+        return res.status(200).json({"success": true}); 
+        
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ "success": false });
     }
 };
 
@@ -156,4 +180,4 @@ const resetPassword = async (req, res) => {
     });
 };
 
-module.exports = { createUser, login, verifyEmail, forgotPassword, resetPassword, getUser };
+module.exports = { createUser, login, verifyEmail, forgotPassword, resetPassword, getUser, logout };

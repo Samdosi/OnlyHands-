@@ -1,5 +1,5 @@
 const express = require("express");
-const { createUser, login, verifyEmail, forgotPassword, resetPassword } = require("../controllers/user");
+const { createUser, login, verifyEmail, forgotPassword, resetPassword, logout } = require("../controllers/user");
 const { body, validationResult } = require("express-validator");
 const { auth_jwt } = require("../middleware/auth_jwt");
 const router = express.Router();
@@ -43,6 +43,12 @@ router.post("/login", async (req, res) => {
         username,
     }, res);
 });
+
+router.delete("/login", auth_jwt, async (req, res) => {
+    const { user_id } = req.body;
+
+    await logout(user_id, res);
+})
 
 //email verification route link
 router.get("/verify-email", async (req, res) => {

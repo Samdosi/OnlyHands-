@@ -60,6 +60,10 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "ImageUpload",
     },
+    online:{
+        type: Boolean,
+        default: true
+    }
 });
 const Profile = mongoose.model('profile', profileSchema);
 module.exports = { Profile };

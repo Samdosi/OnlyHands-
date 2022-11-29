@@ -15,6 +15,10 @@ const matchSchema = new Schema({
         ref: "Chat",
         default: null
     },
+    newMessages:{
+        text: String,
+        amount: Number
+    },
     isComplete: {
         type: Boolean,
         default: false
