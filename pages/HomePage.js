@@ -39,10 +39,44 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { BackgroundImage } from "react-native-elements/dist/config";
-
 import axios from "axios";
+import load from '../loadprofiles'
+
 
 const Home = ({navigation,route}) => {
+
+    //const profiles = load(route.params.paramKey)
+    
+
+ /*   const LoadProfiles = async () => {
+        const token = route.params.paramKey;
+        console.log(token)
+       //console.log('HEY');
+    
+            const header = {
+                'x-access-token': token,
+                'Content-Type': 'application/json',
+            }
+            //console.log(header["x-access-token"])
+            try{
+                const baseURL = "https://only-hands.herokuapp.com"
+                const res = await axios.get(baseURL + '/api/match/serve',{
+                    headers:header
+                });
+
+                console.log(res)
+                console.log(res.data.matches[0].nickname)
+                users[0].name = res.data.matches[0].nickname
+                //users[0].name = res.data.matches[1].nickname
+                //navigation.navigate("Home", { paramKey: token });
+    
+            }
+            catch(e){
+                console.log(e)
+            }
+            
+    }*/
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [nextIndex, setNextIndex] = useState(currentIndex+1)
 
@@ -167,7 +201,7 @@ const Home = ({navigation,route}) => {
                     
                     
                 </View>
-*/
+
 // testing 
     const testing = async () =>{
         console.log(route.params.paramKey)
@@ -181,7 +215,7 @@ const Home = ({navigation,route}) => {
             const res = await axios.get(baseURL + '/api/match/serve',{
                 headers:header
             });
-            
+            console.log(res)
             console.log(res.data.matches[1].nickname)
             users[0].name = res.data.matches[1].nickname
 
@@ -193,7 +227,7 @@ const Home = ({navigation,route}) => {
         
         
     }
-
+*/
 
     return(
 
@@ -206,7 +240,7 @@ const Home = ({navigation,route}) => {
                 
                 <View  style={styles.pageContainer}>                
                     <View style={styles.topNavigation}>
-                        <TouchableOpacity onPress={testing}>
+                        <TouchableOpacity >
                         <FontAwesome name="user-circle-o" size={40} color={'black'}/>
                         </TouchableOpacity>
                         <Entypo name="chat" size={40} color={'black'}/>
@@ -239,7 +273,7 @@ const Home = ({navigation,route}) => {
                     
                     
                 )}
-                <Button title="Click" style={{width:30,height:30,backgroundColor:'red'}} onPress={testing}>
+                <Button title="Click" style={{width:30,height:30,backgroundColor:'red'}} onPress = {load}>
 
                 </Button>
 

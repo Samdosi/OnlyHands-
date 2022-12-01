@@ -4,6 +4,7 @@ import { Text,StyleSheet,ImageBackground, Image, SafeAreaView,View } from "react
 const Card = (props) =>{
     const {name, image, bio} = props.user
 
+
     return(
         <View style={styles.profileCard}>
                     

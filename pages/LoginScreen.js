@@ -17,6 +17,8 @@ import Button from "../src/components/Button";
 //import RegisterScreen from "./RegisterScreen";
 import Loader from "./Loader";
 //import ProfileScreen from "./ProfileScreen";
+import LoadProfiles from '../loadprofiles'
+
 
 const  LoginScreen = ({ navigation }) => {
   const [username = null, setUsername] = useState();
@@ -42,13 +44,18 @@ const  LoginScreen = ({ navigation }) => {
           payload
         ).then((response) => {
           //setTokens(response.data.token);
-          const token = response.data.token
           console.log(response);
-          navigation.navigate("Home", { paramKey: token });
+          const token = response.data.token
+
+          LoadProfiles(token).then(()=>{
+            
+            console.log("NOW")
+            navigation.navigate("Home", { paramKey: token });
+          })      
+          
+          
       })
         //console.log(response);
-        
-
         setLoad(false);
       } catch (error) {
         setLoad(false);

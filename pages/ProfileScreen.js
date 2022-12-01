@@ -83,6 +83,7 @@ function ProfileScreen({ navigation, route }) {
         totalFights: totalFights,
         nickname: nickname,
       };
+      
       const token = route.params.paramKey;
       setLoad(true);
       console.log(token);

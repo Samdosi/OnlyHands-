@@ -18,6 +18,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
 
+import loader from './loadprofiles'
+
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
 };
@@ -33,7 +35,7 @@ const App = () => {
          
         <Stack.Screen
           name="LoginScreen"
-          component={ChatScreen}
+          component={LoginScreen}
           options={{
             headerShown: false,
             headerStyle: { backgroundColor: "red" },
@@ -52,8 +54,7 @@ const App = () => {
             headerStyle: { backgroundColor: "black", color: "white" },
             headerTintColor: "white",
           }}
-       />
-        
+       />        
         <Stack.Screen
           name="MessageScreen"
           component={MessageScreen}
@@ -62,7 +63,7 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
