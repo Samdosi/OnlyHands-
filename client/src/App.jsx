@@ -51,8 +51,8 @@ const handleTabClosing = () => {
         <Routes>
           <Route path="/" element={<Hero setBgImage={setBgImage}/>}/>
           <Route path="/chat" element={<Chat setBgImage={setBgImage} socket={socket}/>} />
-          <Route path="/profile" element={<Profile setBgImage={setBgImage}/>}/>
-          <Route path="/passwordReset" element={<PasswordReset setBgImage={setBgImage}/>}/>
+          <Route path="/profile" element={<Profile />}/>
+          <Route path="/passwordReset" element={<PasswordReset />}/>
         </Routes>
       </BrowserRouter>
     </div>

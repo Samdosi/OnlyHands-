@@ -26,7 +26,7 @@ const Navbar = () => {
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
-        <Link className={linksClass} to='#'>Rules</Link>
+        <Link className={linksClass} to='/profile'>Profile</Link>
       </li>
       <li 
         className='w-fit h-fit'

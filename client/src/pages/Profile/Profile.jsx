@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import Card from './components/Card';
 import InfoModal from './components/InfoModal';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = ({ setBgImage }) => {
-    
-    const { pathname } = useLocation();
-    setBgImage(pathname);
+
+    const navigate = useNavigate();
     
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(false);
@@ -17,7 +16,15 @@ const Profile = ({ setBgImage }) => {
             method: 'GET',
             headers: { 'x-access-token': sessionStorage.getItem('token'), 'Content-Type': 'application/json' },
         })
-            .then((res) => {
+            .then(async (res) => {
+                if(res.status == 401){
+                    navigate('/');
+                }
+                if(res.status == 403){
+                    const {message} = await res.json();
+                    if (message !== "Profile ID is required")
+                        navigate('/');
+                }
                 return res.json()
             })
             .then((data) => {

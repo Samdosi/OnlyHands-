@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { NewMessages, Messages, ChatContainer } from './components';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ProfileProvider } from './context/Profile';
 
 const Chat = ({ setBgImage, socket }) => {
 
+  const navigate = useNavigate();
   const {pathname} = useLocation();
   setBgImage(pathname);
 
@@ -18,7 +19,12 @@ const Chat = ({ setBgImage, socket }) => {
         'x-access-token': sessionStorage.getItem('token')
       }
     })
-      .then(response => response.json())
+      .then(response => {
+        if(response.status == 401 || response.status == 403){
+          navigate('/');
+        }
+        return response.json();
+      })
       .then(data => {
         console.log(data)
         setMessages(data.matches)
