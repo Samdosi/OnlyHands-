@@ -16,7 +16,7 @@ const Register = ({ handleModal }) => {
     toast("Your account has been created!", {
       position: "bottom-right",
       autoClose: 5000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,

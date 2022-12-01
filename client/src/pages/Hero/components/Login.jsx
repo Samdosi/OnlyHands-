@@ -15,7 +15,7 @@ const Login = () => {
         toast("You have successfully logged in!", {
           position: "bottom-right",
           autoClose: 5000,
-          hideProgressBar: false,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
