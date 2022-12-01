@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Card from './Components/Card';
-import InfoModal from './Components/InfoModal';
+import Card from './components/Card';
+import InfoModal from './components/InfoModal';
 
 const Profile = ({ setBgImage }) => {
     
@@ -9,8 +9,8 @@ const Profile = ({ setBgImage }) => {
     setBgImage(pathname);
     
     const [showModal, setShowModal] = useState(false);
-    const handleModal = () => setShowModal(false);
     const [isCreated, setIsCreated] = useState(false);
+    const handleModal = () => setShowModal(false);
 
     useEffect(() => {
         fetch('https://only-hands.herokuapp.com/api/profile/', {

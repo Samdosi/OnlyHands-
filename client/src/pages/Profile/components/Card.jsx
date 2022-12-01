@@ -28,9 +28,9 @@ const Card = () => {
   const [matches, setMatches] = useState([]);
 
   // generate new people to swipe on
-  const doServe = async event => {
-    
-    event.preventDefault();
+  const doServe = async () => {
+
+    // event.preventDefault();
 
     fetch("https://only-hands.herokuapp.com/api/match/serve", {
       method: 'GET',
@@ -40,11 +40,13 @@ const Card = () => {
       },
     })
       .then((res) => {
+        console.log("from serve");
         return res.json();
       })
       .then((data) => {
         if (data["success"]) {
           console.log(data["message"]);
+          console.log(data["matches"]);
         } else console.log(data["message"]);
       })
   }
@@ -64,12 +66,16 @@ const Card = () => {
       .then((data) => {
         if (data["success"]) {
           console.log(data["message"]);
-          setMatches([...data["matches"]]);
+          setMatches(data["matches"], ...matches);
+          console.log("matches:");
+          console.log(matches);
         } else {
           console.log(data["message"]);
         }
       })
       .catch((error) => console.log(error));
+
+    doServe();
   }, [])
 
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
@@ -79,10 +85,10 @@ const Card = () => {
 
   const childRefs = useMemo(
     () =>
-      Array(db.length)
+      Array(matches.length)
         .fill(0)
         .map((i) => React.createRef()),
-    []
+    [matches]
   );
 
   const updateCurrentIndex = (val) => {
@@ -125,21 +131,56 @@ const Card = () => {
 
   return (
     <div className="fighterCard flex flex-col justify-center items-center h-screen">
-      <div className="cardContainer">
+      <div className="cardContainer bg-gray">
+        {matches.length === 0 ? (<div className="flex justify-center items-center">Nobody to serve lol</div>) :
+          (matches.length > 0) && matches.map((match, index) => (
+            <TinderCard
+              className="swipe"
+              key={index}
+              preventSwipe={['up', 'down']}
+              onSwipe={(dir) => swiped(dir, match.name, index)}
+              onCardLeftScreen={() => outOfFrame(match.name, index)}
+            >
+              <div
+                // style={{ backgroundImage: "url(" + match.url + ")" }}
+                style={{ backgroundColor: "gray"}}
+                className="card"
+              >
+                <div className="gridContainer">
+                <div className="item1">{match["firstName"]}{match["lastName"]}</div>
+                <div className="gridItem">Gender: {match["gender"]}</div>
+                <div className="gridItem">Nickname: {match["nickname"]}</div>
+                <div className="gridItem">Age: {match["age"]}</div>
+                <div className="gridItem">Height: {match["height"]}</div>
+                <div className="gridItem">Weight: {match["weight"]}</div>
+                <div className="gridItem">Style: {match["style"]}</div>
+                <div className="gridItem">Record: {match["record"]}</div>
+                <div className="gridItem">Reach: { match["reach"]}</div>
+              </div>
+              </div>
+            </TinderCard>
+          ))
+        }
+        {/* 
+        */}
+        {/* 
+        
         {db.map((match, index) => (
           <TinderCard
             className="swipe"
-            key={match["name"]}
+            key={index}
+            preventSwipe={['up', 'down']}
             onSwipe={(dir) => swiped(dir, match.name, index)}
             onCardLeftScreen={() => outOfFrame(match.name, index)}
           >
             <div
               style={{ backgroundImage: "url(" + match.url + ")" }}
+              // style={{ backgroundColor: "white"}}
               className="card"
             >
               <div className="gridContainer">
-                <div className="item1">Fighters </div>
-                <div className="gridItem">Gender: </div>
+                <div className="item1">{match["name"]}</div>
+                <div className="gridItem">{}</div>
                 <div className="gridItem">Nickname: </div>
                 <div className="gridItem">Height: </div>
                 <div className="gridItem">Style: </div>
@@ -151,6 +192,7 @@ const Card = () => {
             </div>
           </TinderCard>
         ))}
+        */}
       </div>
       <div className="buttons">
         <button
