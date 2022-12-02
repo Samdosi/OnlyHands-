@@ -284,6 +284,7 @@ const styles = StyleSheet.create({
     //backgroundColor:'red',
     height: 150,
     width: 80,
+    transform: [{ scale: 0.9 }],
     //flexDirection:'column',
 
     flex: 1,

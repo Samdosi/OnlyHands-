@@ -86,12 +86,12 @@ function profileEdit({ navigation, route }) {
         onChangeWeight(response.data.profile.weight.toString());
         onChangeNickname(response.data.profile.nickname);
         onChangeReach(response.data.profile.reach);
-        onChangeWins(response.data.profile.wins);
-        onChangeLosses(response.data.profile.losses);
-        onChangeKOs(response.data.profile.KOs);
-        onChangeTotalFihts(response.data.profile.totalFights);
-        onChangeStyle(response.data.profile.style);
-        onChangeBio(response.data.profile.bio);
+        onChangeWins(response.data.profile.wins.toString());
+        onChangeLosses(response.data.profile.losses.toString());
+        onChangeKOs(response.data.profile.KOs.toString());
+        onChangeTotalFihts(response.data.profile.totalFights.toString());
+        onChangeStyle(response.data.profile.style.toString());
+        onChangeBio(response.data.profile.bio.toString());
       })
       .catch(function (error) {
         console.log(error);
