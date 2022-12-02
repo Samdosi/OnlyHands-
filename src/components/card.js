@@ -2,16 +2,20 @@ import React from "react";
 import { Text,StyleSheet,ImageBackground, Image, SafeAreaView,View } from "react-native";
 
 const Card = (props) =>{
-    const {name, image, bio} = props.user
+    const {name, image, bio, wins, losses,age} = props.user
 
 
     return(
         <View style={styles.profileCard}>
                     
                     <ImageBackground source={{uri:image}} style={styles.fighterPicture}>
+                        <View style={styles.profileRecordContainer}>
+                            <Text style={styles.profileRecord}>{wins}-{losses}</Text>
+                        </View>
                         <View style={styles.figtherInfo}>
                             <Text style={styles.profileName}>{name}</Text>
                             <Text style={styles.profileBio}>{bio}</Text>
+                            <Text style={styles.profileAge}>{age} Y.O.</Text>
                         </View>
                     </ImageBackground>
         </View>
@@ -21,6 +25,34 @@ const Card = (props) =>{
 
 
 const styles = StyleSheet.create({
+
+    profileAge:{
+        width:70,
+        height:30,
+        alignSelf:'flex-end',
+        fontSize:20,
+        color:'white',
+        fontWeight:'bold',
+        position:'relative'
+    },
+
+    profileRecord:{
+        fontSize:25,
+        color:'white',
+        fontWeight:'bold',
+    },
+
+    profileRecordContainer:{
+        width:'100%',
+        height:10,
+        //backgroundColor:'red',
+        flex:1,
+        justifyContent:'flex-end',
+        alignSelf:'flex-end',
+        alignItems:'center',
+        flexDirection:'column-reverse'
+        
+    },
 
     pageContainer:{
         justifyContent:'center',
