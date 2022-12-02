@@ -17,8 +17,8 @@ import Home from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
-
-import loader from './assets/data/loadprofiles'
+import profileEdit from "./pages/profileEdit";
+import loader from "./loadprofiles";
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
@@ -31,8 +31,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-        <Stack.Navigator>    
-         
+      <Stack.Navigator>
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
@@ -54,16 +53,34 @@ const App = () => {
             headerStyle: { backgroundColor: "black", color: "white" },
             headerTintColor: "white",
           }}
-       />        
+        />
         <Stack.Screen
           name="MessageScreen"
           component={MessageScreen}
-          option={{headerShown:false}}
+          option={{ headerShown: false }}
         />
         <Stack.Screen
           name="Home"
           component={Home}
           options={{ headerShown: false }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="profileEdit"
+          component={profileEdit}
+          options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: "black", color: "white" },
+            headerTintColor: "white",
+          }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: "black", color: "white" },
+            headerTintColor: "white",
+          }}
         ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
