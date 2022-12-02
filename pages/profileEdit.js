@@ -84,6 +84,14 @@ function profileEdit({ navigation, route }) {
         onChangeAge(response.data.profile.age.toString());
         onChangeHeight(response.data.profile.height);
         onChangeWeight(response.data.profile.weight.toString());
+        onChangeNickname(response.data.profile.nickname);
+        onChangeReach(response.data.profile.reach);
+        onChangeWins(response.data.profile.wins);
+        onChangeLosses(response.data.profile.losses);
+        onChangeKOs(response.data.profile.KOs);
+        onChangeTotalFihts(response.data.profile.totalFights);
+        onChangeStyle(response.data.profile.style);
+        onChangeBio(response.data.profile.bio);
       })
       .catch(function (error) {
         console.log(error);
@@ -91,7 +99,20 @@ function profileEdit({ navigation, route }) {
       .then(function (response) {});
   };
   const Edit = async () => {
-    console.log(route);
+    const payload = {
+      firstName: firstName,
+      lastName: lastName,
+      gender: gender,
+      age: age,
+      height: height,
+      weight: weight,
+      reach: reach,
+      wins: wins,
+      losses: losses,
+      KOs: KOs,
+      totalFights: totalFights,
+      nickname: nickname,
+    };
     const token = route.params.paramKey;
     setLoad(true);
     console.log(token);
@@ -99,73 +120,19 @@ function profileEdit({ navigation, route }) {
       "x-access-token": token,
       "Content-Type": "application/json",
     };
-    const baseURL = "https://only-hands.herokuapp.com/api";
-    axios
-      .get(baseURL + "/profile/", {
+    try {
+      const baseURL = "https://only-hands.herokuapp.com";
+      const response = await axios.put(baseURL + "/api/profile/", payload, {
         headers: headers,
-      })
-      .then(function (response) {
-        console.log(response.data.profile);
-        onChangeFirstName(response.data.profile.firstName);
-        onChangeLastName(response.data.profile.lastName);
-        onchangeGender(response.data.profile.gender);
-        onChangeAge(response.data.profile.age);
-        onChangeHeight(response.data.profile.height);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then(function (response) {
-        // always executed
-        setLoad(false);
       });
-    // if (
-    //   firstName == "" ||
-    //   lastName == "" ||
-    //   gender == "" ||
-    //   age == "" ||
-    //   height == "" ||
-    //   weight == ""
-    // ) {
-    //   setErorrs(true);
-    //   alert("please input all the required fields");
-    // } else {
-    //   const payload = {
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     gender: gender,
-    //     age: age,
-    //     height: height,
-    //     weight: weight,
-    //     reach: reach,
-    //     wins: wins,
-    //     losses: losses,
-    //     KOs: KOs,
-    //     totalFights: totalFights,
-    //     nickname: nickname,
-    //   };
-
-    //   const token = route.params.paramKey;
-    //   setLoad(true);
-    //   console.log(token);
-    //   const headers = {
-    //     "x-access-token": token,
-    //     "Content-Type": "application/json",
-    //   };
-    //   try {
-    //     const baseURL = "https://only-hands.herokuapp.com";
-    //     const response = await axios.post(baseURL + "/api/profile/", payload, {
-    //       headers: headers,
-    //     });
-    //     console.log(response);
-    //     navigation.navigate("Home");
-    //     setLoad(false);
-    //   } catch (error) {
-    //     setLoad(false);
-    //     console.log(error.response.data);
-    //     alert(error.response.data.message);
-    //   }
-    // }
+      console.log(response);
+      navigation.navigate("Home");
+      setLoad(false);
+    } catch (error) {
+      setLoad(false);
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    }
   };
 
   useEffect(() => {
