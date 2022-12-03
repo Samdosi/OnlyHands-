@@ -17,8 +17,8 @@ import Home from "./pages/HomePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
-import profileEdit from "./pages/profileEdit";
-import loader from "./loadprofiles";
+import ProfileEdit from "./pages/ProfileEdit";
+//import loader from "./assets/loadprofiles";
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
@@ -65,8 +65,8 @@ const App = () => {
           options={{ headerShown: false }}
         ></Stack.Screen>
         <Stack.Screen
-          name="profileEdit"
-          component={profileEdit}
+          name="ProfileEdit"
+          component={ProfileEdit}
           options={{
             headerShown: true,
             headerStyle: { backgroundColor: "black", color: "white" },

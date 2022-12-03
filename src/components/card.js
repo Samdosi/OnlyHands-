@@ -21,7 +21,7 @@ const Card = (props) => {
         <View style={styles.figtherInfo}>
           <Text style={styles.profileName}>{name}</Text>
           <Text style={styles.profileBio}>{bio}</Text>
-                            <Text style={styles.profileAge}>{age} Y.O.</Text>
+            <Text style={styles.profileAge}>{age} Y.O.</Text>
         </View>
       </ImageBackground>
     </View>

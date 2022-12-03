@@ -14,7 +14,7 @@ import {
   Alert,
 } from "react-native";
 import Card from "../src/components/card";
-import users from "../assets/data/usersTest";
+import users from "../assets/data/users";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -33,7 +33,7 @@ import {
 } from "react-native-gesture-handler";
 import Fight from "../assets/fight.png";
 import NoFight from "../assets/no!.png";
-import profileEdit from "./profileEdit";
+import profileEdit from "./ProfileEdit";
 const ROTATION = 60;
 const SWIPE_VELOCITY = 1000;
 
@@ -42,40 +42,11 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
-import load from "../loadprofiles";
+import load from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
 
 const Home = ({ navigation, route }) => {
-  //const profiles = load(route.params.paramKey)
-
-  /*   const LoadProfiles = async () => {
-        const token = route.params.paramKey;
-        console.log(token)
-       //console.log('HEY');
-    
-            const header = {
-                'x-access-token': token,
-                'Content-Type': 'application/json',
-            }
-            //console.log(header["x-access-token"])
-            try{
-                const baseURL = "https://only-hands.herokuapp.com"
-                const res = await axios.get(baseURL + '/api/match/serve',{
-                    headers:header
-                });
-
-                console.log(res)
-                console.log(res.data.matches[0].nickname)
-                users[0].name = res.data.matches[0].nickname
-                //users[0].name = res.data.matches[1].nickname
-                //navigation.navigate("Home", { paramKey: token });
-    
-            }
-            catch(e){
-                console.log(e)
-            }
-            
-    }*/
+  
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
@@ -166,50 +137,7 @@ const Home = ({ navigation, route }) => {
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
 
-  //  users[0].name = 'Sam'
-  //
-
-  //IF YES or NO buttons, but F that
-  /*
-                <View style = {styles.botNavigation}>
-                    
-                    <View style = {[styles.botButton,{backgroundColor:'#ff6969'}]}>
-                        <AntDesign name="close" size={40} color={'#323a42'}/> 
-                    </View>
-
-                    <View style = {[styles.botButton,{backgroundColor:'#7ae5fa'}]}>
-                        <AntDesign name="check" size={40} color={'#323a42'}/>
-                    </View>
-                    
-                    
-                </View>
-
-// testing 
-    const testing = async () =>{
-        console.log(route.params.paramKey)
-        const header = {
-            'x-access-token': route.params.paramKey,
-            'Content-Type': 'application/json',
-        }
-        console.log(header["x-access-token"])
-        try{
-            const baseURL = "https://only-hands.herokuapp.com"
-            const res = await axios.get(baseURL + '/api/match/serve',{
-                headers:header
-            });
-            console.log(res)
-            console.log(res.data.matches[1].nickname)
-            users[0].name = res.data.matches[1].nickname
-
-        }
-        catch(e){
-            console.log(e)
-        }
-        
-        
-        
-    }
-*/
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e6e6e3" }}>
@@ -225,7 +153,7 @@ const Home = ({ navigation, route }) => {
         <View style={styles.topNavigation}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("profileEdit", {
+              navigation.navigate("ProfileEdit", {
                 paramKey: route.params.paramKey,
               })
             }

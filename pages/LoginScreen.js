@@ -17,7 +17,7 @@ import Button from "../src/components/Button";
 //import RegisterScreen from "./RegisterScreen";
 import Loader from "./Loader";
 //import ProfileScreen from "./ProfileScreen";
-import LoadProfiles from '../loadprofiles'
+import LoadProfiles from '../assets/data/loadprofiles'
 
 
 const  LoginScreen = ({ navigation }) => {

@@ -17,7 +17,7 @@ import { CheckBox, useTheme } from "react-native-elements";
 import { ImagePicker } from "react-native-image-picker";
 import Loader from "./Loader";
 import axios from "axios";
-function profileEdit({ navigation, route }) {
+function ProfileEdit({ navigation, route }) {
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -606,4 +606,4 @@ const styles = StyleSheet.create({
   saveButtonText: {},
 });
 
-export default profileEdit;
+export default ProfileEdit;
