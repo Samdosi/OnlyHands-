@@ -46,8 +46,6 @@ import load from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
 
 const Home = ({ navigation, route }) => {
-  
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
 
@@ -137,8 +135,6 @@ const Home = ({ navigation, route }) => {
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
 
-  
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e6e6e3" }}>
       <View style={{ alignItems: "center", justifyContent: "center", top: 60 }}>
@@ -148,9 +144,28 @@ const Home = ({ navigation, route }) => {
           resizeMode="contain"
         ></Image>
       </View>
-
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ProfileEdit", {
+            paramKey: route.params.paramKey,
+          })
+        }
+        style={{ textAlign: "left", marginLeft: 20 }}
+      >
+        <FontAwesome name="user-circle-o" size={40} color={"black"} />
+      </TouchableOpacity>
+      <Entypo
+        name="chat"
+        size={40}
+        color={"black"}
+        onPress={() => navigation.navigate("ChatScreen")}
+        style={{
+          textAlign: "right",
+          marginRight: 20,
+        }}
+      />
       <View style={styles.pageContainer}>
-        <View style={styles.topNavigation}>
+        {/* <View style={styles.topNavigation}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("ProfileEdit", {
@@ -166,8 +181,7 @@ const Home = ({ navigation, route }) => {
             color={"black"}
             onPress={() => navigation.navigate("ChatScreen")}
           />
-        </View>
-
+        </View> */}
         {nextProfile && (
           <View style={styles.nextCardContainer}>
             <Animated.View style={[styles.animatedCard, nextCardStyle]}>
