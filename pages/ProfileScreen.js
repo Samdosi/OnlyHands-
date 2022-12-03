@@ -17,6 +17,8 @@ import { CheckBox, useTheme } from "react-native-elements";
 import { ImagePicker } from "react-native-image-picker";
 import Loader from "./Loader";
 import axios from "axios";
+import LoginScreen from "./LoginScreen";
+import Home from "./HomePage";
 function ProfileScreen({ navigation, route }) {
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
@@ -83,7 +85,7 @@ function ProfileScreen({ navigation, route }) {
         totalFights: totalFights,
         nickname: nickname,
       };
-      
+
       const token = route.params.paramKey;
       setLoad(true);
       console.log(token);
@@ -97,7 +99,9 @@ function ProfileScreen({ navigation, route }) {
           headers: headers,
         });
         console.log(response);
-        navigation.navigate("Home");
+        navigation.navigate("Home", {
+          paramKey: route.params.paramKey,
+        });
         setLoad(false);
       } catch (error) {
         setLoad(false);

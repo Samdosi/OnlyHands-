@@ -44,7 +44,7 @@ import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
 import load from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
-
+import drawer from "./drawer";
 const Home = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
@@ -134,10 +134,13 @@ const Home = ({ navigation, route }) => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
+  const openMenu = () => {
+    navigation.openDrawer();
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e6e6e3" }}>
-      <View style={{ alignItems: "center", justifyContent: "center", top: 50}}>
+      <View style={{ alignItems: "center", justifyContent: "center", top: 50 }}>
         <Image
           style={styles.logoStyle}
           source={require("../assets/logoTrans.png")}
@@ -145,41 +148,34 @@ const Home = ({ navigation, route }) => {
         ></Image>
       </View>
       <View style={styles.navigationContainer}>
-
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("ProfileEdit", {
-            paramKey: route.params.paramKey,
-          })
-        }
-      >
-        <FontAwesome 
-        name="user-circle-o" 
-        size={40} color={"black"} 
-        style={{ textAlign: "left", marginLeft: 20, top: 15
-        }}
-      />
-
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("ChatScreen")}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("ProfileEdit", {
+              paramKey: route.params.paramKey,
+            })
+          }
         >
-        <Entypo
-          name="chat"
-          size={40}
-          color={"black"}
-          
-          style={{
-            textAlign: "right",
-            marginRight: 20,
-            top: 15
-          }}
-        />
-      </TouchableOpacity>
-
+          <FontAwesome
+            name="user-circle-o"
+            size={40}
+            color={"black"}
+            style={{ textAlign: "left", marginLeft: 20, top: 15 }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")}>
+          <Entypo
+            name="chat"
+            size={40}
+            color={"black"}
+            style={{
+              textAlign: "right",
+              marginRight: 20,
+              top: 15,
+            }}
+          />
+        </TouchableOpacity>
       </View>
-      
-      
+
       <View style={styles.pageContainer}>
         {}
         {nextProfile && (
@@ -221,12 +217,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 
-  navigationContainer:{
-    width:'100%',
-    flexDirection:'row',
-    alignItems:'center',
+  navigationContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
     //backgroundColor:'red',
-    justifyContent:'space-between'
+    justifyContent: "space-between",
   },
 
   logoStyle: {

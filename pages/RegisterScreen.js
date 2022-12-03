@@ -13,8 +13,8 @@ import Button from "../src/components/Button";
 
 import Loader from "./Loader";
 import axios from "axios";
-
-function RegisterScreen({ navigation }) {
+import ProfileScreen from "./ProfileScreen";
+function RegisterScreen({ navigation, route }) {
   const [inputs, setInputs] = React.useState({
     username: "",
     email: "",
@@ -67,6 +67,8 @@ function RegisterScreen({ navigation }) {
       const baseUrl = "https://only-hands.herokuapp.com";
       const res = await axios.post(baseUrl + "/api/user", payload);
       setLoading(false);
+      console.log("respond form register sc is  " + res);
+      alert("Please check your email to verify your account!");
       navigation.navigate("LoginScreen");
     } catch (error) {
       console.log(error.response.data);
