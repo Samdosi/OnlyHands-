@@ -137,51 +137,51 @@ const Home = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e6e6e3" }}>
-      <View style={{ alignItems: "center", justifyContent: "center", top: 60 }}>
+      <View style={{ alignItems: "center", justifyContent: "center", top: 50}}>
         <Image
           style={styles.logoStyle}
           source={require("../assets/logoTrans.png")}
           resizeMode="contain"
         ></Image>
       </View>
+      <View style={styles.navigationContainer}>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("ProfileEdit", {
             paramKey: route.params.paramKey,
           })
         }
-        style={{ textAlign: "left", marginLeft: 20 }}
       >
-        <FontAwesome name="user-circle-o" size={40} color={"black"} />
-      </TouchableOpacity>
-      <Entypo
-        name="chat"
-        size={40}
-        color={"black"}
-        onPress={() => navigation.navigate("ChatScreen")}
-        style={{
-          textAlign: "right",
-          marginRight: 20,
+        <FontAwesome 
+        name="user-circle-o" 
+        size={40} color={"black"} 
+        style={{ textAlign: "left", marginLeft: 20, top: 15
         }}
       />
+
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("ChatScreen")}
+        >
+        <Entypo
+          name="chat"
+          size={40}
+          color={"black"}
+          
+          style={{
+            textAlign: "right",
+            marginRight: 20,
+            top: 15
+          }}
+        />
+      </TouchableOpacity>
+
+      </View>
+      
+      
       <View style={styles.pageContainer}>
-        {/* <View style={styles.topNavigation}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("ProfileEdit", {
-                paramKey: route.params.paramKey,
-              })
-            }
-          >
-            <FontAwesome name="user-circle-o" size={40} color={"black"} />
-          </TouchableOpacity>
-          <Entypo
-            name="chat"
-            size={40}
-            color={"black"}
-            onPress={() => navigation.navigate("ChatScreen")}
-          />
-        </View> */}
+        {}
         {nextProfile && (
           <View style={styles.nextCardContainer}>
             <Animated.View style={[styles.animatedCard, nextCardStyle]}>
@@ -219,6 +219,14 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   bg: {
     position: "absolute",
+  },
+
+  navigationContainer:{
+    width:'100%',
+    flexDirection:'row',
+    alignItems:'center',
+    //backgroundColor:'red',
+    justifyContent:'space-between'
   },
 
   logoStyle: {
