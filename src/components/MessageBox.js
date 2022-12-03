@@ -1,27 +1,58 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View, Text, ImageBackground } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 
 const MessageBox = (props) => {
-    return (
-        <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate(props.dest)}>
-            <View style={styles.mainView}>
-                <ImageBackground
-                    source={require("../../assets/pexels-cottonbro-4761792.jpg")} //props.image
-                    style={styles.image}
-                >
+    const renderUserStatus = () => {
+        if (props.online) {
+            return {
+                height: 20,
+                width: 20,
+                borderRadius: 20,
+                backgroundColor: "limegreen",
+                marginLeft: -12,
+                marginTop: 30
+            };
+        }
+    };
 
-                </ImageBackground>
-                <View style={styles.placeholder}>
-                    <View>
-                        <Text style={styles.header}>{props.name}</Text>
-                        <Text style={styles.footer}>{props.message}</Text>
+    const renderMessageStatus = () => {
+        const t = 1;
+
+        if (t > 0) {
+            return {
+                height: "100%",
+                width: "100%",
+                borderRadius: 100,
+                backgroundColor: "#ff405b",
+                alignItems: "center",
+                justifyContent: "center"
+            };
+        }
+    };
+
+    return (
+        <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate(props.dest, props)}>
+            <View style={styles.mainView}>
+                <View style={styles.pictureView}>
+                    <Image
+                        source={require("../../assets/pexels-cottonbro-4761792.jpg")}
+                        style={styles.profilePicture}
+                    >
+                    </Image>
+
+                    <View style={renderUserStatus()}></View>
+                </View>
+
+                <View style={styles.nonImage}>
+                    <View style={styles.nameView}>
+                        <Text style={styles.name}>{props.name}</Text>
                     </View>
-                    <View style={styles.rightPart}>
-                        <View style={styles.circle}>
-                            <Text style={styles.numMessages}>{props.numMessages}</Text>
+
+                    <View style={styles.messageAlert}>
+                        <View style={renderMessageStatus()}>
+                            <Text styles={styles.numMessages}>2</Text>   
                         </View>
-                        <Text style={styles.timestamp}>{props.timestamp}</Text>
                     </View>
                 </View>
             </View>
@@ -36,64 +67,44 @@ const styles = StyleSheet.create({
         margin: 20
     },
 
-    button: {
-        width: 388,
-        height: 100
+    pictureView: {
+        flexDirection: "row",
+        width: 60,
+        height: 60,
     },
 
-    icon: {
-        marginRight: 20,
-        borderWidth: 1,
-        borderRadius: 20
+    profilePicture: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 100,
     },
 
-    image: {
-        width: 50,
-        height: 50,
-        borderWidth: 1,
-        borderRadius: 200,
-        justifContent: "flex-end"
-    },
-
-    placeholder: {
+    nonImage: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        marginLeft: 20
     },
 
-    header: {
-        fontSize: 30,
+    nameView: {
+        flex: 1,
+        justifyContent: "flex-end",
+    },
+
+    name: {
+        fontSize: 20,
         color: "white"
     },
 
-    footer: {
-        fontSize: 20,
-        color: "grey"
-    },
-
-    rightPart: {
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
-    circle: {
-        height: 45,
-        width: 45,
-        borderRadius: 45,
-        backgroundColor: "#ff405b",
-        alignItems: "center",
-        justifyContent: "center"
+    messageAlert: {
+        width: 60,
+        height: 60
     },
 
     numMessages: {
         color: "white",
         fontSize: 20
     },
-
-    timestamp: {
-        marginTop: 6,
-        color: "white"
-    }
 });
 
 export default MessageBox;

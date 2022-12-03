@@ -10,35 +10,90 @@ import { React, useState} from "react";
 
 import MessageBox from "../src/components/MessageBox";
 
+import Input from "../src/components/Input";
+
 import axios from "axios";
 
-function ChatScreen({navigation}) {
-    const sampleProfile = {
-        //image: "https://scontent-atl3-2.xx.fbcdn.net/v/t1.6435-9/80192852_2792338754158050_862576909328842752_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=xHnC3p2bApkAX_oVn2H&_nc_ht=scontent-atl3-2.xx&oh=00_AT9g8gsztIqIlQsmK1w1zZAf_0zQlKDOUAszw2_RaSCOGQ&oe=63783BCD",
-        image: "../assets/pexels-cottonbro-4761792.jpg",
-        status: true,
-        name: "name",
-        message: "message",
-        numMessages: 3,
-        timestamp: "2:13 AM"
-    }
+//add search bar for the chat.
 
-    const profiles = [sampleProfile, sampleProfile, sampleProfile, sampleProfile, sampleProfile, sampleProfile, sampleProfile, sampleProfile,]; //flatlist.
+function ChatScreen({ navigation, paramKey }) {
+
+    const [profiles, setProfiles] = useState([]);
+
+    const [messageList, setMessageList] = useState([]);
+
+    const [profilePicture, setProfilePicture] = useState();
+
+    const baseURL = "https://only-hands.herokuapp.com";
+
+    //const matchID = ;
+
+    const requestMatchInfo = async () => {
+        const payload = {
+            headers: {
+                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMDUxMDA0LCJleHAiOjE2NzAwNTQ2MDR9.fVZRQeyEFra7wSTmyIB40YG2h7XzZ5aa7cXLG55XsLM"
+            },
+        };
+
+        try {
+            const response = await axios.get(
+                baseURL + "/api/match/",
+                payload
+            );
+
+            const data = response.data.matches;
+
+            setProfiles(data);
+
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    };
+
+    const requestContacts = async (matchId) => {
+        const payload = {
+            headers: {
+                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMDUxMDA0LCJleHAiOjE2NzAwNTQ2MDR9.fVZRQeyEFra7wSTmyIB40YG2h7XzZ5aa7cXLG55XsLM"
+            },
+        };
+
+        try {
+            const response = await axios.get(
+                baseURL + "/api/match/:" + matchId,
+                payload
+            );
+
+            console.log(response);
+
+        } catch (error) {
+            console.log("penis");
+            console.log(error.response.data);
+        }
+    };
+    
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.mainView}>
+            <View style={styles.mainView} onLayout={() => requestMatchInfo()}>
                 <Text style={styles.title}>Messages</Text>
 
-                <ScrollView style={styles.list}>
+                <View style={styles.searchBox}>
+                    <Input
+                        label="Search"
+                        placeholder="Enter your social security"
+                        iconName={"magnify"}
+                        color="white"
+                    />
+                </View>
+
+                <ScrollView>
                     {profiles.map(c => (
                         <MessageBox
-                            image={c.image}
-                            status={c.status}
-                            name={c.name}
-                            message={c.message}
-                            numMessages={c.numMessages}
-                            timestamp={c.timestamp}
+                            name={c.firstName + " " + c.lastName}
+                            profileID={c.profileID}
+                            online={c.online}
+                            profilePicture={profilePicture}
+                            messages={requestContacts(c.matchId)}
                             navigation={navigation}
                             dest="MessageScreen"
                         />
@@ -48,7 +103,7 @@ function ChatScreen({navigation}) {
             </View>
         </SafeAreaView>
     );
-}
+} 
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -61,6 +116,10 @@ const styles = StyleSheet.create({
         fontStyle: "bold",
         fontSize: 30,
         marginLeft: 40
+    },
+
+    searchBox: {
+        margin: 10
     },
 
     mainView: {
