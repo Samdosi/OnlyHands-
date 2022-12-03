@@ -42,10 +42,12 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
-import load from "../assets/data/loadprofiles";
+import LoadProfiles from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
+//import { tokens } from "react-native-paper/lib/typescript/styles/themes/v3/tokens";
 
 const Home = ({ navigation, route }) => {
+  const token = route.params.paramKey;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
 
@@ -111,7 +113,7 @@ const Home = ({ navigation, route }) => {
       translateX.value = context.startX + event.translationX;
 
       //console.log(event.velocityX)
-    },
+    },//Fill iformation from my saved HomePage
 
     onEnd: (event) => {
       if (Math.abs(event.velocityX) < SWIPE_VELOCITY) {
@@ -127,6 +129,24 @@ const Home = ({ navigation, route }) => {
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
       //post match
+        /*
+        try{
+          
+          axios.post(baseURL + '/match/',{
+              headers: {
+                  "x-access-token": token,
+                  "Content-Type": "application/json",
+              }, 
+              data: {
+                match: false, // This is the body part
+                profileID: users[currentIndex].id
+              }
+            });
+            
+      }
+      catch(e){
+          console.log(e)
+      } */
     },
   });
 
@@ -209,7 +229,8 @@ const Home = ({ navigation, route }) => {
         <Button
           title="Click"
           style={{ width: 30, height: 30, backgroundColor: "red" }}
-          onPress={load}
+          onPress={()=>LoadProfiles(token)
+          }
         ></Button>
       </View>
     </SafeAreaView>
