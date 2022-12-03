@@ -40,15 +40,21 @@ const SWIPE_VELOCITY = 1000;
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
 import LoadProfiles from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
+import drawer from "./drawer";
 //import { tokens } from "react-native-paper/lib/typescript/styles/themes/v3/tokens";
+
+const baseURL = "https://only-hands.herokuapp.com"
 
 const Home = ({ navigation, route }) => {
   const token = route.params.paramKey;
+
   const [currentIndex, setCurrentIndex] = useState(0);
+  //currentIndex = 0
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
 
   const currentProfile = users[currentIndex];
@@ -154,10 +160,13 @@ const Home = ({ navigation, route }) => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
+  const openMenu = () => {
+    navigation.openDrawer();
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e6e6e3" }}>
-      <View style={{ alignItems: "center", justifyContent: "center", top: 50}}>
+      <View style={{ alignItems: "center", justifyContent: "center", top: 50 }}>
         <Image
           style={styles.logoStyle}
           source={require("../assets/logoTrans.png")}
@@ -165,41 +174,34 @@ const Home = ({ navigation, route }) => {
         ></Image>
       </View>
       <View style={styles.navigationContainer}>
-
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("ProfileEdit", {
-            paramKey: route.params.paramKey,
-          })
-        }
-      >
-        <FontAwesome 
-        name="user-circle-o" 
-        size={40} color={"black"} 
-        style={{ textAlign: "left", marginLeft: 20, top: 15
-        }}
-      />
-
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("ChatScreen")}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("ProfileEdit", {
+              paramKey: route.params.paramKey,
+            })
+          }
         >
-        <Entypo
-          name="chat"
-          size={40}
-          color={"black"}
-          
-          style={{
-            textAlign: "right",
-            marginRight: 20,
-            top: 15
-          }}
-        />
-      </TouchableOpacity>
-
+          <FontAwesome
+            name="user-circle-o"
+            size={40}
+            color={"black"}
+            style={{ textAlign: "left", marginLeft: 20, top: 15 }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")}>
+          <Entypo
+            name="chat"
+            size={40}
+            color={"black"}
+            style={{
+              textAlign: "right",
+              marginRight: 20,
+              top: 15,
+            }}
+          />
+        </TouchableOpacity>
       </View>
-      
-      
+
       <View style={styles.pageContainer}>
         {}
         {nextProfile && (
@@ -226,12 +228,53 @@ const Home = ({ navigation, route }) => {
             </Animated.View>
           </PanGestureHandler>
         )}
-        <Button
-          title="Click"
-          style={{ width: 30, height: 30, backgroundColor: "red" }}
-          onPress={()=>LoadProfiles(token)
-          }
-        ></Button>
+
+        
+        <View style = {styles.reloadButtonContainer}>
+
+          <TouchableOpacity
+            title="Click"
+            style={styles.reloadButton}
+              onPress={
+                async() =>{
+                console.log(token)
+                console.log(users[currentIndex].id)
+                
+                try{
+
+            
+                  axios.post(baseURL + '/match/',{
+                      headers: {
+                          "x-access-token": token,
+                          "Content-Type": "application/json",
+                      }, 
+                      data: {
+                        match: false, // This is the body part
+                        profileID: users[currentIndex].id
+                      }
+                    });
+
+                    console.log('Got here')
+                    
+              }
+              catch(e){
+                  console.log(e)
+              }
+            }
+              /*</View>()=>LoadProfiles(token).then(navigation.navigate("Home", { paramKey: token })).then(setCurrentIndex(0))*/
+            }>
+            <Ionicons
+              name="reload"
+              size={40}
+              color={"#b8dff5"}
+            />
+          </TouchableOpacity>
+
+        </View>
+
+        
+        
+
       </View>
     </SafeAreaView>
   );
@@ -242,12 +285,36 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 
-  navigationContainer:{
-    width:'100%',
-    flexDirection:'row',
-    alignItems:'center',
+  reloadButtonContainer:{
+    top:50,
+    //backgroundColor:''
+  },
+
+  reloadButton:{
+    width: 50, 
+    height: 50, 
+    backgroundColor: "#7acdfa",
+    //top:50,
+    justifyContent:'center',
+    alignItems: 'center',
+    borderRadius: '50%',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3
+  },
+
+  navigationContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
     //backgroundColor:'red',
-    justifyContent:'space-between'
+    justifyContent: "space-between",
   },
 
   logoStyle: {

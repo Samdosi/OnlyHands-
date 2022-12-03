@@ -7,25 +7,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { React, useState } from "react";
-
-//import useNavigation from "react-navigation/native";
-
 import axios from "axios";
-
 import Input from "../src/components/Input";
 import Button from "../src/components/Button";
-//import RegisterScreen from "./RegisterScreen";
 import Loader from "./Loader";
-//import ProfileScreen from "./ProfileScreen";
-import LoadProfiles from '../assets/data/loadprofiles'
+import LoadProfiles from "../assets/data/loadprofiles";
 
-
-const  LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [username = null, setUsername] = useState();
   const [password = null, setPassword] = useState();
   const [errors, setError] = useState({ username: "", password: "" });
   const [loading, setLoad] = useState();
-  //const [token, setTokens] = useState("");
+
   const Login = async () => {
     if (username == "" || password == "") {
       alert("please input both fields");
@@ -38,24 +31,19 @@ const  LoginScreen = ({ navigation }) => {
       try {
         const baseURL = "https://only-hands.herokuapp.com";
 
-        //const response = 
-        await axios.post(
-          baseURL + "/api/user/login/",
-          payload
-        ).then((response) => {
-          //setTokens(response.data.token);
-          console.log(response);
-          const token = response.data.token
-
-          LoadProfiles(token).then(()=>{
-            
-            console.log("NOW")
-            navigation.navigate("Home", { paramKey: token });
-          })      
-          
-          
-      })
-        //console.log(response);
+        await axios
+          .post(baseURL + "/api/user/login/", payload)
+          .then((response) => {
+            const token = response.data.token;
+            if (response.data.profile == null) {
+              navigation.navigate("ProfileScreen", { paramKey: token });
+            } else {
+              LoadProfiles(token).then(() => {
+                console.log("NOW");
+                navigation.navigate("Home", { paramKey: token });
+              });
+            }
+          });
         setLoad(false);
       } catch (error) {
         setLoad(false);
@@ -116,7 +104,7 @@ const  LoginScreen = ({ navigation }) => {
       </ImageBackground>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   safeArea: {
