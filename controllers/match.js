@@ -55,6 +55,7 @@ const createMatch = async (userId, matchProfileId, res) => {
             
 
             const foundProfile = foundUser.profile;
+            console.log(foundProfile)
 
             const newMatch = new Match({
                 matchedProfiles: [foundProfile, matchProfile]
