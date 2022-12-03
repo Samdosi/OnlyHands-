@@ -39,17 +39,20 @@ const createMatch = async (userId, matchProfileId, res) => {
     try {
         User.findById(userId, async (err, foundUser) => {
             if (err) {
+                console.log(err);
                 return res.status(404).end();
             }
 
             const matchProfile = await Profile.findById(matchProfileId)
 
             if (!matchProfile) {
+                console.log("match Profile DNE");
                 return res.status(404).end();
             }
 
             
             if (foundUser.matches.get(matchProfileId)){
+                console.log("match already exists");
                 return res.status(405).end();
             }
             
