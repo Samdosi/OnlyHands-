@@ -8,6 +8,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
+  const options = ["-- Select an option --", "Male", "Female", "Other"];
   const [age, setAge] = useState(0);
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState(0);
@@ -281,13 +282,11 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                       id="gender"
                       onChange={(e) => setGender(e.target.value)}
                     >
-                      <option value="" disabled selected>
-                        {" "}
-                        -- Select an option --{" "}
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      {options.map((value) => (
+                        <option value={value} key={value}>
+                          {value}
+                        </option>
+                        ))}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <svg
