@@ -51,10 +51,12 @@ const profileSchema = new Schema({
     },
     style: {
         type: String,
+        default: ""
     },
     bio: {
         type: String,
-        maxLength: 140
+        maxLength: 140,
+        default: ""
     },
     image: {
         type: Schema.Types.ObjectId,
