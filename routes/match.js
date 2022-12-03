@@ -5,7 +5,7 @@ const { dislike, checkExistingMatch, createMatch, serveMatch, getMatches, getSpe
 
 router.get("/serve", auth_jwt, async (req, res) => {
     const userId = req.body.user_id;
-    const numMatches = req.body.user_req.numMatches || 2;
+    const numMatches = req.body.user_req.numMatches || 10;
 
     await serveMatch(userId, numMatches, res);
 });
