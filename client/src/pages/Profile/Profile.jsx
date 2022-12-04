@@ -30,7 +30,7 @@ const Profile = ({ setBgImage }) => {
             .then((data) => {
                 if (data["success"]) {
                     console.log(data["profile"])
-                    //sessionStorage.setItem("profile", JSON.stringify(data["profile"]));
+                    sessionStorage.setItem("profile", JSON.stringify(data["profile"]));
                     setIsCreated(true);
                 }
                 else {

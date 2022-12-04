@@ -48,7 +48,7 @@ const Login = () => {
             if (data["success"]) {
                 console.log("Successfully logged in!")
                 sessionStorage.setItem("token", data.token);
-                sessionStorage.setItem('profile', data.profile);
+                sessionStorage.setItem('profileId', data.profile);
                 navigate('/profile');
                 notify();
             }

@@ -19,7 +19,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if (currentMessage !== "") {
       const messageData = {
         room: profile?.matchId,
-        author: sessionStorage.getItem('profile'),
+        author: sessionStorage.getItem('profileId'),
         message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
