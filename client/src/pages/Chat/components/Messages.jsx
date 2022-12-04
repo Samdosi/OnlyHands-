@@ -19,6 +19,7 @@ const Messages = ({ setShowChat, messages = [] }) => {
                 newMessage={c.newMessage}
                 online={c.online}
                 matchId={c.matchId}
+                profileId={c.profileId}
                 setShowChat={setShowChat}
               />
             )

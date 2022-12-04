@@ -2,7 +2,7 @@ import React from 'react';
 import { BsFillCircleFill } from 'react-icons/bs';
 import { useProfileContext } from '../context/Profile';
 
-const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId }) => { 
+const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId, profileId }) => { 
 
     const { setProfile } = useProfileContext();
 
@@ -15,7 +15,8 @@ const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId
                 name,
                 online,
                 newMessage,
-                matchId
+                matchId,
+                profileId
             });
         }}
         className='w-full h-20 py-2 hover:bg-white/10 flex items-center relative cursor-pointer'

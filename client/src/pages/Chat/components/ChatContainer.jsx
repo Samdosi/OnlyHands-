@@ -19,7 +19,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if (currentMessage !== "") {
       const messageData = {
         room: profile?.matchId,
-        author: profile?.profileId,
+        author: sessionStorage.getItem('profile'),
         message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
@@ -87,17 +87,33 @@ const ChatContainer = ({ setShowChat, socket }) => {
             </div>
           </div>
 
-          <div ref={scrollRef} className='z-[2] w-full h-[75%] px-5 overflow-y-auto hide-scrollbar scroll-smooth'>
+          <div ref={scrollRef} className='z-[2] w-full h-[75%] flex flex-col px-5 overflow-y-auto hide-scrollbar scroll-smooth'>
                 {
                   messageList?.map(message => {
 
+                    console.log(message)
+
+                    if(message.author !== sessionStorage.getItem('profile')){
+                      return(
+                        <div className='flex flex-col my-4 self-start'>
+                          <p
+                            className=' overflow-wrap  self-end text-xl text-black bg-green-200 max-w-[18rem] w-auto h-auto p-2 rounded'
+                          >
+                            {message.message}
+                          </p>
+                          <p className=' text-xs self-start text-gray-400 max-w-[18rem] w-auto h-auto'>{message.time}</p>
+                      </div>
+                      )
+                    }
+
                     return(
-                      <div className='flex flex-col '>
+                      <div className='flex flex-col my-4 '>
                         <p
-                          className=' overflow-wrap  self-end my-4 text-xl text-black bg-white max-w-[18rem] w-auto h-auto p-2 rounded'
+                          className=' overflow-wrap  self-end text-xl text-black bg-white max-w-[18rem] w-auto h-auto p-2 rounded'
                         >
                           {message.message}
                         </p>
+                        <p className='self-end p-1 text-xs text-gray-400 max-w-[18rem] w-auto h-auto'>{message.time}</p>
                       </div>
                       )
                   })
