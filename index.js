@@ -20,6 +20,7 @@ const io = new Server(serverChat, {
 const path = require("path");
 const { verify } = require('crypto');
 const { auth_jwt } = require('./middleware/auth_jwt');
+const {addMessage} = require('./controllers/chat');
 
 app.use(cors());
 app.use(express.json());
@@ -50,6 +51,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", (data) => {
+    addMessage(data);
     socket.to(data.room).emit("receiveMessage", data);
   });
 

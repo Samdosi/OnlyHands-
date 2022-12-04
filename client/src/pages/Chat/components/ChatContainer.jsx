@@ -93,7 +93,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
 
                     console.log(message)
 
-                    if(message.author !== sessionStorage.getItem('profile')){
+                    if(message.author !== sessionStorage.getItem('profileId')){
                       return(
                         <div className='flex flex-col my-4 self-start'>
                           <p
