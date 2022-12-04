@@ -2,22 +2,24 @@ import React from 'react';
 import { BsFillCircleFill } from 'react-icons/bs';
 import { useProfileContext } from '../context/Profile';
 
-const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId, profileId }) => { 
+const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId, profileId, disabled = false }) => { 
 
     const { setProfile } = useProfileContext();
 
     return(
     <div 
         onClick={() => {
-            setShowChat(true);
-            setProfile({
-                picture,
-                name,
-                online,
-                newMessage,
-                matchId,
-                profileId
-            });
+            if(!disabled){
+                setShowChat(true);
+                setProfile({
+                    picture,
+                    name,
+                    online,
+                    newMessage,
+                    matchId,
+                    profileId
+                });
+            }
         }}
         className='w-full h-20 py-2 hover:bg-white/10 flex items-center relative cursor-pointer'
     >
@@ -41,8 +43,8 @@ const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId
             <div className=' flex flex-col justify-around'>
                 <h3 className='text-lg'>{name}</h3>
                 {
-                newMessage &&
-                <p className='text-gray-300 w-32 sm:w-72 md:w-32 overflow-hidden text-ellipsis whitespace-nowrap'>{newMessage.text}</p>
+                newMessage || disabled &&
+                <p className='text-gray-300 w-32 sm:w-72 md:w-32 overflow-hidden text-ellipsis whitespace-nowrap'>{newMessage?.text || "Pending match"}</p>
                 }
             </div>
 

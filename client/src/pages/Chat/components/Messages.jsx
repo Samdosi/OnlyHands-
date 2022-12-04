@@ -1,7 +1,7 @@
 import React from 'react';
 import MessageButton from './MessageButton';
 
-const Messages = ({ setShowChat, messages = [] }) => {
+const Messages = ({ setShowChat, matchMessages = [], unMatchMessages = [] }) => {
 
   return (
     <div className=' w-full h-[74%] messages'>
@@ -11,7 +11,8 @@ const Messages = ({ setShowChat, messages = [] }) => {
       <div className='w-full h-[92%] overflow-y-auto overflow-hidden hide-scrollbar'>
 
         {
-          messages.map( c => {
+          
+          matchMessages.map( c => {
             return(
               <MessageButton 
                 name={c.firstName + " " + c.lastName}
@@ -21,6 +22,23 @@ const Messages = ({ setShowChat, messages = [] }) => {
                 matchId={c.matchId}
                 profileId={c.profileId}
                 setShowChat={setShowChat}
+              />
+            )
+          })
+        }
+        {
+
+          unMatchMessages.map( c => {
+            return(
+              <MessageButton 
+                name={c.firstName + " " + c.lastName}
+                picture={c.picture}
+                newMessage={c.newMessage}
+                online={c.online}
+                matchId={c.matchId}
+                profileId={c.profileId}
+                setShowChat={setShowChat}
+                disabled
               />
             )
           })

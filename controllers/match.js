@@ -149,7 +149,8 @@ const getMatches = (userId, searchQuery, res) => {
                     firstName: profile.firstName,
                     lastName: profile.lastName,
                     online: profile.online,
-                    matchId: matchDoc._id
+                    matchId: matchDoc._id,
+                    isComplete: matchDoc.isComplete
                 };
 
                 if(searchQuery){

@@ -10,8 +10,8 @@ const Chat = ({ setBgImage, socket }) => {
   setBgImage(pathname);
 
   const [showChat, setShowChat] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [newMessages, setNewMessages] = useState([]);
+  const [matchMessages, setMatchMessages] = useState([]);
+  const [unMatchMessages, setUnMatchMessages] = useState([]);
 
   useEffect(() => {
     fetch("https://only-hands.herokuapp.com/api/match", {
@@ -27,7 +27,16 @@ const Chat = ({ setBgImage, socket }) => {
       })
       .then(data => {
         console.log(data)
-        setMessages(data.matches)
+        let m = []
+        let u = []
+
+        data.matches?.forEach(e => {
+          if(e.isComplete) m.push(e)
+          else u.push(e)
+        })
+
+        setMatchMessages(m);
+        setUnMatchMessages(u);
       })
       .catch(e => console.log(e))
   }, [])
@@ -39,13 +48,13 @@ const Chat = ({ setBgImage, socket }) => {
         { !showChat && 
           <div className='w-full flex-auto md:hidden'>
             <NewMessages />
-            <Messages setShowChat={setShowChat} messages={messages}/>
+            <Messages setShowChat={setShowChat} matchMessages={matchMessages} unMatchMessages={unMatchMessages}/>
           </div>
         }
 
         <div className='hidden md:block w-full flex-auto md:max-w-[45%] lg:max-w-[35%] md:border-r-[1px] md:border-r-gray-600 md:border-solid '>
           <NewMessages />
-          <Messages setShowChat={setShowChat} messages={messages}/>
+          <Messages setShowChat={setShowChat} matchMessages={matchMessages} unMatchMessages={unMatchMessages}/>
         </div>
 
         <div className={showChat ? 'w-full h-full md:w-[55%] lg:w-[65%]' : ' hidden h-full md:block w-full md:w-[55%] lg:w-[65%] ' }>
