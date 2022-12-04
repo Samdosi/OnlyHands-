@@ -69,7 +69,7 @@ function ProfileEdit({ navigation, route }) {
         headers: headers,
       })
       .then(function (response) {
-        console.log(response.data.profile);
+        console.log("response is " + JSON.stringify(response.data.profile));
         onChangeFirstName(response.data.profile.firstName);
         onChangeLastName(response.data.profile.lastName);
         const g = response.data.profile.gender;
@@ -112,9 +112,11 @@ function ProfileEdit({ navigation, route }) {
       KOs: KOs,
       totalFights: totalFights,
       nickname: nickname,
+      bio: bio,
+      style: style,
     };
     const token = route.params.paramKey;
-    
+
     setLoad(true);
     console.log(token);
     const headers = {
@@ -127,7 +129,7 @@ function ProfileEdit({ navigation, route }) {
         headers: headers,
       });
       console.log(response);
-      navigation.navigate("Home");
+      navigation.navigate("Home", { paramKey: token });
       setLoad(false);
     } catch (error) {
       setLoad(false);

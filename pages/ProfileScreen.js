@@ -84,6 +84,8 @@ function ProfileScreen({ navigation, route }) {
         KOs: KOs,
         totalFights: totalFights,
         nickname: nickname,
+        bio: bio,
+        style: style,
       };
 
       const token = route.params.paramKey;

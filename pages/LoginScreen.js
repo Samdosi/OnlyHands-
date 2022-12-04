@@ -12,6 +12,7 @@ import Input from "../src/components/Input";
 import Button from "../src/components/Button";
 import Loader from "./Loader";
 import LoadProfiles from "../assets/data/loadprofiles";
+import Home from "./HomePage";
 
 const LoginScreen = ({ navigation }) => {
   const [username = null, setUsername] = useState();

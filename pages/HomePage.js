@@ -41,18 +41,17 @@ const SWIPE_VELOCITY = 1000;
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
 import LoadProfiles from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
-import drawer from "./drawer";
+//import drawer from "./drawer";
 //import { tokens } from "react-native-paper/lib/typescript/styles/themes/v3/tokens";
 
-const baseURL = "https://only-hands.herokuapp.com"
+const baseURL = "https://only-hands.herokuapp.com";
 
 const Home = ({ navigation, route }) => {
-
   const token = route.params.paramKey;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -110,36 +109,33 @@ const Home = ({ navigation, route }) => {
     opacity: interpolate(translateX.value, [0, -hiddenTranslateX / 5], [0, 1]),
   }));
 
-  const sendMatch = async (match) =>{
+  const sendMatch = async (match) => {
+    console.log(token);
+    console.log(users[currentIndex].id);
+    console.log(match);
 
-          console.log(token)
-          console.log(users[currentIndex].id)
-          console.log(match)
-  
-         const payload =  {
-            match: match, // This is the body part
-            profileID: users[currentIndex].id
-          }
-  
-         const headers = {
-            "x-access-token": token,
-            "Content-Type": "application/json",
-          } 
-          
-          try{
-            const baseURL = "https://only-hands.herokuapp.com"
-            const res = await axios.post(baseURL + '/api/match/', payload,{
-                headers:headers,
-              })
+    const payload = {
+      match: match, // This is the body part
+      profileID: users[currentIndex].id,
+    };
 
-              console.log(res.data)
-              console.log('Got here')
-              
-            }
-            catch(e){
-                console.log(e)
-            }
-  }
+    const headers = {
+      "x-access-token": token,
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const baseURL = "https://only-hands.herokuapp.com";
+      const res = await axios.post(baseURL + "/api/match/", payload, {
+        headers: headers,
+      });
+
+      console.log(res.data);
+      console.log("Got here");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, context) => {
@@ -151,10 +147,10 @@ const Home = ({ navigation, route }) => {
     onActive: (event, context) => {
       translateX.value = context.startX + event.translationX;
 
-      console.log(event.velocityX)
-    },//Fill iformation from my saved HomePage
+      console.log(event.velocityX);
+    }, //Fill iformation from my saved HomePage
 
-    onEnd:(event) => {
+    onEnd: (event) => {
       if (Math.abs(event.velocityX) < SWIPE_VELOCITY) {
         //console.log(event.velocityX)
         translateX.value = withSpring(0);
@@ -162,33 +158,23 @@ const Home = ({ navigation, route }) => {
         return;
       }
 
-      if(event.velocityX < -1000){
-
-        console.log('Negative')
-        runOnJS(sendMatch)(false)
-
+      if (event.velocityX < -1000) {
+        console.log("Negative");
+        runOnJS(sendMatch)(false);
       }
 
-      if(event.velocityX > 1000){
-
-        console.log('Right')
-        runOnJS(sendMatch)(true)
-
+      if (event.velocityX > 1000) {
+        console.log("Right");
+        runOnJS(sendMatch)(true);
       }
-
-      
 
       translateX.value = withSpring(
         hiddenTranslateX * Math.sign(event.velocityX),
         {},
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
-
-      
     },
   });
-
-  
 
   useEffect(() => {
     translateX.value = 0;
@@ -263,28 +249,19 @@ const Home = ({ navigation, route }) => {
           </PanGestureHandler>
         )}
 
-        
-        <View style = {styles.reloadButtonContainer}>
-
+        <View style={styles.reloadButtonContainer}>
           <TouchableOpacity
             title="Click"
             style={styles.reloadButton}
-              onPress={
-                ()=>LoadProfiles(token).then(navigation.navigate("Home", { paramKey: token })).then(setCurrentIndex(0))
-              
-            }>
-            <Ionicons
-              name="reload"
-              size={40}
-              color={"#b8dff5"}
-            />
+            onPress={() =>
+              LoadProfiles(token)
+                .then(navigation.navigate("Home", { paramKey: token }))
+                .then(setCurrentIndex(0))
+            }
+          >
+            <Ionicons name="reload" size={40} color={"#b8dff5"} />
           </TouchableOpacity>
-
         </View>
-
-        
-        
-
       </View>
     </SafeAreaView>
   );
@@ -295,19 +272,19 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 
-  reloadButtonContainer:{
-    top:50,
+  reloadButtonContainer: {
+    top: 50,
     //backgroundColor:''
   },
 
-  reloadButton:{
-    width: 50, 
-    height: 50, 
+  reloadButton: {
+    width: 50,
+    height: 50,
     backgroundColor: "#7acdfa",
     //top:50,
-    justifyContent:'center',
-    alignItems: 'center',
-    borderRadius: '50%',
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "50%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -316,7 +293,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
 
-    elevation: 3
+    elevation: 3,
   },
 
   navigationContainer: {

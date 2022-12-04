@@ -6,6 +6,8 @@ import {
   View,
   SafeAreaView,
   TextInput,
+  Button,
+  Alert,
 } from "react-native";
 import ProfileScreen from "./pages/ProfileScreen";
 import LoginScreen from "./pages/LoginScreen";
@@ -14,17 +16,21 @@ import ChatScreen from "./pages/ChatScreen";
 import HomePage from "./pages/HomePage";
 import MessageScreen from "./pages/MessageScreen";
 import Home from "./pages/HomePage";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
 import ProfileEdit from "./pages/ProfileEdit";
+import axios from "axios";
 
 const image = {
   uri: "https://www.enjpg.com/img/2020/boxing-14-e1622327615788.jpg",
 };
 
 const Stack = createNativeStackNavigator();
-const App = () => {
+const App = ({ navigation }) => {
   const [text, onChangeText] = React.useState("Useless Text");
   const [number, onChangeNumber] = React.useState(null);
 
@@ -70,6 +76,15 @@ const App = () => {
             headerShown: true,
             headerStyle: { backgroundColor: "black", color: "white" },
             headerTintColor: "white",
+            headerRight: () => (
+              <Button
+                onPress={({ navigationRef }) =>
+                  navigationRef.navigate("LoginScreen")
+                }
+                title="Logout"
+                color="#fff"
+              />
+            ),
           }}
         ></Stack.Screen>
         <Stack.Screen
