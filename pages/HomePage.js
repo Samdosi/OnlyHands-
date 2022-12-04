@@ -24,6 +24,7 @@ import Animated, {
   interpolate,
   runOnJS,
   color,
+  set,
 } from "react-native-reanimated";
 
 import {
@@ -51,6 +52,7 @@ import drawer from "./drawer";
 const baseURL = "https://only-hands.herokuapp.com"
 
 const Home = ({ navigation, route }) => {
+
   const token = route.params.paramKey;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -108,6 +110,37 @@ const Home = ({ navigation, route }) => {
     opacity: interpolate(translateX.value, [0, -hiddenTranslateX / 5], [0, 1]),
   }));
 
+  const sendMatch = async (match) =>{
+
+          console.log(token)
+          console.log(users[currentIndex].id)
+          console.log(match)
+  
+         const payload =  {
+            match: match, // This is the body part
+            profileID: users[currentIndex].id
+          }
+  
+         const headers = {
+            "x-access-token": token,
+            "Content-Type": "application/json",
+          } 
+          
+          try{
+            const baseURL = "https://only-hands.herokuapp.com"
+            const res = await axios.post(baseURL + '/api/match/', payload,{
+                headers:headers,
+              })
+
+              console.log(res.data)
+              console.log('Got here')
+              
+            }
+            catch(e){
+                console.log(e)
+            }
+  }
+
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, context) => {
       context.startX = translateX.value;
@@ -118,10 +151,10 @@ const Home = ({ navigation, route }) => {
     onActive: (event, context) => {
       translateX.value = context.startX + event.translationX;
 
-      //console.log(event.velocityX)
+      console.log(event.velocityX)
     },//Fill iformation from my saved HomePage
 
-    onEnd: (event) => {
+    onEnd:(event) => {
       if (Math.abs(event.velocityX) < SWIPE_VELOCITY) {
         //console.log(event.velocityX)
         translateX.value = withSpring(0);
@@ -129,32 +162,33 @@ const Home = ({ navigation, route }) => {
         return;
       }
 
+      if(event.velocityX < -1000){
+
+        console.log('Negative')
+        runOnJS(sendMatch)(false)
+
+      }
+
+      if(event.velocityX > 1000){
+
+        console.log('Right')
+        runOnJS(sendMatch)(true)
+
+      }
+
+      
+
       translateX.value = withSpring(
         hiddenTranslateX * Math.sign(event.velocityX),
         {},
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
-      //post match
-        /*
-        try{
-          
-          axios.post(baseURL + '/match/',{
-              headers: {
-                  "x-access-token": token,
-                  "Content-Type": "application/json",
-              }, 
-              data: {
-                match: false, // This is the body part
-                profileID: users[currentIndex].id
-              }
-            });
-            
-      }
-      catch(e){
-          console.log(e)
-      } */
+
+      
     },
   });
+
+  
 
   useEffect(() => {
     translateX.value = 0;
@@ -236,32 +270,8 @@ const Home = ({ navigation, route }) => {
             title="Click"
             style={styles.reloadButton}
               onPress={
-                async() =>{
-                console.log(token)
-                console.log(users[currentIndex].id)
-                
-                try{
-
-            
-                  axios.post(baseURL + '/match/',{
-                      headers: {
-                          "x-access-token": token,
-                          "Content-Type": "application/json",
-                      }, 
-                      data: {
-                        match: false, // This is the body part
-                        profileID: users[currentIndex].id
-                      }
-                    });
-
-                    console.log('Got here')
-                    
-              }
-              catch(e){
-                  console.log(e)
-              }
-            }
-              /*</View>()=>LoadProfiles(token).then(navigation.navigate("Home", { paramKey: token })).then(setCurrentIndex(0))*/
+                ()=>LoadProfiles(token).then(navigation.navigate("Home", { paramKey: token })).then(setCurrentIndex(0))
+              
             }>
             <Ionicons
               name="reload"

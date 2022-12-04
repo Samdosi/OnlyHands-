@@ -114,6 +114,7 @@ function ProfileEdit({ navigation, route }) {
       nickname: nickname,
     };
     const token = route.params.paramKey;
+    
     setLoad(true);
     console.log(token);
     const headers = {
