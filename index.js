@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
 const profile_route = require("./routes/profile");
 const matchRoute = require("./routes/match")
+const chatRoute = require('./routes/chat');
 const app = express();
 const serverChat = http.createServer(app);
 const io = new Server(serverChat, {
@@ -34,6 +35,7 @@ const PORT = process.env.PORT || 5000;
 app.use('/api/user', userRoute);
 app.use('/api/profile', profile_route);
 app.use("/api/match/", matchRoute);
+app.use("/api/chat", chatRoute);
 
 app.get("/api/verify", auth_jwt, (req, res) => {
   res.status(200).end();

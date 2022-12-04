@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useProfileContext } from '../context/Profile';
@@ -8,6 +9,7 @@ import BG from '../assets/bg.webp';
 const ChatContainer = ({ setShowChat, socket }) => {
 
   const { profile, setProfile } = useProfileContext();
+  const navigate = useNavigate();
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
@@ -19,9 +21,9 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if (currentMessage !== "") {
       const messageData = {
         room: profile?.matchId,
-        author: sessionStorage.getItem('profileId'),
-        message: currentMessage,
-        time:
+        from: sessionStorage.getItem('profileId'),
+        text: currentMessage,
+        timeSent:
           new Date(Date.now()).getHours() +
           ":" +
           new Date(Date.now()).getMinutes(),
@@ -43,7 +45,25 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if(profile && profile?.profileId !== ""){
       socket.emit("joinRoom", profile.matchId);
     }
-    setMessageList([]);
+    
+    fetch('https://only-hands.herokuapp.com/api/chat/' + profile?.matchId, {
+      headers:{
+        'x-access-token': sessionStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      if(response.status == 401 || response.status == 403){
+        navigate('/');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      if(data.success)
+        setMessageList([...data.chats]);
+    })
+    .catch(e => console.log(e))
+
     setCurrentMessage("");
   }, [profile]);
 
@@ -93,15 +113,15 @@ const ChatContainer = ({ setShowChat, socket }) => {
 
                     console.log(message)
 
-                    if(message.author !== sessionStorage.getItem('profileId')){
+                    if(message.from !== sessionStorage.getItem('profileId')){
                       return(
                         <div className='flex flex-col my-4 self-start'>
                           <p
                             className=' overflow-wrap  self-end text-xl text-black bg-green-200 max-w-[18rem] w-auto h-auto p-2 rounded'
                           >
-                            {message.message}
+                            {message.text}
                           </p>
-                          <p className=' text-xs self-start text-gray-400 max-w-[18rem] w-auto h-auto'>{message.time}</p>
+                          <p className=' text-xs self-start text-gray-400 max-w-[18rem] w-auto h-auto'>{message.timeSent}</p>
                       </div>
                       )
                     }
@@ -111,9 +131,9 @@ const ChatContainer = ({ setShowChat, socket }) => {
                         <p
                           className=' overflow-wrap  self-end text-xl text-black bg-white max-w-[18rem] w-auto h-auto p-2 rounded'
                         >
-                          {message.message}
+                          {message.text}
                         </p>
-                        <p className='self-end p-1 text-xs text-gray-400 max-w-[18rem] w-auto h-auto'>{message.time}</p>
+                        <p className='self-end p-1 text-xs text-gray-400 max-w-[18rem] w-auto h-auto'>{message.timeSent}</p>
                       </div>
                       )
                   })

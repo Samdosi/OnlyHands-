@@ -12,10 +12,10 @@ const ChatSchema = new Schema({
                 ref: "Profile"
             },
             timeSent: {
-                type: Date
+                type: String
             },
             timeSeen: {
-                type: Date
+                type: String
             },
             reaction: {
                 type: String,
