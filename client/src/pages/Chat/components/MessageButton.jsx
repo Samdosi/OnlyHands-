@@ -1,4 +1,5 @@
 import React from 'react';
+import { CgProfile } from 'react-icons/cg';
 import { BsFillCircleFill } from 'react-icons/bs';
 import { useProfileContext } from '../context/Profile';
 
@@ -25,11 +26,17 @@ const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId
     >
 
         <div className='relative'>
-        <img
-            src={picture}
-            alt="profile "
-            className='w-16 h-16 rounded-[50%]'
-        />
+            {
+                picture
+                ?
+                    <img
+                        src={picture}
+                        alt="profile "
+                        className='w-16 h-16 rounded-[50%]'
+                    />
+                :
+                <CgProfile size={62} />
+            }
 
         {
             online && 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 import { AiOutlineSend } from 'react-icons/ai';
+import { CgProfile } from 'react-icons/cg';
 import { useProfileContext } from '../context/Profile';
 import StartConvosImg from '../assets/undraw_group_chat_re_frmo.svg';
 import BG from '../assets/bg.webp';
@@ -94,11 +95,17 @@ const ChatContainer = ({ setShowChat, socket }) => {
                 <BiArrowBack style={{width: '100%', height: '100%'}}/>
               </div>
               <div className=' h-full flex items-center active:bg-[#484848] '>
-                <img
-                  src={profile.picture}
-                  alt="profile "
-                  className='w-10 h-10 rounded-[50%] mr-2'
-                />
+                {
+                  profile.picture
+                  ?
+                    <img
+                      src={profile.picture}
+                      alt="profile "
+                      className='w-10 h-10 rounded-[50%] mr-2'
+                    />
+                  :
+                    <CgProfile size={38} />
+                }
                 <p>{profile.name}</p>
               </div>
             </div>
