@@ -2,7 +2,9 @@ import React from 'react';
 
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 
-const MessageBox = (props) => {
+const MessageBox = ({ navigation }, props) => {
+    console.log("id", props.profileID);
+
     const renderUserStatus = () => {
         if (props.online) {
             return {
@@ -32,9 +34,9 @@ const MessageBox = (props) => {
     };
 
     return (
-        <TouchableOpacity style={styles.button} onPress={() => {
+        <TouchableOpacity style={styles.button} onPress={(props) => {
             if (props.status != false) {
-                props.navigation.navigate("MessageScreen", props)
+                navigation.navigate("MessageScreen", {id: props.profileID});
             }
         }}>
             <View style={styles.mainView}>

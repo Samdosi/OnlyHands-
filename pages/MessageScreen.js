@@ -15,6 +15,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import io from "socket.io-client";
 
 function MessageScreen(props) {
+    const profileID = props.id;
+
+    console.log("testing", props.profileID);
+
     const [messages, addMessage] = useState([]);
 
     const [message, setMessage] = useState("");
@@ -40,6 +44,12 @@ function MessageScreen(props) {
     /*useEffect(() => {
         submit();
     }, [messages]);*/
+
+    useEffect(() => {
+        if (profileID) {
+            socket.emit("joinRoom", props.matchID);
+        }
+    }, []);
 
     const alignMessage = (id2) => {
         console.log(id.localeCompare(id2));
@@ -140,7 +150,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 60,
         height: 60,
-        borderWidth: 1,
         borderRadius: 60,
         marginRight: 20
     },
@@ -167,7 +176,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        height: 80,
+        height: 60,
         width: "80%",
         borderWidth: 1,
         borderColor: "white",
@@ -180,7 +189,8 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 80,
         width: "30%",
-        padding: 10
+        paddingTop: 5,
+        paddingLeft: 15
     }
 });
 

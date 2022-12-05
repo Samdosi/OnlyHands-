@@ -20,10 +20,9 @@ import io from "socket.io-client";
 
 function ChatScreen({ navigation, route }) {
 
-    const userId = route.params.userId
+    const profileId = route.params.userId;
+
     const token = route.params.paramKey;
-   
-    //console.a (profileID);
 
     const [matched, setMatched] = useState([]);
 
@@ -49,6 +48,8 @@ function ChatScreen({ navigation, route }) {
             );
 
             const data = response.data.matches;
+
+            console.log(data);
 
             let m = [];
 
@@ -94,8 +95,9 @@ function ChatScreen({ navigation, route }) {
                         console.log(c)
                         return (<MessageBox
                             name={c.firstName + " " + c.lastName}
-                            profileID={c.profileId}
+                            profileID={profileId}
                             matchID={c.matchId}
+                            status={true}
                             online={c.online}
                             profilePicture={profilePicture}
                             navigation={navigation}
@@ -103,10 +105,10 @@ function ChatScreen({ navigation, route }) {
                     })
                     }
 
-                    {unmatched.map(c => (
+                    {unmatched.map((c) => (
                         <MessageBox
                             name={c.firstName + " " + c.lastName}
-                            profileID={c.profileId}
+                            profileID={profileId}
                             matchID={c.matchId}
                             status={false}
                             online={c.online}
