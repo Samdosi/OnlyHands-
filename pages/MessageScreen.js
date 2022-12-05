@@ -17,7 +17,7 @@ import io from "socket.io-client";
 function MessageScreen(props) {
     const [messages, addMessage] = useState([]);
 
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState("");
 
     const socket = io("http://only-hands.herokuapp.com");
 
@@ -67,8 +67,8 @@ function MessageScreen(props) {
 
         if (id.localeCompare(id2) == 0) {
             return {
-                height: 60,
-                padding: 10,
+                height: 50,
+                padding: 5,
                 justifyContent: "center",
                 borderRadius: 5,
                 backgroundColor: "azure"
@@ -76,11 +76,11 @@ function MessageScreen(props) {
         }
         else {
             return {
-                height: 60,
-                padding: 10,
+                height: 50,
+                padding: 5,
                 justifyContent: "center",
                 borderRadius: 5,
-                backgroundColor: "aqua"
+                backgroundColor: "#bbf7d0"
             }
         }
     };
@@ -95,8 +95,8 @@ function MessageScreen(props) {
 
             <ScrollView>
                 {messages.map(c => (
-                    <View>
-                        <View>
+                    <View style={alignMessage(c.id)}>
+                        <View style={styleLayout(c.id)}>
                             <Text style={styles.messageText}>testing</Text>
                         </View>
                     </View>

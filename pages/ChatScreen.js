@@ -22,11 +22,7 @@ function ChatScreen({ navigation, route }) {
 
     const userId = route.params.userId
     const token = route.params.paramKey;
-
-    alert(userId);
-    alert(token);
-    
-
+   
     //console.a (profileID);
 
     const [matched, setMatched] = useState([]);
@@ -42,7 +38,7 @@ function ChatScreen({ navigation, route }) {
     const requestMatchInfo = async () => {
         const payload = {
             headers: {
-                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMjY1MDA2LCJleHAiOjE2NzAyNjg2MDZ9.2PG-Jv0zMserCEbhZDQxnBxXpAIQriK3N0IoA5IYpyM"
+                'x-access-token': token
             }
         };
 

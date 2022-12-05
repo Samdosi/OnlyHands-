@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://h7-wva.anonymous.onlyhands.exp.direct",
+  "packagerNgrokUrl": "https://h7-wva.anonymous.onlyhands.exp.direct",
+  "ngrokPid": 18496,
   "webpackServerPort": null
 }
