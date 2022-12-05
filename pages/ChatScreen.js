@@ -18,9 +18,14 @@ import io from "socket.io-client";
 
 //add search bar for the chat.
 
-function ChatScreen({ navigation, paramKey, profileID }) {
+function ChatScreen({ navigation, route }) {
 
-    alert(paramKey);
+    const userId = route.params.userId
+    const token = route.params.paramKey;
+
+    alert(userId);
+    alert(token);
+    
 
     //console.a (profileID);
 
