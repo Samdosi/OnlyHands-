@@ -16,10 +16,7 @@ import ChatScreen from "./pages/ChatScreen";
 import HomePage from "./pages/HomePage";
 import MessageScreen from "./pages/MessageScreen";
 import Home from "./pages/HomePage";
-import {
-  NavigationContainer,
-  useNavigationContainerRef,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { color } from "react-native-reanimated";
 import ProfileEdit from "./pages/ProfileEdit";
@@ -72,20 +69,18 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="ProfileEdit"
           component={ProfileEdit}
-          options={{
+          options={({ navigation }) => ({
             headerShown: true,
             headerStyle: { backgroundColor: "black", color: "white" },
             headerTintColor: "white",
             headerRight: () => (
               <Button
-                onPress={({ navigationRef }) =>
-                  navigationRef.navigate("LoginScreen")
-                }
+                onPress={() => navigation.navigate("LoginScreen")}
                 title="Logout"
                 color="#fff"
               />
             ),
-          }}
+          })}
         ></Stack.Screen>
         <Stack.Screen
           name="ChatScreen"
