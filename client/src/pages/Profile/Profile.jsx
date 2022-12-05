@@ -10,13 +10,12 @@ const Profile = ({ setBgImage }) => {
     setBgImage(pathname);
     
     const [showModal, setShowModal] = useState(false);
-    const [isCreated, setIsCreated] = useState(false);
     const handleModal = () => setShowModal(false);
 
     useEffect(() => {
         fetch('https://only-hands.herokuapp.com/api/profile/', {
             method: 'GET',
-            headers: {"x-access-token": cookies.get("token"), 'Content-Type': 'application/json' },
+            headers: { "x-access-token": cookies.get("token"), 'Content-Type': 'application/json' }
         })
             .then((res) => {
                 return res.json()
@@ -25,7 +24,6 @@ const Profile = ({ setBgImage }) => {
                 if (data["success"]) {
                     console.log(data["profile"])
                     cookies.set("profile", JSON.stringify(data["profile"]));
-                    setIsCreated(true);
                 }
                 else {
                     console.log(data["message"]);
@@ -36,7 +34,7 @@ const Profile = ({ setBgImage }) => {
     }, [])
 
     return (
-        <div className='grid grid-cols-3 gap-3'>
+        <div>
             <div classname="left col-span-1 bg-white">
             <button
                 onClick={() => {setShowModal(true)}}
@@ -49,7 +47,7 @@ const Profile = ({ setBgImage }) => {
                     <Card />
                 </div>
             </div>
-            {showModal && <InfoModal onClose={handleModal} isCreated={isCreated} setIsCreated={setIsCreated} />}
+            {showModal && <InfoModal onClose={handleModal} />}
         </div>
     )
 }
@@ -67,7 +65,7 @@ export default Profile;
 //   setBgImage(pathname);
 
 //   const [showProfileModal, setShowProfileModal] = useState(false);
-//   // const [isCreated, setIsCreated] = useState(false);
+//   const [isCreated, setIsCreated] = useState(false);
 //   const handleModal = () => setShowProfileModal(false);
 //   const cookies = new Cookies();
 

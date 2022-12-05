@@ -16,7 +16,7 @@ const App = () => {
 
   const bgImages = {
     '/': heroBG,
-    'profile': heroBG,
+    '/profile': heroBG,
     '/rules': heroBG
   }
   return (

@@ -3,11 +3,14 @@ import { useOutsideClick } from '../hooks';
 import { Sling as Hamburger } from 'hamburger-react';
 import { GiBoxingGlove } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const Navbar = () => {
 
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleHamburger, setToggleHamburger] = useState(false);
+
+  const cookies = new Cookies();
 
   const hamburgerRef = useOutsideClick( () => {
     handleLinkClicked();
@@ -16,6 +19,12 @@ const Navbar = () => {
   const handleLinkClicked = () =>{
     setToggleHamburger(false);
     setToggleMenu(false)
+  }
+
+  const handleLogout = () => {
+    handleLinkClicked();
+    cookies.remove("profile");
+    cookies.remove("token");
   }
 
   const linksClass = 'hover:bg-gray-200 md:hover:bg-transparent md:hover:text-gray-200 rounded pl-4 py-3 pr-28 md:p-0 text-lg';
@@ -34,13 +43,19 @@ const Navbar = () => {
       >
         <Link className={linksClass} to='/rules'>Rules</Link>
       </li>
+      {cookies.get("token") && <li 
+        className='w-fit h-fit'
+        onClick={handleLogout}
+      >
+        <Link className={linksClass} to="/">Logout</Link>
+      </li>}
     </>
   ]
 
   return (
     <>
       <nav className='min-h-[10%] h-[10%] max-h-[10%] bg-transparent text-white flex justify-between items-center relative shadow-lg'>
-        <Link to='/'>
+        <Link to={cookies.get("token") ? "/profile" : "/"}>
           <div className='flex items-center text-center lg:py-5'>
             <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-14 lg:w-14'>
               <GiBoxingGlove className='icon1 mr-1' style={{width: '100%', height: '100%'}}/>

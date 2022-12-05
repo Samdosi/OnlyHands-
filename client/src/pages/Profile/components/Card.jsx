@@ -155,10 +155,11 @@ const Card = () => {
                 onSwipe={(dir) => swiped(dir, match._id, index)}
                 onCardLeftScreen={() => outOfFrame(match._id)}
                 flickOnSwipe={true}
+
               >
                 <div
                   // style={{ backgroundImage: "url(" + match.url + ")" }}
-                  style={{ backgroundColor: "red" }}
+                  style={{ backgroundColor: "grey" }}
                   className="card"
                 >
                   <div className="gridContainer">
