@@ -1,122 +1,126 @@
-import React from 'react';
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+const MessageBox = (props) => {
+  console.log("profileID", props.profileID);
+  const navigation = useNavigation();
+  const renderUserStatus = () => {
+    if (props.online) {
+      return {
+        height: 20,
+        width: 20,
+        borderRadius: 20,
+        backgroundColor: "limegreen",
+        marginLeft: -12,
+        marginTop: 30,
+      };
+    }
+  };
 
-const MessageBox = ({ navigation }, props) => {
-    console.log("id", props.profileID);
+  const renderMessageStatus = () => {
+    const t = 1;
 
-    const renderUserStatus = () => {
-        if (props.online) {
-            return {
-                height: 20,
-                width: 20,
-                borderRadius: 20,
-                backgroundColor: "limegreen",
-                marginLeft: -12,
-                marginTop: 30
-            };
+    if (t > 0) {
+      return {
+        height: "100%",
+        width: "100%",
+        borderRadius: 100,
+        backgroundColor: "#ff405b",
+        alignItems: "center",
+        justifyContent: "center",
+      };
+    }
+  };
+
+  return (
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {
+        if (props.status != false) {
+          navigation.navigate("MessageScreen", { paramKey: props });
         }
-    };
+      }}
+    >
+      <View style={styles.mainView}>
+        <View style={styles.pictureView}>
+          <Image
+            source={require("../../assets/pexels-cottonbro-4761792.jpg")}
+            style={styles.profilePicture}
+          ></Image>
 
-    const renderMessageStatus = () => {
-        const t = 1;
+          <View style={renderUserStatus()}></View>
+        </View>
 
-        if (t > 0) {
-            return {
-                height: "100%",
-                width: "100%",
-                borderRadius: 100,
-                backgroundColor: "#ff405b",
-                alignItems: "center",
-                justifyContent: "center"
-            };
-        }
-    };
+        <View style={styles.nonImage}>
+          <View style={styles.nameView}>
+            <Text style={styles.name}>{props.name}</Text>
 
-    return (
-        <TouchableOpacity style={styles.button} onPress={(props) => {
-            if (props.status != false) {
-                navigation.navigate("MessageScreen", {id: props.profileID});
-            }
-        }}>
-            <View style={styles.mainView}>
-                <View style={styles.pictureView}>
-                    <Image
-                        source={require("../../assets/pexels-cottonbro-4761792.jpg")}
-                        style={styles.profilePicture}
-                    >
-                    </Image>
+            {props.status === false && (
+              <Text style={styles.pending}> Pending Match </Text>
+            )}
+          </View>
 
-                    <View style={renderUserStatus()}></View>
-                </View>
-
-                <View style={styles.nonImage}>
-                    <View style={styles.nameView}>
-                        <Text style={styles.name}>{props.name}</Text>
-
-                        {props.status === false && <Text style={styles.pending}> Pending Match </Text>}
-                    </View>
-
-                    <View style={styles.messageAlert}>
-                        <View style={renderMessageStatus()}>
-                            <Text style={styles.numMessages}>2</Text>   
-                        </View>
-                    </View>
-                </View>
+          <View style={styles.messageAlert}>
+            <View style={renderMessageStatus()}>
+              <Text style={styles.numMessages}>2</Text>
             </View>
-        </TouchableOpacity>
-    );
-}
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
-    mainView: {
-        flexDirection: "row",
-        alignContent: "center",
-        margin: 20
-    },
+  mainView: {
+    flexDirection: "row",
+    alignContent: "center",
+    margin: 20,
+  },
 
-    pictureView: {
-        flexDirection: "row",
-        width: 60,
-        height: 60,
-    },
+  pictureView: {
+    flexDirection: "row",
+    width: 60,
+    height: 60,
+  },
 
-    profilePicture: {
-        width: "100%",
-        height: "100%",
-        borderRadius: 100,
-    },
+  profilePicture: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 100,
+  },
 
-    nonImage: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginLeft: 20
-    },
+  nonImage: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 20,
+  },
 
-    nameView: {
-        flex: 1,
-        justifyContent: "flex-end",
-    },
+  nameView: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
 
-    name: {
-        fontSize: 20,
-        color: "white"
-    },
+  name: {
+    fontSize: 20,
+    color: "white",
+  },
 
-    pending: {
-        color: "white"
-    },
+  pending: {
+    color: "white",
+  },
 
-    messageAlert: {
-        width: 60,
-        height: 60
-    },
+  messageAlert: {
+    width: 60,
+    height: 60,
+  },
 
-    numMessages: {
-        color: "white",
-        fontSize: 20
-    },
+  numMessages: {
+    color: "white",
+    fontSize: 20,
+  },
 });
 
 export default MessageBox;
