@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { NewMessages, Messages, ChatContainer } from './components';
+import { SearchBar, Messages, ChatContainer } from './components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ProfileProvider } from './context/Profile';
 
 const Chat = ({ setBgImage, socket }) => {
-
   const navigate = useNavigate();
   const {pathname} = useLocation();
   setBgImage(pathname);
 
   const [showChat, setShowChat] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [matchMessages, setMatchMessages] = useState([]);
   const [unMatchMessages, setUnMatchMessages] = useState([]);
 
   useEffect(() => {
-    fetch("https://only-hands.herokuapp.com/api/match", {
+    fetch("https://only-hands.herokuapp.com/api/match?searchQuery=" + searchValue, {
       headers:{
         'x-access-token': sessionStorage.getItem('token')
       }
@@ -39,7 +39,7 @@ const Chat = ({ setBgImage, socket }) => {
         setUnMatchMessages(u);
       })
       .catch(e => console.log(e))
-  }, [])
+  }, [searchValue])
 
   return (
     <div className='text-white w-full h-[90%] min-h-[290px] flex '>
@@ -47,13 +47,13 @@ const Chat = ({ setBgImage, socket }) => {
       <ProfileProvider>
         { !showChat && 
           <div className='w-full flex-auto md:hidden'>
-            <NewMessages />
+            <SearchBar value={searchValue} setValue={setSearchValue} />
             <Messages setShowChat={setShowChat} matchMessages={matchMessages} unMatchMessages={unMatchMessages}/>
           </div>
         }
 
         <div className='hidden md:block w-full flex-auto md:max-w-[45%] lg:max-w-[35%] md:border-r-[1px] md:border-r-gray-600 md:border-solid '>
-          <NewMessages />
+          <SearchBar value={searchValue} setValue={setSearchValue} />
           <Messages setShowChat={setShowChat} matchMessages={matchMessages} unMatchMessages={unMatchMessages}/>
         </div>
 
