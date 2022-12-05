@@ -55,16 +55,7 @@ const baseURL = "https://only-hands.herokuapp.com";
 
 const Home = ({ navigation, route }) => {
 
-  
-
-
-
-
-
-
-
-
-
+  const userId = route.params.userId
   const token = route.params.paramKey;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -221,7 +212,7 @@ const Home = ({ navigation, route }) => {
             style={{ textAlign: "left", marginLeft: 20, top: 15 }}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ChatScreen", { paramKey: token, userId: userId })}>
           <Entypo
             name="chat"
             size={40}

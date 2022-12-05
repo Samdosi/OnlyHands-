@@ -86,12 +86,14 @@ const LoginScreen = ({ navigation }) => {
           .post(baseURL + "/api/user/login/", payload)
           .then((response) => {
             const token = response.data.token;
+            const userId = response.data.profile;
             if (response.data.profile == null) {
               navigation.navigate("ProfileScreen", { paramKey: token });
             } else {
               LoadProfiles(token).then(() => {
-                console.log("NOW");
-                navigation.navigate("Home", { paramKey: token });
+                console.log(response);
+                console.log(response.data.profile)
+                navigation.navigate("Home", { paramKey: token, userId: userId });
               });
             }
           });
