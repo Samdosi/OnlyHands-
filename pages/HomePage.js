@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 
+//import image from '../assets/back.jpg'
 import {
   Text,
   StyleSheet,
@@ -46,12 +47,24 @@ import { BackgroundImage } from "react-native-elements/dist/config";
 import axios from "axios";
 import LoadProfiles from "../assets/data/loadprofiles";
 import ChatScreen from "./ChatScreen";
-//import drawer from "./drawer";
-//import { tokens } from "react-native-paper/lib/typescript/styles/themes/v3/tokens";
+
+import FileBase64 from 'react-native-base64'
+
 
 const baseURL = "https://only-hands.herokuapp.com";
 
 const Home = ({ navigation, route }) => {
+
+  
+
+
+
+
+
+
+
+
+
   const token = route.params.paramKey;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -262,7 +275,14 @@ const Home = ({ navigation, route }) => {
             <Ionicons name="reload" size={40} color={"#b8dff5"} />
           </TouchableOpacity>
         </View>
+        
       </View>
+
+      <Button title='press' onPress={ ()=>{
+        console.log('pressed')
+
+      }}></Button>
+      
     </SafeAreaView>
   );
 };

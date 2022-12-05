@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   Image,
@@ -14,12 +14,44 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { CheckBox, useTheme } from "react-native-elements";
-import { ImagePicker } from "react-native-image-picker";
+//import { ImagePicker } from "react-native-image-picker";
+import * as ImagePicker from 'expo-image-picker'
 import Loader from "./Loader";
 import axios from "axios";
 import LoginScreen from "./LoginScreen";
 import Home from "./HomePage";
 function ProfileScreen({ navigation, route }) {
+  
+  const[hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const[image,setImage] = useState(null);
+
+  useEffect(()=>{
+    (async()=> {
+      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === 'granted');
+    })();
+  },[]);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect:[4,3],
+      quality:1
+    });
+
+    console.log(result)
+
+    if(!result.cancelled){
+      setImage(result.uri);
+    }
+  }
+
+  if(hasGalleryPermission === false){
+    console.log('error')
+  }
+
+
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -122,24 +154,7 @@ function ProfileScreen({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity
-          // onPress={() =>
-          //   ImagePicker.launchImageLibrary(
-          //     {
-          //       mediaType: "photo",
-          //       includeBase64: false,
-          //       maxHeight: 200,
-          //       maxWidth: 200,
-          //     },
-          //     (response) => {
-          //       console.log(response);
-          //       this.setState({
-          //         resourcePath: response,
-          //       });
-          //     }
-          //   )
-          // }
-          >
+          <TouchableOpacity onPress={()=>pickImage()}>
             <View style={styles.profilePicture}>
               <Text style={styles.profilePictureText}>
                 Upload profile Picture
