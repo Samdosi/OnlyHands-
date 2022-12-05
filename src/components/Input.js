@@ -35,7 +35,8 @@ const Input = ({
           onBlur={() => {
             setIsFocused(false);
           }}
-          style={{ color: "red", flex: 1 }}
+          style={{color: "white", flex: 1 }}
+          placeholderTextColor= "white"
           {...props}
         ></TextInput>
         {password && (

@@ -8,25 +8,38 @@ import {
     Image,
     Text
 } from "react-native";
-import { React, useState} from "react";
+import { React, useState, useEffect } from "react";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-//import io from "socket.io-client";
+import io from "socket.io-client";
 
 function MessageScreen(props) {
-    const messages = [{ id: "123", text: "21312312345" }, { id: "432", text: "123123" }];
+    const [messages, addMessage] = useState([]);
 
     const [message, setMessage] = useState();
 
-    const id = "432";
+    const socket = io("http://only-hands.herokuapp.com");
 
     const submit = () => {
-        messages.push({ id: id, text: message });
-
-        console.log(messages);
-        setMessage("");
+        socket.emit("joinRoom", message);
+        addMessage((messages) => [...messages, message]);
     };
+
+    /*const receive = () => {
+        try {
+            socket.on("receiveMessage", (data) => setMessage(data));
+            messages.push(message);
+            setMessage("");
+        } catch (error) {
+            console.log(error);
+        }
+       
+    };*/
+
+    /*useEffect(() => {
+        submit();
+    }, [messages]);*/
 
     const alignMessage = (id2) => {
         console.log(id.localeCompare(id2));
@@ -82,9 +95,9 @@ function MessageScreen(props) {
 
             <ScrollView>
                 {messages.map(c => (
-                    <View style={alignMessage(c.id)}>
-                        <View style={styleLayout(c.id)}>
-                            <Text style={styles.messageText}>{c.text}</Text>
+                    <View>
+                        <View>
+                            <Text style={styles.messageText}>testing</Text>
                         </View>
                     </View>
                     ))
@@ -99,10 +112,10 @@ function MessageScreen(props) {
                     ></TextInput>
 
                     <View style={styles.sendButton}>
-                        <TouchableOpacity onPress={() => submit()}>
+                        <TouchableOpacity onPress={submit}>
                             <Icon
                                 name={"send-outline"}
-                                size={60}
+                                size={50}
                                 color={"white"}
                             />
                         </TouchableOpacity>

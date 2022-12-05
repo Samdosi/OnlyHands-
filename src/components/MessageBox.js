@@ -32,7 +32,11 @@ const MessageBox = (props) => {
     };
 
     return (
-        <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate(props.dest, props)}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+            if (props.status != false) {
+                props.navigation.navigate("MessageScreen", props)
+            }
+        }}>
             <View style={styles.mainView}>
                 <View style={styles.pictureView}>
                     <Image
@@ -47,11 +51,13 @@ const MessageBox = (props) => {
                 <View style={styles.nonImage}>
                     <View style={styles.nameView}>
                         <Text style={styles.name}>{props.name}</Text>
+
+                        {props.status === false && <Text style={styles.pending}> Pending Match </Text>}
                     </View>
 
                     <View style={styles.messageAlert}>
                         <View style={renderMessageStatus()}>
-                            <Text styles={styles.numMessages}>2</Text>   
+                            <Text style={styles.numMessages}>2</Text>   
                         </View>
                     </View>
                 </View>
@@ -93,6 +99,10 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize: 20,
+        color: "white"
+    },
+
+    pending: {
         color: "white"
     },
 

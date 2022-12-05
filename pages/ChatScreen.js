@@ -6,7 +6,7 @@ import {
     View,
     Text
 } from "react-native";
-import { React, useState} from "react";
+import { React, useState, useEffect} from "react";
 
 import MessageBox from "../src/components/MessageBox";
 
@@ -14,88 +14,103 @@ import Input from "../src/components/Input";
 
 import axios from "axios";
 
+import io from "socket.io-client";
+
 //add search bar for the chat.
 
-function ChatScreen({ navigation, paramKey }) {
+function ChatScreen({ navigation, paramKey, profileID }) {
 
-    const [profiles, setProfiles] = useState([]);
+    alert(paramKey);
 
-    const [messageList, setMessageList] = useState([]);
+    //console.a (profileID);
+
+    const [matched, setMatched] = useState([]);
+
+    const [unmatched, setUnmatched] = useState([]);
+
+    const [searchValue, setSearchValue] = useState("");
 
     const [profilePicture, setProfilePicture] = useState();
 
     const baseURL = "https://only-hands.herokuapp.com";
 
-    //const matchID = ;
-
     const requestMatchInfo = async () => {
         const payload = {
             headers: {
-                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMDUxMDA0LCJleHAiOjE2NzAwNTQ2MDR9.fVZRQeyEFra7wSTmyIB40YG2h7XzZ5aa7cXLG55XsLM"
-            },
+                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMjY1MDA2LCJleHAiOjE2NzAyNjg2MDZ9.2PG-Jv0zMserCEbhZDQxnBxXpAIQriK3N0IoA5IYpyM"
+            }
         };
 
         try {
             const response = await axios.get(
-                baseURL + "/api/match/",
+                baseURL + "/api/match?searchQuery=" + searchValue,
                 payload
             );
 
             const data = response.data.matches;
 
-            setProfiles(data);
+            let m = [];
+
+            let u = [];
+
+            data?.forEach(e => {
+                if (e.isComplete) m.push(e)
+                else u.push(e)
+            })
+
+            setMatched(m);
+
+            setUnmatched(u);
 
         } catch (error) {
             console.log(error.response.data);
         }
     };
 
-    const requestContacts = async (matchId) => {
-        const payload = {
-            headers: {
-                'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM3ZDFlNTA2YmEyZmJkMDA3MmRmMzc3IiwiaWF0IjoxNjcwMDUxMDA0LCJleHAiOjE2NzAwNTQ2MDR9.fVZRQeyEFra7wSTmyIB40YG2h7XzZ5aa7cXLG55XsLM"
-            },
-        };
-
-        try {
-            const response = await axios.get(
-                baseURL + "/api/match/:" + matchId,
-                payload
-            );
-
-            console.log(response);
-
-        } catch (error) {
-            console.log("penis");
-            console.log(error.response.data);
-        }
-    };
-    
+    useEffect(() => {
+        requestMatchInfo();
+    }, [searchValue])
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.mainView} onLayout={() => requestMatchInfo()}>
+            <View style={styles.mainView}>
                 <Text style={styles.title}>Messages</Text>
 
                 <View style={styles.searchBox}>
                     <Input
                         label="Search"
-                        placeholder="Enter your social security"
+                        placeholder="Enter the name"
                         iconName={"magnify"}
                         color="white"
+                        placeholderColor= "white"
+                        value={searchValue}
+                        onChangeText={setSearchValue}
                     />
                 </View>
 
                 <ScrollView>
-                    {profiles.map(c => (
-                        <MessageBox
+                    {matched.map(c => {
+                        console.log(c)
+                        return (<MessageBox
                             name={c.firstName + " " + c.lastName}
-                            profileID={c.profileID}
+                            profileID={c.profileId}
+                            matchID={c.matchId}
                             online={c.online}
                             profilePicture={profilePicture}
-                            messages={requestContacts(c.matchId)}
                             navigation={navigation}
-                            dest="MessageScreen"
+                        />)
+                    })
+                    }
+
+                    {unmatched.map(c => (
+                        <MessageBox
+                            name={c.firstName + " " + c.lastName}
+                            profileID={c.profileId}
+                            matchID={c.matchId}
+                            status={false}
+                            online={c.online}
+                            profilePicture={profilePicture}
+                            navigation={navigation}
                         />
                     ))
                     }
@@ -115,7 +130,7 @@ const styles = StyleSheet.create({
         color: "#ff405b",
         fontStyle: "bold",
         fontSize: 30,
-        marginLeft: 40
+        marginLeft: 10
     },
 
     searchBox: {
