@@ -26,13 +26,13 @@ const Navbar = () => {
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
-        <Link className={linksClass} to='/rules'>Rules</Link>
+        <Link className={linksClass} to='/chat'>Chat</Link>
       </li>
       <li 
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
-        <Link className={linksClass} to='/about'>About</Link>
+        <Link className={linksClass} to='/rules'>Rules</Link>
       </li>
     </>
   ]

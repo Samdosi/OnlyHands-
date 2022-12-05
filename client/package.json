@@ -4,8 +4,12 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/material": "^5.10.16",
     "@react-spring/web": "^9.5.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -19,6 +23,7 @@
     "react-tinder-card": "^1.6.2",
     "react-toastify": "4.1",
     "socket.io-client": "^4.5.3",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
