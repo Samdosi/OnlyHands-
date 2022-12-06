@@ -150,7 +150,7 @@ const getMatches = (userId, searchQuery, res) => {
                     lastName: profile.lastName,
                     online: profile.online,
                     matchId: matchDoc._id,
-                    image: profile._id,
+                    image: profile.image,
                     isComplete: matchDoc.isComplete
                 };
 
