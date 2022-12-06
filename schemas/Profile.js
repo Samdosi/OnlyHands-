@@ -59,14 +59,7 @@ const profileSchema = new Schema({
         default: ""
     },
     image: {
-        type: {
-            encodedImage: {
-                type: String,
-            },
-            fileType: {
-                type: String,
-            },
-        },
+        type: String,
     },
     online: {
         type: Boolean,
