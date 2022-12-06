@@ -18,7 +18,7 @@ const validateInput = async (req, res, next) => {
     losses: Joi.number(),
     KOs: Joi.number(),
     totalFights: Joi.number(),
-    image: Joi.object({ encodedImage: Joi.string() }),
+    image: Joi.string(),
   });
 
   const result = profileSchema.validate(body);
