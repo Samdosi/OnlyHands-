@@ -593,10 +593,6 @@ video {
   pointer-events: none;
 }
 
-.visible {
-  visibility: visible;
-}
-
 .fixed {
   position: fixed;
 }
@@ -689,6 +685,10 @@ video {
   grid-column: span 2 / span 2;
 }
 
+.m-7 {
+  margin: 1.75rem;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -763,10 +763,6 @@ video {
 
 .flex {
   display: flex;
-}
-
-.grid {
-  display: grid;
 }
 
 .hidden {
@@ -991,6 +987,18 @@ video {
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.-translate-x-2\/4 {
+  --tw-translate-x: -50%;
+  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-2\/4 {
+  --tw-translate-y: -50%;
+  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .translate-x-\[-50\%\] {
   --tw-translate-x: -50%;
   -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1033,10 +1041,6 @@ video {
           appearance: none;
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .flex-row {
   flex-direction: row;
 }
@@ -1071,14 +1075,6 @@ video {
 
 .justify-evenly {
   justify-content: space-evenly;
-}
-
-.gap-3 {
-  gap: 0.75rem;
-}
-
-.self-start {
-  align-self: flex-start;
 }
 
 .self-end {
@@ -1262,6 +1258,10 @@ video {
 
 .p-10 {
   padding: 2.5rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .p-3 {
@@ -1659,7 +1659,7 @@ hr.solid {
 
 .cardContainer {
   width: 37vw;
-  max-width: 500px;
+  max-width: 450px;
   height: 500px;
 }
 
@@ -1670,7 +1670,6 @@ hr.solid {
   width: 250vw;
   max-width: 450px;
   height: 500px;
-  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.30);
   border-radius: 20px;
   background-size: 100%;
   background-position: top;
@@ -1680,7 +1679,7 @@ hr.solid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /*justify-content: center;*/
 }
 
 .cardContent {
@@ -1760,7 +1759,7 @@ hr.solid {
   border: none;
   color: #fff;
   font-size: 18px;
-  background-color: #9198e5;
+  background-color: #ff405b;
   transition: 200ms;
   margin: 10px;
   font-weight: bolder;
@@ -1846,6 +1845,46 @@ hr.solid {
             transform: scale(1, 1)
   }
 }
+
+.swipeButtons {
+  position: fixed;
+  bottom: 10vh;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.swipeButtons .MuiIconButton-root {
+  background-color: white;
+  box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important ;
+}
+
+/* .swipeButtons_repeat {
+    padding: 3vw !important;
+    color: #f56748 !important;
+  }
+   */
+
+.swipeButtons_left {
+  padding: 3vw !important;
+  color: #ec5e6f !important;
+}
+
+/* .swipeButtons_star {
+    padding: 3vw !important;
+    color: #62b4f9 !important;
+  } */
+
+.swipeButtons_right {
+  padding: 3vw !important;
+  color: #76e2b3 !important;
+}
+
+/* .swipeButtons_lightning {
+    padding: 3vw !important;
+    color: #915dd1 !important;
+  }
+   */
 
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;

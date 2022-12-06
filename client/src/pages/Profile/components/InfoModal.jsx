@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { ImCross } from "react-icons/im";
+import Cookies from "universal-cookie";
+import { useToastyContext } from "../../../context/ToastyContext";
 
-const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
-  let profile = JSON.parse(sessionStorage.profile);
+const InfoModal = ({ onClose }) => {
+  const cookies = new Cookies();
+  const notify = useToastyContext();
+  let profile = cookies.get("profile");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
+  const options = ["-- Select an option --", "Male", "Female", "Other"];
   const [age, setAge] = useState(0);
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState(0);
@@ -86,35 +91,37 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
       setError(true);
     }
 
-    // Determine if creating/editing
+    let body = JSON.stringify({
+      firstName: firstName,
+      lastName: lastName,
+      gender: gender,
+      age: age,
+      height: height,
+      weight: weight,
+      nickname: nickname,
+      reach: reach,
+      wins: wins,
+      losses: losses,
+      style: style,
+      bio: bio,
+      KOs: KOs,
+      totalFights: totalFights,
+    })
+
+    // Determine if creating(POST)/editing(PUT)
     let method = "POST";
 
-    if (isCreated) {
+    if (profile != null) {
       method = "PUT";
     }
 
     fetch("https://only-hands.herokuapp.com/api/profile/", {
       method: method,
       headers: {
-        "x-access-token": sessionStorage.getItem("token"),
+        "x-access-token": cookies.get("token"),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        gender: gender,
-        age: age,
-        height: height,
-        weight: weight,
-        nickname: nickname,
-        reach: reach,
-        wins: wins,
-        losses: losses,
-        style: style,
-        bio: bio,
-        KOs: KOs,
-        totalFights: totalFights,
-      }),
+      body: body,
     })
       .then((res) => {
         return res.json();
@@ -122,32 +129,41 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
       .then((data) => {
         if (data["success"]) {
           console.log(data["message"]);
-        } else console.log(data["message"]);
+          notify(data["message"]);
+          cookies.set("profile", body);
+          // profile = cookies.get("profile");
+          autoFillInfo();
+          onClose();
+          window.location.reload(); //! REMOVE IF POSSIBLE
+        } else {
+          console.log(data["message"]);
+          notify(data["message"], "error");
+        }
       })
       .catch((error) => console.log(error));
 
     console.log(image);
-    
+
     fetch("https://only-hands.herokuapp.com/api/profile/image-upload", {
-        // Send image to database
-        method: "POST",
-        headers: {
-          "x-access-token": sessionStorage.getItem("token")
-        },
-        body: image
+      // Send image to database
+      method: "POST",
+      headers: {
+        "x-access-token": cookies.get("token"),
+      },
+      body: image,
+    })
+      .then((res) => {
+        return res.json();
       })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          if (data["success"]) {
-            console.log(data["message"]);
-            setIsCreated(true);
-            autoFillInfo();
-            handleOnClose();
-          } else console.log(data["message"]);
-        })
-        .catch((error) => console.log(error));
+      .then((data) => {
+        if (data["success"]) {
+          console.log(data["message"]);
+          // setIsCreated(true);
+          autoFillInfo();
+          handleOnClose();
+        } else console.log(data["message"]);
+      })
+      .catch((error) => console.log(error));
   };
 
   const loadPreviewImage = (event) => {
@@ -158,7 +174,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
   };
 
   const autoFillInfo = () => {
-    if (isCreated) {
+    if (profile != null) {
       setFirstName(profile.firstName);
       setLastName(profile.lastName);
       setGender(profile.gender);
@@ -214,7 +230,11 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
           </p>
         </div>
         <div className="body flex flex-row m-2">
-          <form encType="multipart/form-data" onSubmit={updateProfile} className="flex flex-row w-full">
+          <form
+            encType="multipart/form-data"
+            onSubmit={updateProfile}
+            className="flex flex-row w-full"
+          >
             <div className="body-left p-2">
               <div className="form-row flex flex-wrap -mx-3 md-3">
                 <div className="w-full md:w-1/2 px-3 md-3 md:mb-0">
@@ -260,7 +280,6 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                   </label>
                   <input
                     value={nickname}
-                    required
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="nickname"
                     type="text"
@@ -281,13 +300,11 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                       id="gender"
                       onChange={(e) => setGender(e.target.value)}
                     >
-                      <option value="" disabled selected>
-                        {" "}
-                        -- Select an option --{" "}
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      {options.map((value) => (
+                        <option value={value} key={value}>
+                          {value}
+                        </option>
+                      ))}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <svg
@@ -311,7 +328,6 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                   </label>
                   <input
                     value={style}
-                    required
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="fighting-style"
                     type="text"
@@ -365,7 +381,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     </label>
                     <input
                       value={wins}
-                      required
+                      min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       id="wins"
                       type="number"
@@ -381,7 +397,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     </label>
                     <input
                       value={losses}
-                      required
+                      min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
                       type="number"
@@ -397,7 +413,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     </label>
                     <input
                       value={KOs}
-                      required
+                      min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
                       type="number"
@@ -413,7 +429,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     </label>
                     <input
                       value={totalFights}
-                      required
+                      min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
                       type="number"
@@ -432,7 +448,6 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     </label>
                     <input
                       value={reach}
-                      required
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       id="reach"
                       type="text"
@@ -449,6 +464,7 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
                     <input
                       value={age}
                       required
+                      min="1"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="last-name"
                       type="number"
@@ -512,3 +528,4 @@ const InfoModal = ({ onClose, isCreated, setIsCreated }) => {
 };
 
 export default InfoModal;
+

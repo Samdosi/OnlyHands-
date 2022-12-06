@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
+import { useToastyContext } from '../../../context/ToastyContext';
 
 const Register = ({ handleModal }) => {
   const [username, setUsername] = useState("");
@@ -12,19 +12,7 @@ const Register = ({ handleModal }) => {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  function notify() {
-    toast("Your account has been created!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-    toast.configure();
-  }
+  const notify = useToastyContext();
 
   const doRegister = async (event) => {
     event.preventDefault();
@@ -47,10 +35,17 @@ const Register = ({ handleModal }) => {
         if (data["success"]) {
           console.log(data.message);
           handleModal();
-          notify();
-        } else console.log(data.message);
+          notify("User created successfully", "success");
+        } 
+        else {
+          console.log(data.message);
+          notify(data.message, "error");
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        notify(error.message, "error")
+      });
   };
 
   return (
@@ -101,18 +96,6 @@ const Register = ({ handleModal }) => {
               </button>
           </div>
       </form>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

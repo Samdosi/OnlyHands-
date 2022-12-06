@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
+import { useToastyContext } from '../../../context/ToastyContext';
+import Cookies from 'universal-cookie';
 import { useOutsideClick } from '../../../hooks';
 import { AiOutlineLoading } from 'react-icons/ai';
 
@@ -9,21 +10,12 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    function notify() {
-        toast("You have successfully logged in!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        toast.configure();
-      }
+    const cookies = new Cookies();
+
+    const notify = useToastyContext();
 
     const doLogin = async event =>  {
 
@@ -46,16 +38,19 @@ const Login = () => {
         })
         .then((data) => {
             if (data["success"]) {
+                cookies.set("token", data.token, { expires : new Date(Date.now() + 3600 * 1000)})
                 console.log("Successfully logged in!")
-                sessionStorage.setItem("token", data.token);
-                sessionStorage.setItem('profileId', data.profile);
                 navigate('/profile');
-                notify();
+                notify("Successfully logged in!", "success");
             }
             else
                 console.log(data.message);
+                notify(data.message, "error");
+            })
+        .catch(error => {
+            console.log(error);
+            notify(error.message, "error");
         })
-        .catch(error => console.log(error))
     }
 
     return (
@@ -102,18 +97,6 @@ const Login = () => {
                     </button>
                 </div>
             </form>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
         </div>
     );
 }
