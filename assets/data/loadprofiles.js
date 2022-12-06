@@ -7,6 +7,14 @@ const LoadProfiles = async (token) => {
     console.log(token)
    //console.log('HEY');
 
+   const avatarImages = [
+    require('../Avatars/1.jpg'),
+    require('../Avatars/2.jpg'),
+    require('../Avatars/3.jpg'),
+    require('../Avatars/4.jpg'),
+    require('../Avatars/5.jpg')
+  ]
+
         const header = {
             'x-access-token': token,
             'Content-Type': 'application/json',
@@ -32,6 +40,8 @@ const LoadProfiles = async (token) => {
                     users[i].wins = res.data.matches[i].wins 
                     users[i].losses = res.data.matches[i].losses
                     users[i].id = res.data.matches[i]._id 
+                    console.log(res.data.matches[i].image)
+                    users[i].image = avatarImages[res.data.matches[i].image] || avatarImages[0]
                     console.log(users[i].id);
                 }
             })

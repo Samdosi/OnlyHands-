@@ -14,11 +14,81 @@ import {
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { CheckBox, useTheme } from "react-native-elements";
-import { ImagePicker } from "react-native-image-picker";
+//import { ImagePicker } from "react-native-image-picker";
 import Loader from "./Loader";
 import axios from "axios";
+import * as FileSystem from 'expo-file-system';
+import base64 from 'react-native-base64'
+import * as ImagePicker from 'expo-image-picker'
 
 function ProfileEdit({ navigation, route }) {
+/*
+  const[hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const[image,setImage] = useState(null);
+  const[uploadText,setUploadText] = useState('Upload profile Picture')
+
+  const[encodedImage, setEncodedImage] = useState(null)
+
+  useEffect(()=>{
+    (async()=> {
+      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === 'granted');
+    })();
+  },[]);
+
+  const pickImage = async () => {
+    console.log('here')
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect:[4,3],
+      quality:0.001,
+      base64:true,
+
+    });
+
+    console.log('inside')
+
+    console.log(result)
+    
+
+    const decoded = base64.decode(result.base64)
+
+    if(!result.cancelled){
+      setImage(result.uri)
+      setEncodedImage(result.base64)
+      console.log(image)
+    }
+
+    
+
+    if(!result.cancelled){
+      setUploadText('');
+    }
+
+    imageUpload(result)
+  }
+
+  if(hasGalleryPermission === false){
+    Alert.alert('You gave no permission to access gallery')
+  }
+
+
+  const imageUpload = async (image) => {
+    console.log(image.uri)
+
+    const base64 = await FileSystem.readAsStringAsync(image.uri, { encoding: 'base64' })
+
+   // console.log(base64)
+/*
+    const reader = new FileReader();
+    reader.readAsDataURL(image)
+
+
+    console.log(reader.result)
+
+  }
+*/
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -99,7 +169,10 @@ function ProfileEdit({ navigation, route }) {
       })
       .then(function (response) {});
   };
+
   const Edit = async () => {
+    console.log(encodedImage)
+
     const payload = {
       firstName: firstName,
       lastName: lastName,
@@ -134,6 +207,7 @@ function ProfileEdit({ navigation, route }) {
       setLoad(false);
     } catch (error) {
       setLoad(false);
+      console.log(error)
       console.log(error.response.data);
       alert(error.response.data.message);
     }
@@ -152,13 +226,22 @@ function ProfileEdit({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity>
-            <View style={styles.profilePicture}>
-              <Text style={styles.profilePictureText}>
-                Upload profile Picture
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>pickImage()}>
+              <View style={styles.PictureContainer}>
+
+                <ImageBackground source={{uri:image}} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
+                  <View style={styles.profilePicture}>
+                    
+                    <Text style={styles.profilePictureText}>
+                      {uploadText}
+                    </Text>
+                    
+                  </View>
+                </ImageBackground>
+
+              </View>
+              
+            </TouchableOpacity>
 
           <View style={styles.profileInfo}>
             <Text style={styles.profileInfoText}>
@@ -516,8 +599,8 @@ const styles = StyleSheet.create({
     height: 120,
     left: 15,
     top: 15,
-    borderRadius: 60,
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    borderRadius: '50%',
+    //backgroundColor: "rgba(52, 52, 52, 0.8)",
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
@@ -556,6 +639,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: 2,
     color: "white",
+  },
+
+  PictureContainer:{
+     width: 120,
+    height: 120,
+    borderRadius:'50%',
   },
 
   Record: {

@@ -268,11 +268,6 @@ const Home = ({ navigation, route }) => {
         </View>
         
       </View>
-
-      <Button title='press' onPress={ ()=>{
-        console.log('pressed')
-
-      }}></Button>
       
     </SafeAreaView>
   );

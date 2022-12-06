@@ -11,6 +11,7 @@ import {
   View,
   ScrollView,
   ImagePickerIOS,
+  Alert,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { CheckBox, useTheme } from "react-native-elements";
@@ -20,38 +21,22 @@ import Loader from "./Loader";
 import axios from "axios";
 import LoginScreen from "./LoginScreen";
 import Home from "./HomePage";
+import * as FileSystem from 'expo-file-system';
+import base64 from 'react-native-base64'
+
+const avatarIndex = Math.floor(Math.random()*4)+0;
+
+
 function ProfileScreen({ navigation, route }) {
-  
-  const[hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const[image,setImage] = useState(null);
 
-  useEffect(()=>{
-    (async()=> {
-      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === 'granted');
-    })();
-  },[]);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect:[4,3],
-      quality:1
-    });
-
-    console.log(result)
-
-    if(!result.cancelled){
-      setImage(result.uri);
-    }
-  }
-
-  if(hasGalleryPermission === false){
-    console.log('error')
-  }
-
-
+  const avatarImages = [
+    require('../assets/Avatars/1.jpg'),
+    require('../assets/Avatars/2.jpg'),
+    require('../assets/Avatars/3.jpg'),
+    require('../assets/Avatars/4.jpg'),
+    require('../assets/Avatars/5.jpg'),
+  ]
+ 
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -72,6 +57,8 @@ function ProfileScreen({ navigation, route }) {
   const [loading, setLoad] = React.useState(false);
   const [haserorr, setErorrs] = React.useState(false);
 
+  
+  
   const genderMale = () => {
     onChangeMale(true);
     onChangeFemale(false);
@@ -90,6 +77,19 @@ function ProfileScreen({ navigation, route }) {
     onChangeOther(true);
     onchangeGender("other");
   };
+
+  const[uploadText,setUploadText] = useState('')
+  const[avatarPath,setAvatarPath] = useState('')
+
+  
+  console.log(avatarIndex)
+
+  //const path = '../assets/Avatars/'+avatarIndex+'.jpg'
+  //setAvatarPath(path)
+  //const AvatarURI = Image.resolveAssetSource(path).uri;
+
+
+  //console.log(path)
 
   const Login = async () => {
     if (
@@ -118,6 +118,7 @@ function ProfileScreen({ navigation, route }) {
         nickname: nickname,
         bio: bio,
         style: style,
+        image: avatarIndex.toString()
       };
 
       const token = route.params.paramKey;
@@ -143,6 +144,10 @@ function ProfileScreen({ navigation, route }) {
         alert(error.response.data.message);
       }
     }
+
+  
+
+  
   };
 
   return (
@@ -155,11 +160,20 @@ function ProfileScreen({ navigation, route }) {
       >
         <ScrollView style={styles.scroll}>
           <TouchableOpacity onPress={()=>pickImage()}>
-            <View style={styles.profilePicture}>
-              <Text style={styles.profilePictureText}>
-                Upload profile Picture
-              </Text>
+            <View style={styles.PictureContainer}>
+
+              <ImageBackground source={avatarImages[avatarIndex]} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
+                <View style={styles.profilePicture}>
+                  
+                  <Text style={styles.profilePictureText}>
+                    {uploadText}
+                  </Text>
+                  
+                </View>
+              </ImageBackground>
+
             </View>
+            
           </TouchableOpacity>
 
           <View style={styles.profileInfo}>
@@ -410,6 +424,9 @@ function ProfileScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+
+ 
+
   AHW: {
     flex: 1,
     flexDirection: "row",
@@ -512,14 +529,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  PictureContainer:{
+    width: 120,
+    height: 120,
+    borderRadius:'50%',
+  },
+
   profilePicture: {
     //on press we will open gallery and user can upload his picture
     width: 120,
     height: 120,
     left: 15,
     top: 15,
-    borderRadius: 60,
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    borderRadius:'50%',
+    //backgroundColor: "rgba(52, 52, 52, 0.8)",
+    //backgroundColor:'red',
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",

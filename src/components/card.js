@@ -14,7 +14,7 @@ const Card = (props) => {
 
   return (
     <View style={styles.profileCard}>
-      <ImageBackground source={{ uri: image }} style={styles.fighterPicture}>
+      <ImageBackground source={image} style={styles.fighterPicture}>
                         <View style={styles.profileRecordContainer}>
                             <Text style={styles.profileRecord}>{wins}-{losses}</Text>
                         </View>
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
         height:30,
         alignSelf:'flex-end',
         fontSize:20,
-        color:'white',
+        color:'black',
         fontWeight:'bold',
         position:'relative'
     },
 
     profileRecord:{
         fontSize:25,
-        color:'white',
+        color:'black',
         fontWeight:'bold',
     },
 
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
 
   profileName: {
     fontSize: 30,
-    color: "white",
+    color: "black",
     fontWeight: "bold",
   },
 
   profileBio: {
     fontSize: 15,
-    color: "white",
+    color: "black",
     lineHeight: 25,
   },
 
