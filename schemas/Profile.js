@@ -59,10 +59,16 @@ const profileSchema = new Schema({
         default: ""
     },
     image: {
-        type: Schema.Types.ObjectId,
-        ref: "ImageUpload",
+        type: {
+            encodedImage: {
+                type: String,
+            },
+            fileType: {
+                type: String,
+            },
+        },
     },
-    online:{
+    online: {
         type: Boolean,
         default: true
     }
