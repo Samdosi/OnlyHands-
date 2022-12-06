@@ -23,6 +23,7 @@ import LoginScreen from "./LoginScreen";
 import Home from "./HomePage";
 import * as FileSystem from 'expo-file-system';
 import base64 from 'react-native-base64'
+import LoadProfiles from "../assets/data/loadprofiles";
 
 const avatarIndex = Math.floor(Math.random()*4)+0;
 
@@ -115,6 +116,7 @@ function ProfileScreen({ navigation, route }) {
       };
 
       const token = route.params.paramKey;
+      const userId = route.params.userId;
       setLoad(true);
       console.log(token);
       const headers = {
@@ -127,8 +129,10 @@ function ProfileScreen({ navigation, route }) {
           headers: headers,
         });
         console.log(response);
-        navigation.navigate("Home", {
-          paramKey: route.params.paramKey,
+        LoadProfiles(token).then(() => {
+          console.log(response);
+          //console.log(response.data.profile)
+          navigation.navigate("Home", { paramKey: token, userId: userId });
         });
         setLoad(false);
       } catch (error) {

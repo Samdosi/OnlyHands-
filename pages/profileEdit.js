@@ -20,75 +20,10 @@ import axios from "axios";
 import * as FileSystem from 'expo-file-system';
 import base64 from 'react-native-base64'
 import * as ImagePicker from 'expo-image-picker'
+import LoadProfiles from "../assets/data/loadprofiles";
 
 function ProfileEdit({ navigation, route }) {
-/*
-  const[hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const[image,setImage] = useState(null);
-  const[uploadText,setUploadText] = useState('Upload profile Picture')
 
-  const[encodedImage, setEncodedImage] = useState(null)
-
-  useEffect(()=>{
-    (async()=> {
-      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === 'granted');
-    })();
-  },[]);
-
-  const pickImage = async () => {
-    console.log('here')
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect:[4,3],
-      quality:0.001,
-      base64:true,
-
-    });
-
-    console.log('inside')
-
-    console.log(result)
-    
-
-    const decoded = base64.decode(result.base64)
-
-    if(!result.cancelled){
-      setImage(result.uri)
-      setEncodedImage(result.base64)
-      console.log(image)
-    }
-
-    
-
-    if(!result.cancelled){
-      setUploadText('');
-    }
-
-    imageUpload(result)
-  }
-
-  if(hasGalleryPermission === false){
-    Alert.alert('You gave no permission to access gallery')
-  }
-
-
-  const imageUpload = async (image) => {
-    console.log(image.uri)
-
-    const base64 = await FileSystem.readAsStringAsync(image.uri, { encoding: 'base64' })
-
-   // console.log(base64)
-/*
-    const reader = new FileReader();
-    reader.readAsDataURL(image)
-
-
-    console.log(reader.result)
-
-  }
-*/
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -108,6 +43,16 @@ function ProfileEdit({ navigation, route }) {
   const [bio, onChangeBio] = useState();
   const [loading, setLoad] = React.useState(false);
   const [haserorr, setErorrs] = React.useState(false);
+
+  const [avatarIndex,onChangeAvatarIndex] = useState(null)
+
+  const avatarImages = [
+    require('../assets/Avatars/1.jpg'),
+    require('../assets/Avatars/2.jpg'),
+    require('../assets/Avatars/3.jpg'),
+    require('../assets/Avatars/4.jpg'),
+    require('../assets/Avatars/5.jpg'),
+  ]
 
   const genderMale = () => {
     onChangeMale(true);
@@ -163,6 +108,7 @@ function ProfileEdit({ navigation, route }) {
         onChangeTotalFihts(response.data.profile.totalFights.toString());
         onChangeStyle(response.data.profile.style.toString());
         onChangeBio(response.data.profile.bio.toString());
+        onChangeAvatarIndex(response.data.profile.image)
       })
       .catch(function (error) {
         console.log(error);
@@ -171,7 +117,7 @@ function ProfileEdit({ navigation, route }) {
   };
 
   const Edit = async () => {
-    console.log(encodedImage)
+    
 
     const payload = {
       firstName: firstName,
@@ -190,6 +136,7 @@ function ProfileEdit({ navigation, route }) {
       style: style,
     };
     const token = route.params.paramKey;
+    const userId = route.params.userId;
 
     setLoad(true);
     console.log(token);
@@ -203,7 +150,12 @@ function ProfileEdit({ navigation, route }) {
         headers: headers,
       });
       console.log(response);
-      navigation.navigate("Home", { paramKey: token });
+      LoadProfiles(token).then(() => {
+        console.log(response);
+        console.log(response.data.profile)
+        navigation.navigate("Home", { paramKey: token, userId: userId });
+      });
+
       setLoad(false);
     } catch (error) {
       setLoad(false);
@@ -229,12 +181,9 @@ function ProfileEdit({ navigation, route }) {
           <TouchableOpacity onPress={()=>pickImage()}>
               <View style={styles.PictureContainer}>
 
-                <ImageBackground source={{uri:image}} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
+                <ImageBackground source={avatarImages[avatarIndex]} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
                   <View style={styles.profilePicture}>
                     
-                    <Text style={styles.profilePictureText}>
-                      {uploadText}
-                    </Text>
                     
                   </View>
                 </ImageBackground>

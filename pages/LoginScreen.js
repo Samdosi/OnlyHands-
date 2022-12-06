@@ -90,7 +90,7 @@ const LoginScreen = ({ navigation }) => {
             const token = response.data.token;
             const userId = response.data.profile;
             if (response.data.profile == null) {
-              navigation.navigate("ProfileScreen", { paramKey: token });
+              navigation.navigate("ProfileScreen", { paramKey: token, userId: userId });
             } else {
               LoadProfiles(token).then(() => {
                 console.log(response);
