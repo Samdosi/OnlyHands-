@@ -158,8 +158,10 @@ const Card = () => {
     <div className="fighterCard flex flex-col items-center h-screen">
       <div className="cardContainer">
         {matches["data"].length === 0 ? (
-          <div className="flex justify-center items-center text-white">
-            Nobody wants that smoke
+          <div className="card" style={{ backgroundColor: "#323232" }}>
+            <div className="flex justify-center items-center h-full rounded text-white font-bold text-3xl text-center">
+              You have swiped through all possible opponents!
+            </div>
           </div>
         ) : (
           matches["data"].length > 0 &&
@@ -180,11 +182,10 @@ const Card = () => {
               >
                 <div className="gridContainer">
                   <div className="item0">
-                      
                     {match["image"] ? (<img
-                      style={{ height: "250px", width: "250px", borderRadius: "50%" }}
+                      style={{ height: "225px", width: "225px", borderRadius: "50%" }}
                       src={avatarImages[match["image"]]} />) :
-                      (<IconContext.Provider value={{ color: "white", size: "250px", className: "avatar_icon" }}>
+                      (<IconContext.Provider value={{ color: "white", size: "225px", className: "avatar_icon" }}>
                       <CgProfile />
                     </IconContext.Provider>)}
                   </div>

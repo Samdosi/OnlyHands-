@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    overflow: hidden;
+}
+
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -172,26 +176,18 @@ hr.solid {
 }
 
 .card {
-    /* 
-    background-color: grey;
-    */
     position: relative;
-    background-color: black;
-    background-repeat: no-repeat;
     width: 250vw;
     max-width: 450px;
     height: 500px;
     border-radius: 20px;
-    background-size: 100%;
-    background-position: top;
-    padding: 10px;
+    padding: 20px;
 }
 
 .figherCard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*justify-content: center;*/
 }
 
 .cardContent {
@@ -215,7 +211,6 @@ hr.solid {
 .gridContainer {
     display: grid;
     vertical-align: bottom; /* I CANT ALIGN FOR SHIT */
-    padding-left: 5%;
     user-drag: none;
     -webkit-user-drag: none;
     user-select: none;
@@ -224,8 +219,12 @@ hr.solid {
     -ms-user-select: none;
     pointer-events: none;
     grid-template-columns: auto auto;
-    gap: 25px 75px;
+    gap: 25px;
     /* transform: translate(0, +118%); */
+}
+
+.gridContainer > * {
+    overflow: hidden;
 }
 
 .item0, .item1 {
