@@ -19,15 +19,7 @@ const Profile = ({ setBgImage }) => {
             method: 'GET',
             headers: { "x-access-token": cookies.get("token"), 'Content-Type': 'application/json' }
         })
-            .then(async (res) => {
-                if(res.status == 401){
-                    navigate('/');
-                }
-                if(res.status == 403){
-                    const {message} = await res.json();
-                    if (message !== "Profile ID is required")
-                        navigate('/');
-                }
+            .then((res) => {
                 return res.json()
             })
             .then((data) => {
@@ -63,3 +55,26 @@ const Profile = ({ setBgImage }) => {
 }
 
 export default Profile;
+
+// .then(async (res) => {
+//     if(res.status == 401){
+//         navigate('/');
+//     }
+//     if(res.status == 403){
+//         const {message} = await res.json();
+//         if (message !== "Profile ID is required")
+//             navigate('/');
+//     }
+//     return res.json()
+// })
+// .then((data) => {
+//     if (data["success"]) {
+//         console.log(data["profile"])
+//         cookies.set("profile", JSON.stringify(data["profile"]));
+//     }
+//     else {
+//         console.log(data["message"]);
+//         setShowModal(true)
+//     }
+// })
+// .catch(error => console.log(error))

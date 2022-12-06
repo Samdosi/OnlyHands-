@@ -40,17 +40,17 @@ const InfoModal = ({ onClose }) => {
     autoFillInfo();
   }, []);
 
-  useEffect(() => {
-    if (!image) {
-      // setPreview(undefined);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!image) {
+  //     // setPreview(undefined);
+  //     return;
+  //   }
 
-    const imageURL = URL.createObjectURL(image);
-    setPreview(imageURL);
+  //   const imageURL = URL.createObjectURL(image);
+  //   setPreview(imageURL);
 
-    return () => URL.revokeObjectURL(imageURL);
-  }, [image]);
+  //   return () => URL.revokeObjectURL(imageURL);
+  // }, [image]);
 
   const hiddenFileInput = React.useRef(null);
 
@@ -516,7 +516,7 @@ const InfoModal = ({ onClose }) => {
                   name="about"
                   rows={3}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  defaultValue={""}
+                  // defaultValue={""}
                 />
               </div>
             </div>
