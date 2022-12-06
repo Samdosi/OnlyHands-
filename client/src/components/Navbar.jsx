@@ -33,7 +33,7 @@ const Navbar = () => {
     <>
       {cookies.get("token") && <li
         className='w-fit h-fit'
-        onClick={handleLogout}
+        onClick={handleLinkClicked}
       >
         <Link className={linksClass} to="/profile">Opponents</Link>
       </li>}
