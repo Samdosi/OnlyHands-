@@ -1024,10 +1024,6 @@ video {
           appearance: none;
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .flex-row {
   flex-direction: row;
 }
@@ -1062,10 +1058,6 @@ video {
 
 .justify-evenly {
   justify-content: space-evenly;
-}
-
-.gap-3 {
-  gap: 0.75rem;
 }
 
 .self-end {
