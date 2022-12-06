@@ -50,12 +50,12 @@ const createMatch = async (userId, matchProfileId, res) => {
                 return res.status(404).end();
             }
 
-            
-            if (foundUser.matches.get(matchProfileId)){
+
+            if (foundUser.matches.get(matchProfileId)) {
                 console.log("match already exists");
                 return res.status(405).end();
             }
-            
+
 
             const foundProfile = foundUser.profile;
             console.log(foundProfile)
@@ -97,7 +97,7 @@ const completeMatch = async (userId, matchProfileId, res) => {
                 return res.status(400).json({ "success": false, "message": "Profile not found!" });
             }
 
-            if(foundUser.matches.get(matchProfileId)){
+            if (foundUser.matches.get(matchProfileId)) {
                 return res.status(405).end();
             }
 
@@ -136,11 +136,11 @@ const getMatches = (userId, searchQuery, res) => {
 
             for (let index = 0; index < mapEntries.length; index++) {
                 const currentArray = mapEntries[index];
-                
+
                 const profileId = currentArray[0];
                 const matchId = currentArray[1];
 
-                
+
                 const profile = await Profile.findById(profileId);
                 const matchDoc = await Match.findById(matchId);
 
@@ -150,15 +150,16 @@ const getMatches = (userId, searchQuery, res) => {
                     lastName: profile.lastName,
                     online: profile.online,
                     matchId: matchDoc._id,
+                    image: profile.image,
                     isComplete: matchDoc.isComplete
                 };
 
-                if(searchQuery){
-                    searchRegex = new RegExp(searchQuery,"i");
-                    const {firstName, lastName} = match;
+                if (searchQuery) {
+                    searchRegex = new RegExp(searchQuery, "i");
+                    const { firstName, lastName } = match;
                     const fullName = firstName + " " + lastName;
                     console.log(fullName)
-                    if(fullName.search(searchRegex) == -1){
+                    if (fullName.search(searchRegex) == -1) {
                         continue;
                     }
                 }
@@ -228,16 +229,16 @@ const serveMatch = async (userId, numMatches, res) => {
             if (err) {
                 return res.status(404).json({ "success": false, "message": "User not found!" });
             }
-            
+
 
             const queryRes = await Profile.
                 find({
                     $and: [
-                        { "_id": { $nin : Array.from(foundUser.matches.keys()) } },
-                        { "_id": { $nin : foundUser.rejections } },
-                        { "_id": {$not: {$eq: foundUser.profile}} } 
+                        { "_id": { $nin: Array.from(foundUser.matches.keys()) } },
+                        { "_id": { $nin: foundUser.rejections } },
+                        { "_id": { $not: { $eq: foundUser.profile } } }
                     ]
-                })   
+                })
 
             console.log(queryRes);
 
