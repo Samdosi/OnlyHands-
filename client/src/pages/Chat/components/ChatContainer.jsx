@@ -6,11 +6,13 @@ import { CgProfile } from 'react-icons/cg';
 import { useProfileContext } from '../context/Profile';
 import StartConvosImg from '../assets/undraw_group_chat_re_frmo.svg';
 import BG from '../assets/bg.webp';
+import Cookies from 'universal-cookie';
 
 const ChatContainer = ({ setShowChat, socket }) => {
 
   const { profile, setProfile } = useProfileContext();
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
@@ -22,7 +24,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
     if (currentMessage !== "") {
       const messageData = {
         room: profile?.matchId,
-        from: sessionStorage.getItem('profileId'),
+        from: cookies.get('profileID'),
         text: currentMessage,
         timeSent:
           new Date(Date.now()).getHours() +
@@ -49,7 +51,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
     
     fetch('https://only-hands.herokuapp.com/api/chat/' + profile?.matchId, {
       headers:{
-        'x-access-token': sessionStorage.getItem('token')
+        'x-access-token': cookies.get('token')
       }
     })
     .then(response => {
@@ -118,9 +120,8 @@ const ChatContainer = ({ setShowChat, socket }) => {
                 {
                   messageList?.map(message => {
 
-                    console.log(message)
 
-                    if(message.from !== sessionStorage.getItem('profileId')){
+                    if(message.from !== cookies.get('profileID')){
                       return(
                         <div className='flex flex-col my-4 self-start'>
                           <p

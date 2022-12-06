@@ -39,6 +39,7 @@ const Login = () => {
         .then((data) => {
             if (data["success"]) {
                 cookies.set("token", data.token, { expires : new Date(Date.now() + 3600 * 1000)})
+                cookies.set("profileID", data.profile);
                 console.log("Successfully logged in!")
                 navigate('/profile');
                 notify("Successfully logged in!", "success");
