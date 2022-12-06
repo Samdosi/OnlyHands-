@@ -23,6 +23,8 @@ import Button from "../src/components/Button";
 import Loader from "./Loader";
 import LoadProfiles from "../assets/data/loadprofiles";
 import Home from "./HomePage";
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
 const ModelPop = ({ visible, children }) => {
   const [showModal, setVisible] = useState(false);
   useEffect(() => {
@@ -108,18 +110,19 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ModelPop visible={visible}>
-        <View style={{ alignItems: "center" }}>
+      <ModelPop visible={visible} style={{}}>
+        <View style={{ alignItems: "center"}}>
           <View style={styles.header}>
             <TouchableOpacity onPress={() => setVisible(false)}>
-              <Image
-                source={require("../assets/close.png")}
-                style={{ height: 23, width: 23 }}
-              ></Image>
+              <AntDesign
+                name="close"
+                size={35}
+                style={{left:150,top:-8,color:'white' }}
+              ></AntDesign>
             </TouchableOpacity>
           </View>
-          <View>
-            <Text style={{ fontSize: 20, textAlign: "center", marginEnd: 50 }}>
+          <View style={{}}>
+            <Text style={{ fontSize: 17, textAlign: "center", marginEnd: 85, color:'white'}}>
               Enter your email address:
             </Text>
             <TextInput
@@ -134,7 +137,7 @@ const LoginScreen = ({ navigation }) => {
             ></TextInput>
             <TouchableOpacity onPress={findemail}>
               <View style={styles.saveButtonView}>
-                <Text style={styles.saveButtonText}>Enter</Text>
+                <Text style={{color:'white',fontWeight:'500',fontSize:'16'}}>Enter</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -185,9 +188,14 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.redirectLink}>Register</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => setVisible(true)}>
-            <Text style={styles.redirectpass}>Forgot password?</Text>
-          </TouchableOpacity>
+          <View style={styles.forgetPasswordContainer}>
+
+            <TouchableOpacity onPress={() => setVisible(true)}>
+              <Text style={styles.redirectpass}>Forgot password?</Text>
+            </TouchableOpacity>
+
+          </View>
+         
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -195,13 +203,20 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+
+  forgetPasswordContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+    top:15
+  },
+
   fillIn: {
     width: 280,
     height: 40,
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    backgroundColor: "rgba(60, 60, 60, 0.8)",
     top: 10,
     marginBottom: 35,
-    borderRadius: 15,
+    borderRadius:2,
     textAlign: "center",
     borderColor: "white",
     borderWidth: 1.8,
@@ -215,14 +230,20 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "flex-end",
     justifyContent: "center",
+    
   },
   modelcontainer: {
     width: "90%",
-    backgroundColor: "gray",
+    height:200,
+    backgroundColor: "rgba(52, 52, 52, 0.8)" ,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    borderRadius: 20,
+    borderRadius: 5,
+    borderColor:'black',
+    borderWidth:'1',
     elevation: 20,
+    justifyContent:'center',
+    alignItems:'center'
   },
   modelBackgrond: {
     flex: 1,
@@ -234,8 +255,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
-    marginLeft: 130,
-    marginTop: 20,
+    //marginLeft: 130,
+    //marginTop: 20,
   },
   safeArea: {
     backgroundColor: "black",
@@ -294,7 +315,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     bottom: 15,
-    borderRadius: 15,
+    borderRadius: 2,
     backgroundColor: "#ff0011",
   },
 });

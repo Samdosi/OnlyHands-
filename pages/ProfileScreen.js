@@ -84,13 +84,6 @@ function ProfileScreen({ navigation, route }) {
   
   console.log(avatarIndex)
 
-  //const path = '../assets/Avatars/'+avatarIndex+'.jpg'
-  //setAvatarPath(path)
-  //const AvatarURI = Image.resolveAssetSource(path).uri;
-
-
-  //console.log(path)
-
   const Login = async () => {
     if (
       firstName == "" ||
