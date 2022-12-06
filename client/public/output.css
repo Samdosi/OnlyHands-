@@ -677,12 +677,12 @@ video {
   z-index: 4;
 }
 
-.col-span-1 {
-  grid-column: span 1 / span 1;
-}
-
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+
+.col-span-1 {
+  grid-column: span 1 / span 1;
 }
 
 .m-7 {
@@ -730,6 +730,10 @@ video {
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .mr-4 {
@@ -1601,12 +1605,15 @@ hr.solid {
 }
 
 .cardContainer {
-  width: 37vw;
+  width: 100%;
   max-width: 450px;
   height: 500px;
 }
 
 .card {
+  /* 
+    background-color: grey;
+    */
   position: relative;
   background-color: black;
   background-repeat: no-repeat;
@@ -1616,6 +1623,7 @@ hr.solid {
   border-radius: 20px;
   background-size: 100%;
   background-position: top;
+  padding: 10px;
 }
 
 .figherCard {
@@ -1628,6 +1636,10 @@ hr.solid {
 .cardContent {
   width: 100%;
   height: 100%;
+}
+
+.global-class-name {
+  padding-left: 50%;
 }
 
 .swipe:last-of-type {
@@ -1646,13 +1658,19 @@ hr.solid {
   vertical-align: bottom;
   /* I CANT ALIGN FOR SHIT */
   padding-left: 5%;
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
   grid-template-columns: auto auto;
   gap: 25px 75px;
-  -webkit-transform: translate(0, +118%);
-          transform: translate(0, +118%);
+  /* transform: translate(0, +118%); */
 }
 
-.item1 {
+.item0, .item1 {
   grid-column: 1 / span 2;
   font-weight: bold;
   justify-self: center;
@@ -1988,6 +2006,10 @@ hr.solid {
 
   .lg\:max-w-\[35\%\] {
     max-width: 35%;
+  }
+
+  .lg\:justify-start {
+    justify-content: flex-start;
   }
 
   .lg\:justify-around {

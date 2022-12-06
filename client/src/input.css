@@ -166,12 +166,15 @@ hr.solid {
 }
 
 .cardContainer {
-    width: 37vw;
+    width: 100%;
     max-width: 450px;
     height: 500px;
 }
 
 .card {
+    /* 
+    background-color: grey;
+    */
     position: relative;
     background-color: black;
     background-repeat: no-repeat;
@@ -181,6 +184,7 @@ hr.solid {
     border-radius: 20px;
     background-size: 100%;
     background-position: top;
+    padding: 10px;
 }
 
 .figherCard {
@@ -195,6 +199,9 @@ hr.solid {
     height: 100%;
 }
 
+.global-class-name {
+    padding-left: 50%;
+}
 .swipe:last-of-type {}
 
 .card h3 {
@@ -209,12 +216,19 @@ hr.solid {
     display: grid;
     vertical-align: bottom; /* I CANT ALIGN FOR SHIT */
     padding-left: 5%;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
     grid-template-columns: auto auto;
     gap: 25px 75px;
-    transform: translate(0, +118%);
+    /* transform: translate(0, +118%); */
 }
 
-.item1 {
+.item0, .item1 {
     grid-column: 1 / span 2;
     font-weight: bold;
     justify-self: center;
