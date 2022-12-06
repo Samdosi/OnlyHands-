@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { SearchBar, Messages, ChatContainer } from './components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ProfileProvider } from './context/Profile';
+import Cookies from "universal-cookie";
 
 const Chat = ({ setBgImage, socket }) => {
+  const cookies = new Cookies();
   const navigate = useNavigate();
   const {pathname} = useLocation();
   setBgImage(pathname);
@@ -16,7 +18,7 @@ const Chat = ({ setBgImage, socket }) => {
   useEffect(() => {
     fetch("https://only-hands.herokuapp.com/api/match?searchQuery=" + searchValue, {
       headers:{
-        'x-access-token': sessionStorage.getItem('token')
+        "x-access-token": cookies.get("token")
       }
     })
       .then(response => {
