@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 const MessageBox = (props) => {
+
   const navigation = useNavigation();
   const renderUserStatus = () => {
     if (props.online) {
@@ -44,7 +45,7 @@ const MessageBox = (props) => {
       <View style={styles.mainView}>
         <View style={styles.pictureView}>
           <Image
-            source={require("../../assets/pexels-cottonbro-4761792.jpg")}
+            //source={ uri: profilePicture }}
             style={styles.profilePicture}
           ></Image>
 
@@ -58,12 +59,6 @@ const MessageBox = (props) => {
             {props.status === false && (
               <Text style={styles.pending}> Pending Match </Text>
             )}
-          </View>
-
-          <View style={styles.messageAlert}>
-            <View style={renderMessageStatus()}>
-              <Text style={styles.numMessages}>2</Text>
-            </View>
           </View>
         </View>
       </View>
@@ -109,17 +104,7 @@ const styles = StyleSheet.create({
 
   pending: {
     color: "white",
-  },
-
-  messageAlert: {
-    width: 60,
-    height: 60,
-  },
-
-  numMessages: {
-    color: "white",
-    fontSize: 20,
-  },
+  }
 });
 
 export default MessageBox;

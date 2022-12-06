@@ -48,8 +48,6 @@ function ChatScreen({ navigation, route }) {
 
       const data = response.data.matches;
 
-      console.log(data);
-
       let m = [];
 
       let u = [];
@@ -96,10 +94,11 @@ function ChatScreen({ navigation, route }) {
                 name={c.firstName+" " + c.lastName}
                 profileID={c.profileId}
                 profileSelfID={profileId}
+                token={token }
                 matchID={c.matchId}
                 status={true}
                 online={c.online}
-                profilePicture={profilePicture}
+                profilePicture={c.image}
                 navigation={navigation}
               />
             );
@@ -108,12 +107,9 @@ function ChatScreen({ navigation, route }) {
             return (
               <MessageBox
                 name={c.firstName + " " + c.lastName}
-                profileID={c.profileId}
-                profileSelfID={profileId}
-                matchID={c.matchId}
                 status={false}
                 online={c.online}
-                profilePicture={c.profilePicture}
+                profilePicture={c.image}
                 navigation={navigation}
               />
             );

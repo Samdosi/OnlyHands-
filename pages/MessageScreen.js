@@ -15,11 +15,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import io from "socket.io-client";
 
 function MessageScreen({ navigation, route }) {
-  const params = route.params.paramKey;
+    const params = route.params.paramKey;
+
+    console.log("token", params.token);
+
+    console.log("my id", params.profileSelfID);
+
+    console.log("other id", params.profileID);
 
   const profileID = params.profileSelfID;
-
-  console.log("testing", profileID);
 
   const [messages, addMessage] = useState([]);
 
@@ -27,7 +31,7 @@ function MessageScreen({ navigation, route }) {
 
   const socket = io("http://only-hands.herokuapp.com");
 
-  useEffect(() => {
+  /*seEffect(() => {
       socket.on("receiveMessage", (data) => {
           setMessageList((list) => [...list, data]);
       });
@@ -58,7 +62,7 @@ function MessageScreen({ navigation, route }) {
           .catch(e => console.log(e));
 
           setMessage("");
-  }, [message]);
+  }, [message]);*/
 
   const alignMessage = (id2) => {
     console.log(id.localeCompare(id2));
@@ -110,7 +114,7 @@ function MessageScreen({ navigation, route }) {
           source={require("../assets/pexels-cottonbro-4761792.jpg")}
         ></Image>
 
-        <Text style={styles.name}></Text>
+              <Text style={styles.name}>{params.name}</Text>
       </View>
 
       <ScrollView>
@@ -128,11 +132,12 @@ function MessageScreen({ navigation, route }) {
           <TextInput
             style={styles.input}
             onChangeText={(input) => setMessage(input)}
-          ></TextInput>
+            placeholder="Type a message"
+          />
 
           <View style={styles.sendButton}>
-            <TouchableOpacity onPress={submit}>
-              <Icon name={"send-outline"} size={50} color={"white"} />
+            <TouchableOpacity>
+              <Icon name={"send-outline"} size={40} color={"white"} />
             </TouchableOpacity>
           </View>
         </View>
@@ -170,8 +175,9 @@ const styles = StyleSheet.create({
   },
 
   sendContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
+    height: 100,
+    width: "100%",
+    justifyContent: "flex-end"
   },
 
   sendView: {
