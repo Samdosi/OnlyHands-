@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 const MessageBox = (props) => {
-  console.log("profileID", props.profileID);
   const navigation = useNavigation();
   const renderUserStatus = () => {
     if (props.online) {

@@ -15,7 +15,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import io from "socket.io-client";
 
 function MessageScreen({ navigation, route }) {
-  const profileID = route.params.paramKey.profileID;
+  const params = route.params.paramKey;
+
+  const profileID = params.profileSelfID;
 
   console.log("testing", profileID);
 
@@ -25,31 +27,38 @@ function MessageScreen({ navigation, route }) {
 
   const socket = io("http://only-hands.herokuapp.com");
 
-  const submit = () => {
-    socket.emit("joinRoom", message);
-    addMessage((messages) => [...messages, message]);
-  };
+  useEffect(() => {
+      socket.on("receiveMessage", (data) => {
+          setMessageList((list) => [...list, data]);
+      });
+  }, [socket]);
 
-  /*const receive = () => {
-        try {
-            socket.on("receiveMessage", (data) => setMessage(data));
-            messages.push(message);
-            setMessage("");
-        } catch (error) {
-            console.log(error);
-        }
-       
-    };*/
-
-  /*useEffect(() => {
-        submit();
-    }, [messages]);*/
 
   useEffect(() => {
     if (profileID) {
-      //socket.emit("joinRoom", props.matchID);
+      socket.emit("joinRoom", params.matchID);
     }
-  }, []);
+
+      fetch("https://only-hands.herokuapp.com/api/chat/" + params,
+          {
+              headers: {
+                  "x-access-token": sessionStorage.getItem("token")
+              }
+          })
+          .then(response => {
+              if (response.status != 401 && response.status != 302) {
+                  return response.json();
+              }
+          })
+          .then(data => {
+              if (data.success) {
+                  addMessage([...data.chats]);
+              }
+          })
+          .catch(e => console.log(e));
+
+          setMessage("");
+  }, [message]);
 
   const alignMessage = (id2) => {
     console.log(id.localeCompare(id2));

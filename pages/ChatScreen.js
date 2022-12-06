@@ -93,7 +93,9 @@ function ChatScreen({ navigation, route }) {
             console.log(c);
             return (
               <MessageBox
-                profileID={profileId}
+                name={c.firstName+" " + c.lastName}
+                profileID={c.profileId}
+                profileSelfID={profileId}
                 matchID={c.matchId}
                 status={true}
                 online={c.online}
@@ -106,7 +108,8 @@ function ChatScreen({ navigation, route }) {
             return (
               <MessageBox
                 name={c.firstName + " " + c.lastName}
-                profileID={profileId}
+                profileID={c.profileId}
+                profileSelfID={profileId}
                 matchID={c.matchId}
                 status={false}
                 online={c.online}
