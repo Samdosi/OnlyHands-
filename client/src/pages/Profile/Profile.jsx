@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Card from './Components/Card';
-import InfoModal from './Components/InfoModal';
+import Card from './components/Card';
+import InfoModal from './components/InfoModal';
 import Cookies from "universal-cookie";
 
 const Profile = ({ setBgImage }) => {
     const cookies = new Cookies();
     const { pathname } = useLocation();
     setBgImage(pathname);
-    
+    const user = cookies.get("profile").firstName;
+
+
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(false);
 
@@ -27,7 +29,7 @@ const Profile = ({ setBgImage }) => {
                 }
                 else {
                     console.log(data["message"]);
-                    setShowModal(true) 
+                    setShowModal(true)
                 }
             })
             .catch(error => console.log(error))
@@ -36,11 +38,11 @@ const Profile = ({ setBgImage }) => {
     return (
         <div>
             <div classname="left col-span-1 bg-white">
-            <button
-                onClick={() => {setShowModal(true)}}
-                className="bg-white transition text-black p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
-                Profile
-            </button>
+                <button
+                    onClick={() => { setShowModal(true) }}
+                    className="bg-white transition text-black font-bold p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
+                    My Stats
+                </button>
             </div>
             <div className="right col-span-2 flex flex-col justify-center items-center">
                 <div className="w-full relative flex flex-col justify-center overflow-hidden">

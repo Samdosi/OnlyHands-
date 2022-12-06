@@ -12,11 +12,11 @@ const Navbar = () => {
 
   const cookies = new Cookies();
 
-  const hamburgerRef = useOutsideClick( () => {
+  const hamburgerRef = useOutsideClick(() => {
     handleLinkClicked();
   });
 
-  const handleLinkClicked = () =>{
+  const handleLinkClicked = () => {
     setToggleHamburger(false);
     setToggleMenu(false)
   }
@@ -31,19 +31,31 @@ const Navbar = () => {
 
   const links = [
     <>
-      <li 
+      {cookies.get("token") && <li
+        className='w-fit h-fit'
+        onClick={handleLogout}
+      >
+        <Link className={linksClass} to="/profile">Opponents</Link>
+      </li>}
+      {cookies.get("token") && <li
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
         <Link className={linksClass} to='/chat'>Chat</Link>
-      </li>
-      <li 
+      </li>}
+      {cookies.get("token") == null && <li
+        className='w-fit h-fit'
+        onClick={handleLinkClicked}
+      >
+        <Link className={linksClass} to='/about'>About</Link>
+      </li>}
+      {cookies.get("token") == null && <li
         className='w-fit h-fit'
         onClick={handleLinkClicked}
       >
         <Link className={linksClass} to='/rules'>Rules</Link>
-      </li>
-      {cookies.get("token") && <li 
+      </li>}
+      {cookies.get("token") && <li
         className='w-fit h-fit'
         onClick={handleLogout}
       >
@@ -58,15 +70,15 @@ const Navbar = () => {
         <Link to={cookies.get("token") ? "/profile" : "/"}>
           <div className='flex items-center text-center lg:py-5'>
             <div className='flex h-11 w-11 xsm:h-14 xsm:w-14 lg:h-14 lg:w-14'>
-              <GiBoxingGlove className='icon1 mr-1' style={{width: '100%', height: '100%'}}/>
-              <GiBoxingGlove className='icon2' style={{width: '100%', height: '100%'}}/>
+              <GiBoxingGlove className='icon1 mr-1' style={{ width: '100%', height: '100%' }} />
+              <GiBoxingGlove className='icon2' style={{ width: '100%', height: '100%' }} />
             </div>
-            
+
             <h1 className='text-xl xsm:text-2xl lg:text-3xl font-medium ml-2'>OnlyHands</h1>
 
           </div>
         </Link>
-      
+
         <u className='hidden md:flex justify-between lg:justify-around text-white w-1/3 no-underline list-none font-medium '>
           {links}
         </u>
@@ -79,16 +91,16 @@ const Navbar = () => {
               size={25}
               duration={0.7}
               onToggle={toggled => {
-                if(toggled){
+                if (toggled) {
                   setToggleMenu(true);
                 }
-                else{
+                else {
                   handleLinkClicked();
                 }
               }}
             />
           </div>
-          {toggleMenu && 
+          {toggleMenu &&
             <u className='bg-white flex flex-col justify-around text-black p-10 w-64 h-64 absolute z-[5] top-1 right-0 no-underline list-none rounded-md shadow-lg font-medium '>
               {links}
             </u>

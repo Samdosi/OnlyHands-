@@ -130,10 +130,11 @@ const InfoModal = ({ onClose }) => {
         if (data["success"]) {
           console.log(data["message"]);
           notify(data["message"]);
-          // cookies.set("profile", body);
+          cookies.set("profile", body);
           // profile = cookies.get("profile");
-          // autoFillInfo();
+          autoFillInfo();
           onClose();
+          window.location.reload(); //! REMOVE IF POSSIBLE
         } else {
           console.log(data["message"]);
           notify(data["message"], "error");
@@ -279,7 +280,6 @@ const InfoModal = ({ onClose }) => {
                   </label>
                   <input
                     value={nickname}
-                    required
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="nickname"
                     type="text"
@@ -328,7 +328,6 @@ const InfoModal = ({ onClose }) => {
                   </label>
                   <input
                     value={style}
-                    required
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     id="fighting-style"
                     type="text"
@@ -382,7 +381,6 @@ const InfoModal = ({ onClose }) => {
                     </label>
                     <input
                       value={wins}
-                      required
                       min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       id="wins"
@@ -399,7 +397,6 @@ const InfoModal = ({ onClose }) => {
                     </label>
                     <input
                       value={losses}
-                      required
                       min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
@@ -416,7 +413,6 @@ const InfoModal = ({ onClose }) => {
                     </label>
                     <input
                       value={KOs}
-                      required
                       min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
@@ -433,7 +429,6 @@ const InfoModal = ({ onClose }) => {
                     </label>
                     <input
                       value={totalFights}
-                      required
                       min="0"
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       id="losses"
@@ -453,7 +448,6 @@ const InfoModal = ({ onClose }) => {
                     </label>
                     <input
                       value={reach}
-                      required
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       id="reach"
                       type="text"

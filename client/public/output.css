@@ -760,10 +760,6 @@ video {
   display: flex;
 }
 
-.grid {
-  display: grid;
-}
-
 .hidden {
   display: none;
 }
@@ -1606,7 +1602,7 @@ hr.solid {
 
 .cardContainer {
   width: 37vw;
-  max-width: 500px;
+  max-width: 450px;
   height: 500px;
 }
 
@@ -1626,7 +1622,7 @@ hr.solid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /*justify-content: center;*/
 }
 
 .cardContent {

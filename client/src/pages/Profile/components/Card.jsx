@@ -138,7 +138,7 @@ const Card = () => {
   };
 
   return (
-    <div className="fighterCard flex flex-col justify-center items-center h-screen">
+    <div className="fighterCard flex flex-col items-center h-screen">
       <div className="cardContainer bg-gray">
         {matches["data"].length === 0 ? (
           <div className="flex justify-center items-center text-white">
@@ -202,7 +202,7 @@ const Card = () => {
             You swiped {lastDirection}
           </h2>
         ) : (
-          <h2 className="infoText">Swipe or get swiped b#@?% !</h2>
+          <h2 className="infoText">Swipe or get swiped on!</h2>
         )}
        </div>
     </div>

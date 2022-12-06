@@ -15,7 +15,7 @@ const About = ({setBgImage}) => {
           many different locations and fighting styles to better expand our experience and
           build up better fighters in the process to create a new wave of elite MMA fighters.
           <br></br><br></br>
-          The preoject originally began as a project for a class but quickly became a passion project 
+          The project originally began as a project for a class but quickly became a passion project 
           as we got further into the process and began inviting users.
           <br></br><br></br>
           -JRDLJJSKJ</h2>
