@@ -1,6 +1,7 @@
 import axios from "axios";
 import { withNavigation } from "react-navigation";
 import users from './users'
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const LoadProfiles = async (token) => {
     //const token = route.params.paramKey;
@@ -12,8 +13,10 @@ const LoadProfiles = async (token) => {
     require('../Avatars/2.jpg'),
     require('../Avatars/3.jpg'),
     require('../Avatars/4.jpg'),
-    require('../Avatars/5.jpg')
+    require('../Avatars/5.jpg'),
   ]
+
+  const defaultImage = require('../Avatars/default.png')
 
         const header = {
             'x-access-token': token,
@@ -41,7 +44,7 @@ const LoadProfiles = async (token) => {
                     users[i].losses = res.data.matches[i].losses
                     users[i].id = res.data.matches[i]._id 
                     console.log(res.data.matches[i].image)
-                    users[i].image = avatarImages[res.data.matches[i].image] || avatarImages[0]
+                    users[i].image = avatarImages[res.data.matches[i].image] || defaultImage
                     console.log(users[i].id);
                 }
             })

@@ -1,9 +1,8 @@
 export default [
     {
-      id: '',
+      id: '1',
       name: '',
-      image:
-        'https://media.gettyimages.com/id/839485722/photo/floyd-mayweather-jr-v-conor-mcgregor-weigh-in.jpg?s=2048x2048&w=gi&k=20&c=ZFe9-YdUY0AVvPAL19PNr06eeKaQNkU1lMdAgSyRr78=',
+      image: '',
       bio: '',
       age: '',
       wins: '',
@@ -12,8 +11,7 @@ export default [
     {
       id: '2',
       name: '',
-      image:
-        'https://media.gettyimages.com/id/487863041/photo/floyd-mayweather-jr-v-marcos-maidana-weigh-in.jpg?s=1024x1024&w=gi&k=20&c=HvEsm-x34ACQM1zYp8Qf0NG6oMAqk8_9gWqMc4jO0YU=',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -22,8 +20,7 @@ export default [
     {
       id: '3',
       name: '',
-      image:
-        'https://media.gettyimages.com/id/1203109888/photo/jake-paul-v-anesongib.jpg?s=1024x1024&w=gi&k=20&c=9M-qNHg8R3ihGtw5NiXUjKU2AavUzfzlxVAmaOtwui8=',
+      image: '',
       bio: '',
       age: '',
       wins: '',
@@ -32,8 +29,7 @@ export default [
     {
       id: '4',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/jeff.jpeg',
+      image: '',
       bio: '',
       age: '',
       wins: '',
@@ -42,8 +38,7 @@ export default [
     {
       id: '5',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -52,8 +47,7 @@ export default [
     {
       id: '6',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -62,8 +56,7 @@ export default [
     {
       id: '7',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -72,8 +65,7 @@ export default [
     {
       id: '8',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -82,8 +74,7 @@ export default [
     {
       id: '9',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
@@ -92,8 +83,7 @@ export default [
     {
       id: '10',
       name: '',
-      image:
-        'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+      image:'',
       bio: '',
       age: '',
       wins: '',
