@@ -2,10 +2,24 @@ import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { BsFillCircleFill } from 'react-icons/bs';
 import { useProfileContext } from '../context/Profile';
+import imageOne from '../assets/avatars/1.jpg';
+import imageTwo from '../assets/avatars/2.jpg';
+import imageThree from '../assets/avatars/3.jpg';
+import imageFour from '../assets/avatars/4.jpg';
+import imageFive from '../assets/avatars/5.jpg';
 
 const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId, profileId, disabled = false }) => { 
 
     const { setProfile } = useProfileContext();
+
+    const avatarImages = [
+        imageOne,
+        imageTwo,
+        imageThree,
+        imageFour,
+        imageFive
+      ]
+    
 
     return(
     <div 
@@ -30,7 +44,7 @@ const MessageButton = ({ picture, name, online, newMessage, setShowChat, matchId
                 picture
                 ?
                     <img
-                        src={picture}
+                        src={avatarImages[picture]}
                         alt="profile "
                         className='w-16 h-16 rounded-[50%]'
                     />

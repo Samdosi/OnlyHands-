@@ -7,6 +7,11 @@ import { useProfileContext } from '../context/Profile';
 import StartConvosImg from '../assets/undraw_group_chat_re_frmo.svg';
 import BG from '../assets/bg.webp';
 import Cookies from 'universal-cookie';
+import imageOne from '../assets/avatars/1.jpg';
+import imageTwo from '../assets/avatars/2.jpg';
+import imageThree from '../assets/avatars/3.jpg';
+import imageFour from '../assets/avatars/4.jpg';
+import imageFive from '../assets/avatars/5.jpg';
 
 const ChatContainer = ({ setShowChat, socket }) => {
 
@@ -19,6 +24,14 @@ const ChatContainer = ({ setShowChat, socket }) => {
 
   const [prevScroll, setPrevScroll] = useState(0);
   const scrollRef = useRef(null);
+
+  const avatarImages = [
+    imageOne,
+    imageTwo,
+    imageThree,
+    imageFour,
+    imageFive
+  ]
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -45,6 +58,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
   }, [socket]);
 
   useEffect(() => {
+    console.log(profile);
     if(profile && profile?.profileId !== ""){
       socket.emit("joinRoom", profile.matchId);
     }
@@ -101,7 +115,7 @@ const ChatContainer = ({ setShowChat, socket }) => {
                   profile.picture
                   ?
                     <img
-                      src={profile.picture}
+                      src={avatarImages[profile.picture]}
                       alt="profile "
                       className='w-10 h-10 rounded-[50%] mr-2'
                     />
