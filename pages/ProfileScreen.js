@@ -25,8 +25,9 @@ import * as FileSystem from 'expo-file-system';
 import base64 from 'react-native-base64'
 import LoadProfiles from "../assets/data/loadprofiles";
 
-const avatarIndex = Math.floor(Math.random()*4)+0;
+ const avatarIndex = Math.floor(Math.random()*4)+0;
 
+//const [avatarIndex,setAvatarIndex] = useState(null)
 
 function ProfileScreen({ navigation, route }) {
 
@@ -38,6 +39,8 @@ function ProfileScreen({ navigation, route }) {
     require('../assets/Avatars/5.jpg'),
   ]
  
+  //const generateIndex = ()=> {setAvatarIndex(Math.floor(Math.random()*4)+0);}
+  
   const [firstName, onChangeFirstName] = useState("");
   const [lastName, onChangeLastName] = useState("");
   const [male, onChangeMale] = useState(false);
@@ -156,7 +159,7 @@ function ProfileScreen({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity onPress={()=>pickImage()}>
+          <TouchableOpacity onPress={()=>generateIndex()}>
             <View style={styles.PictureContainer}>
 
               <ImageBackground source={avatarImages[avatarIndex]} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
@@ -408,12 +411,14 @@ function ProfileScreen({ navigation, route }) {
               ellip
             ></TextInput>
           </View>
-
-          <TouchableOpacity onPress={Login}>
-            <View style={styles.saveButtonView}>
-              <Text style={styles.saveButtonText}>Save</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{top:-150}}>
+            <TouchableOpacity onPress={Login}>
+              <View style={styles.saveButtonView}>
+                <Text style={styles.saveButtonText}>Save</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
@@ -484,6 +489,7 @@ const styles = StyleSheet.create({
   fillInContainer: {
     alignItems: "center",
     marginBottom: 50,
+    paddingBottom:150,
   },
 
   fillIn: {

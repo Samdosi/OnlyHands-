@@ -5,11 +5,11 @@ import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 const MessageBox = (props) => {
   const navigation = useNavigation();
   const avatarImages = [
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/2.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/3.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/4.jpg"),
+    require("../../assets/Avatars/1.jpg"),
+    require("../../assets/Avatars/2.jpg"),
+    require("../../assets/Avatars/3.jpg"),
+    require("../../assets/Avatars/4.jpg"),
+    require("../../assets/Avatars/5.jpg"),
   ];
   const renderUserStatus = () => {
     if (props.online) {
@@ -80,7 +80,17 @@ const styles = StyleSheet.create({
   mainView: {
     flexDirection: "row",
     alignContent: "center",
-    margin: 20,
+    margin: 0,
+    marginBottom:15,
+    //borderWidth:1,
+    backgroundColor:'#35373b',
+    borderBottomWidth:0.5,
+    width:'100%',
+    paddingLeft:'3%',
+    borderColor:'grey',
+    
+    height:70,
+    top:10
   },
 
   pictureView: {
@@ -110,10 +120,14 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     color: "white",
+    top:-40,
+    fontWeight:'500'
   },
 
   pending: {
     color: "white",
+    top:-40,
+    fontWeight:'300'
   },
 });
 

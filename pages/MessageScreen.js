@@ -76,13 +76,15 @@ function MessageScreen({ navigation, route }) {
       };
     }
   };
+  
   const avatarImages = [
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/2.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/3.jpg"),
-    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/4.jpg"),
+    require("../assets/Avatars/1.jpg"),
+    require("../assets/Avatars/2.jpg"),
+    require("../assets/Avatars/3.jpg"),
+    require("../assets/Avatars/4.jpg"),
+    require("../assets/Avatars/5.jpg"),
   ];
+  
   const sendMessage = async () => {
     if (message) {
       const messageData = {
@@ -107,48 +109,58 @@ function MessageScreen({ navigation, route }) {
   const styleLayout = (id2) => {
     if (profileID == id2) {
       return {
-        height: 50,
+        height: 40,
         padding: 5,
         justifyContent: "center",
         borderRadius: 5,
         backgroundColor: "azure",
+        right: 7,
       };
     } else {
       return {
-        height: 50,
+        height: 40,
         padding: 5,
         justifyContent: "center",
         borderRadius: 5,
         backgroundColor: "#bbf7d0",
+        left: 7
       };
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      
       <View style={styles.profileView}>
-        <Image
-          style={styles.profilePicture}
-          source={pic ? avatarImages[pic - 1] : avatarImages[1]}
-        ></Image>
+        <View style={{top:3,left:5}}>
+          <Image
+            style={styles.profilePicture}
+            source={pic ? avatarImages[pic - 1] : avatarImages[1]}
+          ></Image>
+        </View>
+        
 
         <Text style={styles.name}>{params.name}</Text>
       </View>
+      <View style={{height:'79%',backgroundColor:'#35373b'}}>
 
-      <ScrollView
-        ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({ animated: true })
-        }
-      >
-        {messages.map((c) => (
-          <View style={alignMessage(c.from)}>
-            <View style={styleLayout(c.from)}>
-              <Text style={styles.messageText}>{c.text}</Text>
+        <ScrollView contentContainerStyle={{backgroundColor:"#35373b"}}
+          ref={scrollViewRef}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+          }
+        >
+          {messages.map((c) => (
+            <View style={alignMessage(c.from)}>
+              <View style={styleLayout(c.from)}>
+                <Text style={styles.messageText}>{c.text}</Text>
+              </View>
             </View>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+
+      </View>
+      
 
       <View style={styles.sendContainer}>
         <View style={styles.sendView}>
@@ -157,6 +169,8 @@ function MessageScreen({ navigation, route }) {
             onChangeText={(input) => setMessage(input)}
             placeholder="Type a message"
             value={message}
+            placeholderTextColor={'white'}
+
           />
 
           <View style={styles.sendButton}>
@@ -178,10 +192,14 @@ const styles = StyleSheet.create({
 
   profileView: {
     flexDirection: "row",
+    height:65,
+    backgroundColor:'rgb(37, 37, 37)',
+    borderTopWidth:1
   },
 
   profilePicture: {
-    marginTop: 10,
+   // marginTop: 10,
+    alignSelf:'center',
     width: 60,
     height: 60,
     borderRadius: 60,
@@ -192,16 +210,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontSize: 30,
     color: "white",
+    fontWeight:'500'
   },
 
   messageText: {
     fontSize: 20,
+    flex: 1,
+    flexWrap: 'wrap'
   },
 
   sendContainer: {
+    
     height: 100,
     width: "100%",
     justifyContent: "flex-end",
+    backgroundColor:"rgb(37, 37, 37)"
   },
 
   sendView: {
@@ -211,13 +234,18 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 60,
+    height: 50,
     width: "80%",
     borderWidth: 1,
     borderColor: "white",
-    fontSize: 30,
+    fontSize: 15,
+    fontWeight:'300',
+    //opacity:0.5,
     padding: 5,
     color: "white",
+    left:15,
+    borderRadius:5,
+    backgroundColor:'#35373b'
   },
 
   sendButton: {
@@ -225,7 +253,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: "30%",
     paddingTop: 5,
-    paddingLeft: 15,
+    paddingLeft: 25,
   },
 });
 

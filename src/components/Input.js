@@ -35,7 +35,7 @@ const Input = ({
           onBlur={() => {
             setIsFocused(false);
           }}
-          style={{color: "white", flex: 1 }}
+          style={{color: "white", flex: 1, fontSize:15 }}
           placeholderTextColor= "white"
           {...props}
         ></TextInput>
@@ -67,7 +67,8 @@ const style = StyleSheet.create({
     marginHorizontal: 15,
     borderWidth: 0.5,
     alignContent: "center",
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    backgroundColor: "#35373b",
+    borderRadius:5
   },
 });
 export default Input;

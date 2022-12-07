@@ -74,19 +74,25 @@ function ChatScreen({ navigation, route }) {
       <View style={styles.mainView}>
         <Text style={styles.title}>Messages</Text>
 
-        <View style={styles.searchBox}>
-          <Input
-            label="Search"
-            placeholder="Enter the name"
-            iconName={"magnify"}
-            color="white"
-            placeholderColor="white"
-            value={searchValue}
-            onChangeText={setSearchValue}
-          />
-        </View>
+        <View style={styles.heading}>
 
-        <ScrollView>
+          <View style={styles.searchBox}>
+            <Input
+              placeholder="Enter the name"
+              iconName={"magnify"}
+              color="white"
+              placeholderColor="white"
+              value={searchValue}
+              onChangeText={setSearchValue}
+              
+            />
+          </View>
+
+        </View>
+        
+        
+
+        <ScrollView contentContainerStyle = {{backgroundColor:'#35373b',paddingBottom:150}} >
           {matched.map((c) => {
             console.log(c);
             return (
@@ -121,9 +127,19 @@ function ChatScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  heading:{
+    marginTop: -5,
+    //borderBottomWidth:2,
+    marginBottom:0
+    //bottom:15
+    
+  },
+  
+
   safeArea: {
-    backgroundColor: "rgb(37, 37, 37)",
+    backgroundColor: "#35373b",
     flex: 1,
+
   },
 
   title: {
@@ -131,15 +147,21 @@ const styles = StyleSheet.create({
     fontStyle: "bold",
     fontSize: 30,
     marginLeft: 10,
+    marginTop: -10,
+    marginBottom:-15
   },
 
   searchBox: {
     margin: 10,
+    marginTop:-5
+    
   },
 
   mainView: {
     backgroundColor: "rgb(37, 37, 37)",
-    marginTop: 20,
+    //marginTop: 20,
+    paddingTop:15,
+    borderTopWidth:1
   },
 
   text: {

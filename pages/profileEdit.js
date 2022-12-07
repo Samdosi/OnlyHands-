@@ -427,12 +427,16 @@ function ProfileEdit({ navigation, route }) {
               ellip
             ></TextInput>
           </View>
+          <View style={{top:-150}}>
 
-          <TouchableOpacity onPress={Edit}>
-            <View style={styles.saveButtonView}>
-              <Text style={styles.saveButtonText}>Edit</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={Edit}>
+              <View style={styles.saveButtonView}>
+                <Text style={styles.saveButtonText}>Edit</Text>
+              </View>
+            </TouchableOpacity>
+
+          </View>
+          
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
@@ -500,6 +504,7 @@ const styles = StyleSheet.create({
   fillInContainer: {
     alignItems: "center",
     marginBottom: 50,
+    paddingBottom:200,
   },
 
   fillIn: {

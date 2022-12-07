@@ -82,17 +82,20 @@ const App = ({ navigation }) => {
           name="ChatScreen"
           component={ChatScreen}
           options={{
+            headerTitle:'',
             headerShown: true,
-            headerStyle: { backgroundColor: "black", color: "white" },
+            headerStyle: { backgroundColor: "#35373b", color: "white" },
             headerTintColor: "white",
+            
           }}
         ></Stack.Screen>
         <Stack.Screen
           name="MessageScreen"
           component={MessageScreen}
-          option={{
+          options={{
+            headerTitle:'',
             headerShown: true,
-            headerStyle: { backgroundColor: "black", color: "white" },
+            headerStyle: { backgroundColor: "#35373b", color: "white" },
             headerTintColor: "white",
           }}
         />
