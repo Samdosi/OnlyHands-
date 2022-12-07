@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Card from './components/Card';
 import InfoModal from './components/InfoModal';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import AvatarModal from './components/AvatarModal';
 import Cookies from "universal-cookie";
+import { CgProfile } from 'react-icons/cg';
+import { IconContext } from "react-icons";
+import imageOne from './avatars/1.jpg';
+import imageTwo from './avatars/2.jpg';
+import imageThree from './avatars/3.jpg';
+import imageFour from './avatars/4.jpg';
+import imageFive from './avatars/5.jpg';
+import NewCard from './components/NewCard';
 
 const Profile = ({ setBgImage }) => {
     const cookies = new Cookies();
@@ -13,6 +20,18 @@ const Profile = ({ setBgImage }) => {
 
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(false);
+    
+    const [avatar, setAvatar] = useState(null);
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const handleAvatarModal = () => setShowAvatarModal(false);
+
+    const avatarImages = [
+        imageOne,
+        imageTwo,
+        imageThree,
+        imageFour,
+        imageFive
+      ]
 
     useEffect(() => {
         fetch('https://only-hands.herokuapp.com/api/profile/', {
@@ -26,6 +45,7 @@ const Profile = ({ setBgImage }) => {
                 if (data["success"]) {
                     console.log(data["profile"])
                     cookies.set("profile", JSON.stringify(data["profile"]));
+                    setAvatar(data["profile"]["image"])
                 }
                 else {
                     console.log(data["message"]);
@@ -36,45 +56,34 @@ const Profile = ({ setBgImage }) => {
     }, [])
 
     return (
-        <div>
-            <div classname="left col-span-1 bg-white">
+        <div className='w-full h-full'>
+            <div className='flex flex-row justify-center center-items lg:justify-start'>
                 <button
                     onClick={() => { setShowModal(true) }}
                     className="bg-white transition text-black font-bold p-3 2xl:p-4 rounded-lg shadow-md grow-transition">
-                    My Stats
+                    {cookies.get("profile") != null ? cookies.get("profile").firstName + "'s Stats" : "My Stats"} 
+                </button>
+                <button 
+                    onClick={() => { setShowAvatarModal(true) }}
+                    >
+                    {avatar ? 
+                    <img
+                        className='rounded-lg transition grow-transition ml-3'
+                        src={avatarImages[cookies.get("profile")["image"]]} 
+                        style={{width: "4em", height: "4em", borderRadius: "50%"}}
+                        />: 
+                    (<IconContext.Provider value={{ color: "white", size: "4em", className: "avatar_icon"}}>
+                        <CgProfile />
+                    </IconContext.Provider>)}
                 </button>
             </div>
-            <div className="right col-span-2 flex flex-col justify-center items-center">
-                <div className="w-full relative flex flex-col justify-center overflow-hidden">
-                    <Card />
+                <div className="w-full h-4/5 flex flex-col justify-center items-center">
+                    <NewCard avatars={avatarImages} />
                 </div>
-            </div>
             {showModal && <InfoModal onClose={handleModal} />}
+            {showAvatarModal && <AvatarModal onClose={handleAvatarModal} />}
         </div>
     )
 }
 
 export default Profile;
-
-// .then(async (res) => {
-//     if(res.status == 401){
-//         navigate('/');
-//     }
-//     if(res.status == 403){
-//         const {message} = await res.json();
-//         if (message !== "Profile ID is required")
-//             navigate('/');
-//     }
-//     return res.json()
-// })
-// .then((data) => {
-//     if (data["success"]) {
-//         console.log(data["profile"])
-//         cookies.set("profile", JSON.stringify(data["profile"]));
-//     }
-//     else {
-//         console.log(data["message"]);
-//         setShowModal(true)
-//     }
-// })
-// .catch(error => console.log(error))

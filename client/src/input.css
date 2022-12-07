@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    overflow: hidden;
+}
+
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -166,28 +170,24 @@ hr.solid {
 }
 
 .cardContainer {
-    width: 37vw;
+    width: 100%;
     max-width: 450px;
     height: 500px;
 }
 
 .card {
     position: relative;
-    background-color: black;
-    background-repeat: no-repeat;
     width: 250vw;
     max-width: 450px;
     height: 500px;
     border-radius: 20px;
-    background-size: 100%;
-    background-position: top;
+    padding: 20px;
 }
 
 .figherCard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*justify-content: center;*/
 }
 
 .cardContent {
@@ -195,6 +195,9 @@ hr.solid {
     height: 100%;
 }
 
+.global-class-name {
+    padding-left: 50%;
+}
 .swipe:last-of-type {}
 
 .card h3 {
@@ -208,13 +211,23 @@ hr.solid {
 .gridContainer {
     display: grid;
     vertical-align: bottom; /* I CANT ALIGN FOR SHIT */
-    padding-left: 5%;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
     grid-template-columns: auto auto;
-    gap: 25px 75px;
-    transform: translate(0, +118%);
+    gap: 25px;
+    /* transform: translate(0, +118%); */
 }
 
-.item1 {
+.gridContainer > * {
+    overflow: hidden;
+}
+
+.item0, .item1 {
     grid-column: 1 / span 2;
     font-weight: bold;
     justify-self: center;
@@ -342,3 +355,43 @@ hr.solid {
     color: #915dd1 !important;
   }
    */
+
+.newCard{
+    transition: all 0.1s ease-in-out;
+}
+
+@keyframes yay {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    to {
+      transform: rotate(40deg) translateY(-80px);
+      opacity: 0;
+    }
+}
+
+@keyframes nope {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    to {
+      transform: rotate(-40deg) translateY(-80px);
+      opacity: 0;
+    }
+}
+
+.yes{
+    animation: yay 0.7s ease-out;
+}
+.no{
+    animation: nope 0.7s ease-out;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
