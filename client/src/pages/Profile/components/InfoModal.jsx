@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import { ImCross } from "react-icons/im";
 import Cookies from "universal-cookie";
 import { useToastyContext } from "../../../context/ToastyContext";
@@ -39,37 +38,6 @@ const InfoModal = ({ onClose }) => {
     // Fill out profile
     autoFillInfo();
   }, []);
-
-  // useEffect(() => {
-  //   if (!image) {
-  //     // setPreview(undefined);
-  //     return;
-  //   }
-
-  //   const imageURL = URL.createObjectURL(image);
-  //   setPreview(imageURL);
-
-  //   return () => URL.revokeObjectURL(imageURL);
-  // }, [image]);
-
-  const hiddenFileInput = React.useRef(null);
-
-  // Click hidden button
-  const handleClick = (event) => {
-    event.preventDefault();
-    hiddenFileInput.current.click();
-  };
-
-  // set image when user uploads image
-  const onSelectFile = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setImage(undefined);
-      return;
-    }
-
-    setImage(event.target.files[0]);
-    console.log(image);
-  };
 
   const updateProfile = async (event) => {
     event.preventDefault();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Card from './components/Card';
+import { useLocation } from 'react-router-dom';
 import InfoModal from './components/InfoModal';
 import AvatarModal from './components/AvatarModal';
 import Cookies from "universal-cookie";
@@ -16,7 +16,6 @@ const Profile = ({ setBgImage }) => {
     const cookies = new Cookies();
     const { pathname } = useLocation();
     setBgImage(pathname);
-    const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(false);
