@@ -40,25 +40,6 @@ const InfoModal = ({ onClose }) => {
     autoFillInfo();
   }, []);
 
-  const hiddenFileInput = React.useRef(null);
-
-  // Click hidden button
-  const handleClick = (event) => {
-    event.preventDefault();
-    hiddenFileInput.current.click();
-  };
-
-  // set image when user uploads image
-  const onSelectFile = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setImage(undefined);
-      return;
-    }
-
-    setImage(event.target.files[0]);
-    console.log(image);
-  };
-
   const updateProfile = async (event) => {
     event.preventDefault();
 
@@ -154,13 +135,6 @@ const InfoModal = ({ onClose }) => {
       .catch((error) => console.log(error));
   };
 
-  const loadPreviewImage = (event) => {
-    console.log(event);
-    let image = document.getElementByClassName("preview");
-    console.log(image);
-    image.src = URL.createObjectURL(event.target.files[0]);
-  };
-
   const autoFillInfo = () => {
     if (profile != null) {
       setFirstName(profile.firstName);
@@ -187,18 +161,19 @@ const InfoModal = ({ onClose }) => {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="info-modal bg-white rounded w-72 text-gray-700 p-2">
-        <div className="flex m-2">
+      <div className="info-modal bg-white rounded w-4/5 text-gray-700 p-4 z-index-50">
+        <div className="flex pb-2">
           <div className="top w-full flex justify-between align-center">
             <div className="top-left flex flex-row align-center">
               <button
                 className="bg-gray-300 py-3 px-4 rounded"
                 onClick={cookies.get("profile") && onClose}
               >
-                {/* <IoMdArrowRoundBack /> */}
                 <ImCross />
               </button>
-              <h1 className="modal-title px-3">Your Information</h1>
+              <h1 className="modal-title px-3">
+                {cookies.get("profile") != null ? cookies.get("profile").firstName + "'s Stats" : "My Stats"} 
+              </h1>
             </div>
             <div className="top-right flex align-center">
               <button
@@ -465,38 +440,13 @@ const InfoModal = ({ onClose }) => {
             </div>
             <div className="body-right p-2">
               <div className="w-full px-3">
-                {/* <label
-                  className="block text-gray-700 font-bold mb-2"
-                  for="user_photo"
-                >
-                  Profile Photo
-                </label>
-                <div>
-                  <form>
-                    <button
-                      className="bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                      onClick={handleClick}
-                    >
-                      Upload photo
-                    </button>
-                    <input
-                      id="user_photo"
-                      type="file"
-                      accept="image/*"
-                      onChange={onSelectFile}
-                      ref={hiddenFileInput}
-                      style={{ display: "none" }}
-                    />
-                    {image && <img src={preview} />}
-                  </form>
-                </div> */}
               </div>
               <div className="w-full px-3 relative">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   for="about"
                 >
-                  Description
+                  Bio
                 </label>
                 <textarea
                   maxLength={140}

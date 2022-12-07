@@ -355,3 +355,43 @@ hr.solid {
     color: #915dd1 !important;
   }
    */
+
+.newCard{
+    transition: all 0.1s ease-in-out;
+}
+
+@keyframes yay {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    to {
+      transform: rotate(40deg) translateY(-80px);
+      opacity: 0;
+    }
+}
+
+@keyframes nope {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    to {
+      transform: rotate(-40deg) translateY(-80px);
+      opacity: 0;
+    }
+}
+
+.yes{
+    animation: yay 0.7s ease-out;
+}
+.no{
+    animation: nope 0.7s ease-out;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

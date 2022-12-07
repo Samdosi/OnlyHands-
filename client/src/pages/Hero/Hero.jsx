@@ -32,7 +32,7 @@ const Hero = ({ setBgImage }) => {
                     }}
                     className="p-3 2xl:p-4 rounded-lg shadow-md border grow-transition"
                 >
-                    Log in
+                    Log In
                 </button>
             </div>
             {showModal && <Modal onClose={handleModal} isLoginTab={isLoginTab} toggleTab={setIsLoginTab} />}

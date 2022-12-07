@@ -189,7 +189,7 @@ const Card = () => {
                       <CgProfile />
                     </IconContext.Provider>)}
                   </div>
-                  <div className="item1">
+                  <div className="item1 ">
                     {match["firstName"]} {match["lastName"]}
                   </div>
                   <div className="gridItem">Gender: {match["gender"]}</div>
