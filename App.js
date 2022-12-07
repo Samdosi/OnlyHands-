@@ -56,11 +56,7 @@ const App = ({ navigation }) => {
             headerTintColor: "white",
           }}
         />
-        <Stack.Screen
-          name="MessageScreen"
-          component={MessageScreen}
-          option={{ headerShown: false }}
-        />
+
         <Stack.Screen
           name="Home"
           component={Home}
@@ -91,6 +87,15 @@ const App = ({ navigation }) => {
             headerTintColor: "white",
           }}
         ></Stack.Screen>
+        <Stack.Screen
+          name="MessageScreen"
+          component={MessageScreen}
+          option={{
+            headerShown: true,
+            headerStyle: { backgroundColor: "black", color: "white" },
+            headerTintColor: "white",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

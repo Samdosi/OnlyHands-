@@ -8,66 +8,59 @@ import {
   Image,
   Text,
 } from "react-native";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import io from "socket.io-client";
+import axios from "axios";
 
 function MessageScreen({ navigation, route }) {
-    const params = route.params.paramKey;
+  const params = route.params.paramKey;
+  console.log(params);
+  console.log("token", params.token);
+  const scrollViewRef = useRef();
+  console.log("my id", params.matchID);
 
-    console.log("token", params.token);
-
-    console.log("my id", params.profileSelfID);
-
-    console.log("other id", params.profileID);
+  console.log("other id", params.profileID);
 
   const profileID = params.profileSelfID;
-
-  const [messages, addMessage] = useState([]);
+  const matchId = params.matchID;
+  const token = params.token;
+  const pic = params.profilePicture;
+  const [messages, setMessages] = useState([]);
 
   const [message, setMessage] = useState("");
+  const [prevScroll, setPrevScroll] = useState(0);
+  const scrollRef = useRef(null);
 
   const socket = io("http://only-hands.herokuapp.com");
 
-  /*seEffect(() => {
-      socket.on("receiveMessage", (data) => {
-          setMessageList((list) => [...list, data]);
+  const load = async () => {
+    console.log("match id is ", matchId);
+    try {
+      const baseURL = "https://only-hands.herokuapp.com/api/chat/";
+      const headers = {
+        "x-access-token": token,
+      };
+      const response = await axios.get(baseURL + matchId, {
+        headers: headers,
       });
-  }, [socket]);
-
-
+      console.log("response ", response);
+      setMessages(response.data.chats);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     if (profileID) {
-      socket.emit("joinRoom", params.matchID);
+      socket.emit("joinRoom", matchId);
+      load();
     }
-
-      fetch("https://only-hands.herokuapp.com/api/chat/" + params,
-          {
-              headers: {
-                  "x-access-token": sessionStorage.getItem("token")
-              }
-          })
-          .then(response => {
-              if (response.status != 401 && response.status != 302) {
-                  return response.json();
-              }
-          })
-          .then(data => {
-              if (data.success) {
-                  addMessage([...data.chats]);
-              }
-          })
-          .catch(e => console.log(e));
-
-          setMessage("");
-  }, [message]);*/
+  }, [profileID]);
 
   const alignMessage = (id2) => {
-    console.log(id.localeCompare(id2));
-
-    if (id.localeCompare(id2) == 0) {
+    if (profileID == id2) {
       return {
         flex: 1,
         flexDirection: "row",
@@ -83,11 +76,36 @@ function MessageScreen({ navigation, route }) {
       };
     }
   };
-
+  const avatarImages = [
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/2.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/3.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/4.jpg"),
+  ];
+  const sendMessage = async () => {
+    if (message) {
+      const messageData = {
+        room: matchId,
+        from: profileID,
+        text: message,
+        timeSent:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
+      await socket.emit("sendMessage", messageData);
+      setMessages((list) => [...list, messageData]);
+      setMessage("");
+    }
+  };
+  useEffect(() => {
+    socket.on("receiveMessage", (data) => {
+      setMessages((list) => [...list, data]);
+    });
+  }, [socket]);
   const styleLayout = (id2) => {
-    console.log(id.localeCompare(id2));
-
-    if (id.localeCompare(id2) == 0) {
+    if (profileID == id2) {
       return {
         height: 50,
         padding: 5,
@@ -111,17 +129,22 @@ function MessageScreen({ navigation, route }) {
       <View style={styles.profileView}>
         <Image
           style={styles.profilePicture}
-          source={require("../assets/pexels-cottonbro-4761792.jpg")}
+          source={pic ? avatarImages[pic - 1] : avatarImages[1]}
         ></Image>
 
-              <Text style={styles.name}>{params.name}</Text>
+        <Text style={styles.name}>{params.name}</Text>
       </View>
 
-      <ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({ animated: true })
+        }
+      >
         {messages.map((c) => (
-          <View style={alignMessage(c.id)}>
-            <View style={styleLayout(c.id)}>
-              <Text style={styles.messageText}>testing</Text>
+          <View style={alignMessage(c.from)}>
+            <View style={styleLayout(c.from)}>
+              <Text style={styles.messageText}>{c.text}</Text>
             </View>
           </View>
         ))}
@@ -133,10 +156,11 @@ function MessageScreen({ navigation, route }) {
             style={styles.input}
             onChangeText={(input) => setMessage(input)}
             placeholder="Type a message"
+            value={message}
           />
 
           <View style={styles.sendButton}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={sendMessage}>
               <Icon name={"send-outline"} size={40} color={"white"} />
             </TouchableOpacity>
           </View>
@@ -177,7 +201,7 @@ const styles = StyleSheet.create({
   sendContainer: {
     height: 100,
     width: "100%",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
 
   sendView: {

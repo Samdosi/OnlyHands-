@@ -3,8 +3,14 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 const MessageBox = (props) => {
-
   const navigation = useNavigation();
+  const avatarImages = [
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/1.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/2.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/3.jpg"),
+    require("/Users/samdosi/Desktop/github/COP4331-large-project/assets/Avatars/4.jpg"),
+  ];
   const renderUserStatus = () => {
     if (props.online) {
       return {
@@ -45,7 +51,11 @@ const MessageBox = (props) => {
       <View style={styles.mainView}>
         <View style={styles.pictureView}>
           <Image
-            //source={ uri: profilePicture }}
+            source={
+              props.profilePicture
+                ? avatarImages[props.profilePicture - 1]
+                : avatarImages[1]
+            }
             style={styles.profilePicture}
           ></Image>
 
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
 
   pending: {
     color: "white",
-  }
+  },
 });
 
 export default MessageBox;
