@@ -8,7 +8,7 @@ const Messages = ({ setShowChat, matchMessages = [], unMatchMessages = [] }) => 
 
       <h1 className='text-lg md:text-xl pb-3 text-[#ff405b]'>Messages</h1>
 
-      <div className='w-full h-[92%] overflow-y-auto overflow-hidden hide-scrollbar'>
+      <div className='w-full h-full overflow-y-auto overflow-hidden hide-scrollbar'>
 
         {
           

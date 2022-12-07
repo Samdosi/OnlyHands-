@@ -4,7 +4,7 @@ import Card from './Card';
 const SearchBar = ({ value, setValue }) => {
 
   return (
-    <div className=' w-full h-[25%] min-h-[170px] relative pt-5'>
+    <div className=' w-full h-[15%] min-h-[120px] relative pt-5'>
 
         <h1 className='text-lg md:text-xl text-[#ff405b]'>Search Chats</h1>
 
