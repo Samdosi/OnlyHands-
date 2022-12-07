@@ -18,6 +18,7 @@ const Profile = ({ setBgImage }) => {
     const { pathname } = useLocation();
     setBgImage(pathname);
 
+
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(false);
     
@@ -87,3 +88,5 @@ const Profile = ({ setBgImage }) => {
 }
 
 export default Profile;
+
+// export default Profile;
