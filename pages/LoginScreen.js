@@ -54,6 +54,7 @@ const LoginScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [email, onChangeEmail] = useState("");
   const findemail = async () => {
+
     const payload = {
       email: email,
     };
@@ -67,11 +68,15 @@ const LoginScreen = ({ navigation }) => {
       });
       console.log(response);
       Alert.alert(response.data.message);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
       Alert.alert("Email not found!");
+      blurt("Email not found!");
     }
   };
+
+
   const Login = async () => {
     if (username == "" || password == "") {
       alert("please input both fields");
@@ -135,7 +140,7 @@ const LoginScreen = ({ navigation }) => {
               onChangeText={onChangeEmail}
               value={email}
             ></TextInput>
-            <TouchableOpacity onPress={findemail}>
+            <TouchableOpacity onPress={()=>findemail()}>
               <View style={styles.saveButtonView}>
                 <Text style={{color:'white',fontWeight:'500',fontSize:'16'}}>Enter</Text>
               </View>

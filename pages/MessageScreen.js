@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  KeyboardAvoidingView,
 } from "react-native";
 import { React, useState, useEffect, useRef } from "react";
 
@@ -85,7 +86,7 @@ function MessageScreen({ navigation, route }) {
     require("../assets/Avatars/5.jpg"),
   ];
   
-  const sendMessage = async () => {
+  const sendMessage = async () => {//i think the issue is here !Talk about it tomorrow
     if (message) {
       const messageData = {
         room: matchId,
@@ -97,7 +98,7 @@ function MessageScreen({ navigation, route }) {
           new Date(Date.now()).getMinutes(),
       };
       await socket.emit("sendMessage", messageData);
-      setMessages((list) => [...list, messageData]);
+      setMessage((list) => [...list, messageData]);
       setMessage("");
     }
   };
@@ -130,8 +131,9 @@ function MessageScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      
-      <View style={styles.profileView}>
+
+
+         <View style={styles.profileView}>
         <View style={{top:3,left:5}}>
           <Image
             style={styles.profilePicture}
@@ -161,25 +163,34 @@ function MessageScreen({ navigation, route }) {
 
       </View>
       
+     
+        
+        <View style={styles.sendContainer}>
+          <View style={styles.sendView}>
+            <TextInput
+              style={styles.input}
+              onChangeText={(input) => setMessage(input)}
+              placeholder="Type a message"
+              value={message}
+              placeholderTextColor={'white'}
+              
 
-      <View style={styles.sendContainer}>
-        <View style={styles.sendView}>
-          <TextInput
-            style={styles.input}
-            onChangeText={(input) => setMessage(input)}
-            placeholder="Type a message"
-            value={message}
-            placeholderTextColor={'white'}
+            />
 
-          />
-
-          <View style={styles.sendButton}>
-            <TouchableOpacity onPress={sendMessage}>
-              <Icon name={"send-outline"} size={40} color={"white"} />
-            </TouchableOpacity>
+            <View style={styles.sendButton}>
+              <TouchableOpacity onPress={sendMessage}>
+                <Icon name={"send-outline"} size={40} color={"white"} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+
+
+      
+     
+
+      
+      
     </SafeAreaView>
   );
 }
