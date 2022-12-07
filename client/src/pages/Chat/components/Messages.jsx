@@ -16,7 +16,7 @@ const Messages = ({ setShowChat, matchMessages = [], unMatchMessages = [] }) => 
             return(
               <MessageButton 
                 name={c.firstName + " " + c.lastName}
-                picture={c.picture}
+                picture={c.image}
                 newMessage={c.newMessage}
                 online={c.online}
                 matchId={c.matchId}
