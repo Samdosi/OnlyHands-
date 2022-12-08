@@ -53,7 +53,7 @@ const MessageBox = (props) => {
           <Image
             source={
               props.profilePicture
-                ? avatarImages[props.profilePicture - 1]
+                ? avatarImages[props.profilePicture]
                 : avatarImages[1]
             }
             style={styles.profilePicture}

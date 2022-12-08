@@ -159,7 +159,7 @@ function ProfileScreen({ navigation, route }) {
         source={require("../assets/pexels1.jpg")}
       >
         <ScrollView style={styles.scroll}>
-          <TouchableOpacity onPress={()=>generateIndex()}>
+          
             <View style={styles.PictureContainer}>
 
               <ImageBackground source={avatarImages[avatarIndex]} imageStyle={{borderRadius:'50%',top:15,left:15,bottom:-15,right:-15,position:'absolute'}} resizeMethod='scale'>
@@ -174,7 +174,7 @@ function ProfileScreen({ navigation, route }) {
 
             </View>
             
-          </TouchableOpacity>
+         
 
           <View style={styles.profileInfo}>
             <Text style={styles.profileInfoText}>
